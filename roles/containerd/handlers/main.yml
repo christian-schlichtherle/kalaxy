@@ -1,0 +1,17 @@
+---
+# handlers file for containerd
+- name: load kernel-params
+  command: sysctl --system
+- name: load modules
+  modprobe:
+    name: "{{ item }}"
+  with_items:
+    - overlay
+    - br_netfilter
+- name: reboot system
+  reboot: {}
+- name: restart containerd
+  systemd:
+    daemon_reload: yes
+    name: containerd
+    state: restarted
