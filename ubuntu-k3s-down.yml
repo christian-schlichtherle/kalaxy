@@ -1,0 +1,10 @@
+---
+- hosts: workers
+  roles:
+    - k3s-worker-down
+- hosts: masters
+  roles:
+    - k3s-master-down
+- hosts: all
+  roles:
+    - ubuntu-swap-up

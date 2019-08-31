@@ -1,0 +1,3 @@
+---
+- name: enable swap-space
+  command: swapon -a

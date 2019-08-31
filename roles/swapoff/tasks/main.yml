@@ -1,8 +1,0 @@
----
-# tasks file for swapoff
-- name: disable swap-space
-  replace:
-    path: /etc/fstab
-    regexp: '^(.*\sswap\s+sw\s.*)$'
-    replace: '# \1'
-  notify: disable swap-space

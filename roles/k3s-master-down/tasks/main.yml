@@ -1,0 +1,5 @@
+---
+- name: uninstall k3s server
+  command: k3s-uninstall.sh
+  args:
+    removes: /usr/local/bin/k3s-uninstall.sh

@@ -1,0 +1,7 @@
+---
+- name: enable swap-space
+  replace:
+    path: /etc/fstab
+    regexp: '^#\s*(.*\sswap\s+sw\s.*)$'
+    replace: '\1'
+  notify: enable swap-space

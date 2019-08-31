@@ -1,7 +1,0 @@
----
-# handlers file for k8s-common
-- name: restart kubelet
-  systemd:
-    daemon_reload: yes
-    name: kubelet
-    state: restarted

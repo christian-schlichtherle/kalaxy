@@ -1,28 +1,34 @@
 ---
 all:
   hosts:
-    master1:
+    raspi-1:
       ansible_host: 192.168.0.21
-    master2:
+    raspi-2:
       ansible_host: 192.168.0.22
-    worker1:
-      ansible_host: 192.168.0.31
-    worker2:
-      ansible_host: 192.168.0.32
-    worker3:
-      ansible_host: 192.168.0.33
-    worker4:
-      ansible_host: 192.168.0.34
+    raspi-3:
+      ansible_host: 192.168.0.23
+    raspi-4:
+      ansible_host: 192.168.0.24
+    raspi-5:
+      ansible_host: 192.168.0.25
+    raspi-6:
+      ansible_host: 192.168.0.26
   children:
     masters:
       hosts:
-        master1: {}
-        master2: {}
+        raspi-1: {}
+      vars:
+        ansible_become: yes
     workers:
       hosts:
-        worker1: {}
-        worker2: {}
-        worker3: {}
-        worker4: {}
+        raspi-2: {}
+        raspi-3: {}
+        raspi-4: {}
+        raspi-5: {}
+        raspi-6: {}
+      vars:
+        ansible_become: yes
   vars:
-    ansible_user: ubuntu
+    ansible_python_interpreter: /usr/bin/python3
+    # https://github.com/rancher/k3s/releases :
+    install_k3s_version: ''

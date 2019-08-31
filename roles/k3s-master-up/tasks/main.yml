@@ -1,0 +1,28 @@
+---
+- name: install k3s server
+  shell: |
+    export INSTALL_K3S_VERSION='{{ install_k3s_version }}'
+    curl -fsL https://get.k3s.io | sh -
+  args:
+    creates: /usr/local/bin/k3s-uninstall.sh
+    warn: no
+- name: fix access to k3s.yaml
+  file:
+    path: /etc/rancher/k3s/k3s.yaml
+    mode: 0644
+- name: fetch kubeconfig.bak
+  fetch:
+    dest: kubeconfig.bak
+    flat: yes
+    src: /etc/rancher/k3s/k3s.yaml
+  notify:
+    - copy kubeconfig
+    - edit kubeconfig
+  run_once: yes
+- name: fetch node-token
+  fetch:
+    dest: node-token
+    flat: yes
+    src: /var/lib/rancher/k3s/server/node-token
+  run_once: yes
+- meta: flush_handlers

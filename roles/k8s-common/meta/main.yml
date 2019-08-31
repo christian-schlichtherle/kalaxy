@@ -1,6 +1,0 @@
----
-dependencies:
-  - swapoff
-  # Prefer Containerd over Docker because it has a smaller memory footprint:
-  - containerd
-#  - docker

@@ -1,0 +1,13 @@
+---
+- name: copy kubeconfig
+  local_action:
+    module: copy
+    dest: kubeconfig
+    src: kubeconfig.bak
+- name: edit kubeconfig
+  local_action:
+    backrefs: yes
+    line: '\g<1>{{ ansible_default_ipv4.address }}\g<2>'
+    module: lineinfile
+    path: kubeconfig
+    regexp: '^(\s+server:\s+https?://)(?:[a-zA-Z0-9.-]+)([\W$].*)$'

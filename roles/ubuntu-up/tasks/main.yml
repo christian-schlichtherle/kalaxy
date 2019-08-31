@@ -1,0 +1,34 @@
+---
+# https://jamesachambers.com/raspberry-pi-ubuntu-server-18-04-2-installation-guide :
+- name: set /boot/firmware/cmdline.txt
+  copy:
+    content: "dwc_otg.fiq_fix_enable=2 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait rootflags=noload net.ifnames=0\n"
+    dest: /boot/firmware/cmdline.txt
+  notify: reboot system
+- name: set /boot/firmware/config.txt
+  copy:
+    src: config.txt
+    dest: /boot/firmware/config.txt
+  notify: reboot system
+- name: set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+  notify: update avahi-daemon
+- name: edit /etc/hosts
+  lineinfile:
+    line: "127.0.1.1\t{{ inventory_hostname }}"
+    path: /etc/hosts
+    regexp: '^127.0.1.1\t'
+- name: update and upgrade all existing packages
+  apt:
+    only_upgrade: yes
+    update_cache: yes
+    upgrade: yes
+- name: enable Bonjour discovery
+  apt:
+    name: avahi-daemon
+- name: remove obsolete or unused packages
+  apt:
+    autoclean: yes
+    autoremove: yes
+- meta: flush_handlers

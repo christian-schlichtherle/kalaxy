@@ -1,8 +1,0 @@
----
-- become: true
-  hosts: master1
-  module_defaults:
-    apt:
-      force_apt_get: yes
-  roles:
-    - k8s-master

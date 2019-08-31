@@ -1,0 +1,14 @@
+---
+- name: register k3s token
+  local_action: 'command cat node-token'
+  register: k3s_token
+- name: register k3s URL
+  local_action:
+    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" kubeconfig'
+    warn: no
+  register: k3s_url
+- name: install k3s agent
+  shell: "curl -fsL https://get.k3s.io | INSTALL_K3S_VERSION='{{ install_k3s_version }}' K3S_TOKEN='{{ k3s_token.stdout }}' K3S_URL='{{ k3s_url.stdout }}' sh -"
+  args:
+    creates: /usr/local/bin/k3s-agent-uninstall.sh
+    warn: no
