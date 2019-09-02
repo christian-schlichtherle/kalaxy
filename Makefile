@@ -5,21 +5,11 @@ BASE_OS = ubuntu
 
 .PHONY: up k3s-up raspbian-k3s-up ubuntu-k3s-up down k3s-down raspbian-k3s-down ubuntu-k3s-down
 
-up k3s-up: $(BASE_OS)-k3s-up
+up k3s-up: $(BASE_OS)-k3s-up.yml
+	ansible-playbook $(CHECK_OPTION) $?
 
-down k3s-down: $(BASE_OS)-k3s-down
-
-raspbian-k3s-up:
-	ansible-playbook $(CHECK_OPTION) raspbian-k3s-up.yml
-
-raspbian-k3s-down:
-	ansible-playbook $(CHECK_OPTION) raspbian-k3s-down.yml
-
-ubuntu-k3s-up:
-	ansible-playbook $(CHECK_OPTION) ubuntu-k3s-up.yml
-
-ubuntu-k3s-down:
-	ansible-playbook $(CHECK_OPTION) ubuntu-k3s-down.yml
+down k3s-down: $(BASE_OS)-k3s-down.yml
+	ansible-playbook $(CHECK_OPTION) $?
 
 clean:
 	rm -f kubeconfig* node-token *.img
