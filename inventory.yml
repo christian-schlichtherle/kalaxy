@@ -2,17 +2,17 @@
 all:
   hosts:
     raspi-1:
-      ansible_host: 192.168.0.21
+      ansible_host: 192.168.71.21
     raspi-2:
-      ansible_host: 192.168.0.22
+      ansible_host: 192.168.71.22
     raspi-3:
-      ansible_host: 192.168.0.23
+      ansible_host: 192.168.71.23
     raspi-4:
-      ansible_host: 192.168.0.24
+      ansible_host: 192.168.71.24
     raspi-5:
-      ansible_host: 192.168.0.25
+      ansible_host: 192.168.71.25
     raspi-6:
-      ansible_host: 192.168.0.26
+      ansible_host: 192.168.71.26
   children:
     masters:
       hosts:
@@ -31,4 +31,4 @@ all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
     # https://github.com/rancher/k3s/releases :
-    install_k3s_version: ''
+    install_k3s_version: v0.9.0-rc2
