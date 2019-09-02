@@ -150,19 +150,29 @@ By default, the base OS is assumed to be Ubuntu.
 
 ## Provisioning
 
-You can now set-up the cluster:
+You can now set up the cluster:
 
 ```shell script
 $ make up
 [...]
+```
+
+To configure kubectl to talk to your cluster:
+
+```shell script
 $ export KUBECONFIG="$PWD/kubeconfig"
+```
+
+To verify everything is working as expected:
+
+```shell script
 $ kubectl get nodes -o wide
 [...]
 $ ansible all -a 'free -m'
 [...]
 ```
 
-To tear-down the cluster:
+To tear down the cluster:
 
 ```shell script
 $ make down
