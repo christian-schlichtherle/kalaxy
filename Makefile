@@ -3,7 +3,7 @@
 #BASE_OS = raspbian
 BASE_OS = ubuntu
 
-.PHONY: up k3s-up raspbian-k3s-up ubuntu-k3s-up down k3s-down raspbian-k3s-down ubuntu-k3s-down
+.PHONY: up k3s-up down k3s-down
 
 up k3s-up: $(BASE_OS)-k3s-up.yml
 	ansible-playbook $(CHECK_OPTION) $?
