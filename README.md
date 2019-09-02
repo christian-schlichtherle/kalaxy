@@ -13,10 +13,10 @@ Other distributions or versions may work, but haven't been tested.
 
 ![An array of Raspberry Pi 4's](docs/images/raspi-array.jpg)
 
-```shell
+```shell script
 $ make
 [...]
-$ export KUBECONFIG=kubeconfig
+$ export KUBECONFIG="$PWD/kubeconfig"
 $ kubectl get nodes -o wide
 NAME      STATUS   ROLES    AGE     VERSION         INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
 raspi-6   Ready    worker   3m51s   v1.15.3-k3s.1   192.168.0.26   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
@@ -117,7 +117,7 @@ By default, the latest k3s release gets installed.
 Run `ansible all -m ping` to verify your inventory.
 For my setup, it shows:
 
-```shell
+```shell script
 $ ansible all -m ping
 raspi-1 | SUCCESS => {
     "changed": false,
@@ -152,10 +152,10 @@ By default, the base OS is assumed to be Ubuntu.
 
 You can now set-up the cluster:
 
-```shell
+```shell script
 $ make up
 [...]
-$ export KUBECONFIG=$PWD/kubeconfig
+$ export KUBECONFIG="$PWD/kubeconfig"
 $ kubectl get nodes -o wide
 [...]
 $ ansible all -a 'free -m'
@@ -164,7 +164,7 @@ $ ansible all -a 'free -m'
 
 To tear-down the cluster:
 
-```shell
+```shell script
 $ make down
 [...]
 ```
