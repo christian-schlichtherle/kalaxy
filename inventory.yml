@@ -31,4 +31,4 @@ all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
     # https://github.com/rancher/k3s/releases :
-    install_k3s_version: v0.9.0-rc2
+    install_k3s_version: ''
