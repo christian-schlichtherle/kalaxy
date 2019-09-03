@@ -1,0 +1,13 @@
+---
+- name: init kubeadm
+  command: "kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --pod-network-cidr=10.244.0.0/16"
+- name: install Flannel pod network
+  command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.11.0/Documentation/kube-flannel.yml
+- name: generate join command
+  command: kubeadm token create --print-join-command
+  register: join_command
+- name: Copy join command to local file
+  local_action:
+    module: copy
+    content: "{{ join_command.stdout_lines[0] }}"
+    dest: kubeadm-join.sh

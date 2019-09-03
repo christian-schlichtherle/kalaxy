@@ -3,13 +3,16 @@
 #BASE_OS = raspbian
 BASE_OS = ubuntu
 
-.PHONY: up k3s-up down k3s-down
+#K8S_VARIANT = k3s
+K8S_VARIANT = k8s
 
-up k3s-up: $(BASE_OS)-k3s-up.yml
-	ansible-playbook $(CHECK_OPTION) $?
+.PHONY: up down clean
 
-down k3s-down: $(BASE_OS)-k3s-down.yml
-	ansible-playbook $(CHECK_OPTION) $?
+up:
+	ansible-playbook $(CHECK_OPTION) $(BASE_OS)-$(K8S_VARIANT)-up.yml
+
+down:
+	ansible-playbook $(CHECK_OPTION) $(BASE_OS)-$(K8S_VARIANT)-down.yml
 
 clean:
 	rm -f kubeconfig* node-token *.img

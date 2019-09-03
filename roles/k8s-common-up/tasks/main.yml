@@ -1,0 +1,30 @@
+---
+- name: add apt-key for Kubernetes
+  apt_key:
+    id: 6A030B21BA07F4FB
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+- name: add apt-repository for Kubernetes
+  copy:
+    content: "deb https://apt.kubernetes.io/ kubernetes-xenial main\n"
+    dest: /etc/apt/sources.list.d/kubernetes.list
+- name: install Kubernetes
+  apt:
+    name:
+      - kubeadm
+      - kubectl
+      - kubelet
+    update_cache: yes
+  notify: restart kubelet
+- name: freeze Kubernetes
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubeadm
+    - kubectl
+    - kubelet
+- name: edit kubelet defaults
+  copy:
+    content: "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd\n"
+    dest: /etc/default/kubelet
+  notify: restart kubelet

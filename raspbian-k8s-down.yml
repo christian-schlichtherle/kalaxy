@@ -1,0 +1,16 @@
+---
+#- hosts: workers
+#  module_defaults:
+#    apt:
+#      force_apt_get: yes
+#  roles:
+#    - k8s-worker-down
+#- hosts: masters
+#  module_defaults:
+#    apt:
+#      force_apt_get: yes
+#  roles:
+#    - k8s-master-down
+- hosts: all
+  roles:
+    - raspbian-swap-up

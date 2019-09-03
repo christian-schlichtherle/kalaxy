@@ -1,0 +1,5 @@
+---
+dependencies:
+  # Prefer Containerd over Docker because it has a smaller memory footprint:
+  - containerd-up
+#  - docker-up
