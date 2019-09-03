@@ -5,7 +5,7 @@
       force_apt_get: yes
   roles:
     - raspbian-up
-    - raspbian-swap-down
+    - swap-raspbian-down
 - hosts: masters
   module_defaults:
     local_action:
