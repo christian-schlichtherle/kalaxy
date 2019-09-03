@@ -1,33 +1,55 @@
 ---
 all:
   hosts:
-    raspi-1:
+    raspi1:
       ansible_host: 192.168.71.21
-    raspi-2:
+    raspi2:
       ansible_host: 192.168.71.22
-    raspi-3:
+    raspi3:
       ansible_host: 192.168.71.23
-    raspi-4:
+    raspi4:
       ansible_host: 192.168.71.24
-    raspi-5:
+    raspi5:
       ansible_host: 192.168.71.25
-    raspi-6:
+    raspi6:
       ansible_host: 192.168.71.26
   children:
-    masters:
+    k3s_masters:
       hosts:
-        raspi-1: {}
-      vars:
-        ansible_become: yes
-    workers:
+        # Only one master!
+        raspi1: {}
+    k3s_workers:
       hosts:
-        raspi-2: {}
-        raspi-3: {}
-        raspi-4: {}
-        raspi-5: {}
-        raspi-6: {}
+        raspi2: {}
+        raspi3: {}
+        raspi4: {}
+        raspi5: {}
+        raspi6: {}
+    k8s_masters:
+      hosts:
+      # Only one master!
+    k8s_workers:
+      hosts:
+    raspbian_nodes:
+      hosts:
       vars:
-        ansible_become: yes
+        docker:
+          apt:
+            force_apt_get: yes
+            name: "docker-ce"
+          apt_key:
+            id: 8D81803C0EBFCD88
+            url: "https://download.docker.com/linux/raspbian/gpg"
+          apt_repository:
+            repo: "deb [arch=armhf] https://download.docker.com/linux/raspbian stretch edge"
+    ubuntu_nodes:
+      hosts:
+        raspi1: {}
+        raspi2: {}
+        raspi3: {}
+        raspi4: {}
+        raspi5: {}
+        raspi6: {}
   vars:
     ansible_python_interpreter: /usr/bin/python3
     # https://github.com/rancher/k3s/releases :

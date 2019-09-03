@@ -1,12 +1,16 @@
 ---
 - name: register k3s token
-  local_action: 'command cat node-token'
+  local_action: 'command cat k3s-token'
   register: k3s_token
+  vars:
+    ansible_become: no
 - name: register k3s URL
   local_action:
-    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" kubeconfig'
+    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" k3s-config.yml'
     warn: no
   register: k3s_url
+  vars:
+    ansible_become: no
 - name: install k3s agent
   shell: "curl -fsL https://get.k3s.io | INSTALL_K3S_VERSION='{{ install_k3s_version }}' K3S_TOKEN='{{ k3s_token.stdout }}' K3S_URL='{{ k3s_url.stdout }}' sh -"
   args:

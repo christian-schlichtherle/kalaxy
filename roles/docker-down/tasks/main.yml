@@ -1,0 +1,23 @@
+---
+- name: unhold docker updates
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: deinstall
+  with_items:
+    - containerd.io
+    - docker-ce
+- name: uninstall docker
+  apt:
+    force_apt_get: yes
+    name:
+      - containerd.io
+      - docker-ce
+    state: absent
+- name: remove docker daemon configuration
+  command: rm /etc/docker/daemon.json
+  args:
+    removes: /etc/docker/daemon.json
+- name: remove docker service directory
+  command: rm -r /etc/systemd/system/docker.service.d
+  args:
+    removes: /etc/systemd/system/docker.service.d

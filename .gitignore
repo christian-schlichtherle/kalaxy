@@ -1,5 +1,5 @@
 *.iml
 /.idea/
-/kubeconfig
-/kubeconfig.bak
-/node-token
+/k?s-config.yml
+/k3s-config.yml.bak
+/k?s-token

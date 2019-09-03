@@ -1,0 +1,23 @@
+---
+- name: unhold k8s updates
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: deinstall
+  with_items:
+    - kubeadm
+    - kubectl
+    - kubelet
+    - kubernetes-cni
+- name: uninstall k8s
+  apt:
+    force_apt_get: yes
+    name:
+      - kubeadm
+      - kubectl
+      - kubelet
+      - kubernetes-cni
+    state: absent
+- name: uninstall kubelet defaults
+  command: rm /etc/default/kubelet
+  args:
+    removes: /etc/default/kubelet

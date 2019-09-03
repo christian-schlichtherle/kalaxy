@@ -1,0 +1,21 @@
+---
+- name: stat kubelet configuration
+  stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_conf
+- name: drain and delete node
+  local_action:
+    module: shell
+    _raw_params: |
+      export KUBECONFIG=k8s-config.yaml
+      kubectl drain {{ inventory_hostname }} --delete-local-data --force --ignore-daemonsets
+      kubectl delete node {{ inventory_hostname }}
+    removes: k8s-config.yml
+  vars:
+    ansible_become: no
+  when: kubelet_conf.stat.exists == true
+- name: kubeadm reset
+  shell: echo y | kubeadm reset
+  when: kubelet_conf.stat.exists == true
+  notify: clean iptables
+- meta: flush_handlers

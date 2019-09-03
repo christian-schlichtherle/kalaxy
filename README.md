@@ -1,22 +1,23 @@
 # Provisioning Kubernetes (K8s) on Raspberry Pi's with Ansible
 
-With this repository you can easily set-up and tear-down a multi-node Kubernetes (K8s) cluster on an array of 
+With this repository you can easily set-up and tear-down a multi-node Kubernetes cluster on an array of 
 Raspberry Pi's in a couple of minutes.
 I use this repository to run K8s on an array of Raspberry Pi 4's with 4 GB memory (see below).
 
-The Ansible playbooks in this repository provision [k3s](https://k3s.io) on the following OSes:
+The Ansible playbooks in this repository provision [k3s](https://k3s.io) or the original Kubernetes (subsequently called 
+k8s) on Raspbian Buster, 32 bit (armhf), or Ubuntu 18.04.3 LTS (Bionic Beaver), 64 bit (aarch64).
+Other Kubernetes variants, OS images or versions may work, but haven't been tested.
+As of September 4th, the following constraints apply:
 
-+ Raspbian Buster, 32 bit (armhf)
-+ Ubuntu 18.04.3 LTS (Bionic Beaver), 64 bit (aarch64)
-
-Other distributions or versions may work, but haven't been tested.
+- Only one master
+- Only k3s on Raspbian
 
 ![An array of Raspberry Pi 4's](docs/images/raspi-array.jpg)
 
 ```shell script
 $ make
 [...]
-$ export KUBECONFIG="$PWD/kubeconfig"
+$ export KUBECONFIG="$PWD/k?s-config.yml"
 $ kubectl get nodes -o wide
 NAME      STATUS   ROLES    AGE     VERSION         INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
 raspi-6   Ready    worker   3m51s   v1.15.3-k3s.1   192.168.0.26   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
@@ -110,7 +111,9 @@ I'm using Ansible 2.8.4 with Python 3.7.3 on macOS. Other versions may work, but
 
 ## Configuration
 
-You need to edit the `inventory.yml` file to match the IP address of each Pi in your array and the desired
+You need to edit the `inventory.yml` file to match the IP address of each Pi in your array and the desired Kubernetes
+variant, i.e. k3s or k8s, by adding or removing your hosts to the respective groups.
+In case you want to install k3s, you also need to configure the desired 
 [k3s release](https://github.com/rancher/k3s/releases).
 By default, the latest k3s release gets installed.
 
@@ -160,7 +163,7 @@ $ make up
 To configure kubectl to talk to your cluster:
 
 ```shell script
-$ export KUBECONFIG="$PWD/kubeconfig"
+$ export KUBECONFIG="$PWD/k?s-config.yml"
 ```
 
 To verify everything is working as expected:

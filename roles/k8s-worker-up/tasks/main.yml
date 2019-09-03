@@ -1,0 +1,17 @@
+---
+- name: register k8s token
+  local_action: 'command cat k8s-token'
+  register: k8s_token
+  vars:
+    ansible_become: no
+- name: register k8s address
+  local_action:
+    module: 'command sed -n -E -e "s/^ +server: +https?:\/\/([^\/]+)$/\1/p" k8s-config.yml'
+    warn: no
+  register: k8s_address
+  vars:
+    ansible_become: no
+- name: kubeadm join
+  command: "kubeadm join '{{ k8s_address.stdout }}' --token '{{ k8s_token.stdout }}' --discovery-token-unsafe-skip-ca-verification"
+  args:
+    creates: /etc/kubernetes/kubelet.conf

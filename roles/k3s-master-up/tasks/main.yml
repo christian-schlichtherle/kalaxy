@@ -6,22 +6,19 @@
   args:
     creates: /usr/local/bin/k3s-uninstall.sh
     warn: no
-- name: fix access to k3s.yaml
-  file:
-    path: /etc/rancher/k3s/k3s.yaml
-    mode: 0644
-- name: fetch kubeconfig.bak
+  run_once: yes
+- name: fetch k3s config
   fetch:
-    dest: kubeconfig.bak
+    dest: k3s-config.yml.bak
     flat: yes
     src: /etc/rancher/k3s/k3s.yaml
-  notify:
-    - copy kubeconfig
-    - edit kubeconfig
   run_once: yes
-- name: fetch node-token
+  notify:
+    - write k3s config
+    - edit k3s config
+- name: fetch k3s token
   fetch:
-    dest: node-token
+    dest: k3s-token
     flat: yes
     src: /var/lib/rancher/k3s/server/node-token
   run_once: yes

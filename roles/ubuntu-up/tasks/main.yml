@@ -21,14 +21,18 @@
     regexp: '^127.0.1.1\t'
 - name: update and upgrade all existing packages
   apt:
+    force_apt_get: yes
     only_upgrade: yes
     update_cache: yes
     upgrade: yes
+  notify: reboot system
 - name: enable Bonjour discovery
   apt:
+    force_apt_get: yes
     name: avahi-daemon
 - name: remove obsolete or unused packages
   apt:
     autoclean: yes
     autoremove: yes
+    force_apt_get: yes
 - meta: flush_handlers
