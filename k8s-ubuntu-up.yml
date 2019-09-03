@@ -5,7 +5,7 @@
       force_apt_get: yes
   roles:
     - ubuntu-up
-    - ubuntu-swap-down
+    - swap-ubuntu-down
 - hosts: masters
   module_defaults:
     apt:

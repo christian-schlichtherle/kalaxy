@@ -13,4 +13,4 @@
 #    - k8s-master-down
 - hosts: all
   roles:
-    - raspbian-swap-up
+    - swap-raspbian-up

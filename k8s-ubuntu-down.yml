@@ -13,4 +13,4 @@
 #    - k8s-master-down
 - hosts: all
   roles:
-    - ubuntu-swap-up
+    - swap-ubuntu-up
