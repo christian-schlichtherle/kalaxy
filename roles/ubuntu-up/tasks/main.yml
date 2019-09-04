@@ -7,15 +7,21 @@
   notify: reboot system
 - name: set video memory to 16mb
   lineinfile:
-    line: "gpu_mem = 16"
+    line: "gpu_mem=16"
     path: /boot/firmware/config.txt
     regexp: '^\s*gpu_mem\s*=\s*'
   notify: reboot system
 - name: program usb boot mode
   lineinfile:
-    line: "program_usb_boot_mode = 1"
+    line: "program_usb_boot_mode=1"
     path: /boot/firmware/config.txt
     regexp: '^\s*program_usb_boot_mode\s*=\s*'
+  notify: reboot system
+- name: fix overscanning
+  lineinfile:
+    line: "#disable_overscan=1"
+    path: /boot/firmware/config.txt
+    regexp: '^\s*#?\s*disable_overscan\s*=\s*'
   notify: reboot system
 - name: set hostname
   hostname:
