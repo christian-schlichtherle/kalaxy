@@ -5,10 +5,11 @@
     content: "dwc_otg.fiq_fix_enable=2 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait rootflags=noload net.ifnames=0\n"
     dest: /boot/firmware/cmdline.txt
   notify: reboot system
-- name: set /boot/firmware/config.txt
-  copy:
-    src: config.txt
-    dest: /boot/firmware/config.txt
+- name: set video memory to 16mb
+  lineinfile:
+    line: "gpu_mem = 16"
+    path: /boot/firmware/config.txt
+    regexp: '^\s*gpu_mem\s*=\s*'
   notify: reboot system
 - name: set hostname
   hostname:
