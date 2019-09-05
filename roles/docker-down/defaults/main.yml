@@ -1,2 +1,8 @@
 ---
 ansible_become: yes
+docker:
+  apt:
+    name:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli

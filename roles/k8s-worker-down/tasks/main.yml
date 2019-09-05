@@ -7,10 +7,10 @@
   local_action:
     module: shell
     _raw_params: |
-      export KUBECONFIG=k8s-config.yaml
+      export KUBECONFIG=build/k8s-config.yml
       kubectl drain {{ inventory_hostname }} --delete-local-data --force --ignore-daemonsets
       kubectl delete node {{ inventory_hostname }}
-    removes: k8s-config.yml
+    removes: build/k8s-config.yml
   when: kubelet_conf.stat.exists == true
   vars:
     ansible_become: no

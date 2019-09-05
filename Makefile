@@ -9,4 +9,4 @@ down:
 	ansible-playbook $(CHECK_OPTION) down.yml
 
 clean:
-	rm -f kubeconfig* node-token *.img
+	rm -rf build

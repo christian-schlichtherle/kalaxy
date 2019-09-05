@@ -28,9 +28,9 @@
   notify: update avahi-daemon
 - name: edit /etc/hosts
   lineinfile:
-    line: "127.0.1.1\t{{ inventory_hostname }}"
+    line: "{{ ansible_default_ipv4.address }}\t{{ inventory_hostname }}"
     path: /etc/hosts
-    regexp: '^127.0.1.1\t'
+    regexp: '^{{ ansible_default_ipv4.address }}\s+'
 - name: remove macos artifacts from /boot directory
   file:
     path: /boot/.Spotlight-V100

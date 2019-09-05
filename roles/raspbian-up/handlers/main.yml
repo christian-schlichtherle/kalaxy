@@ -2,6 +2,7 @@
 - name: reboot system
   reboot: {}
 - name: update avahi-daemon
-  service:
+  systemd:
+    daemon_reload: yes
     name: avahi-daemon
     state: restarted

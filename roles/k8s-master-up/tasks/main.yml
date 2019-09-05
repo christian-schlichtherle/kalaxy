@@ -6,7 +6,7 @@
   run_once: yes
 - name: fetch k8s config
   fetch:
-    dest: k8s-config.yml
+    dest: build/k8s-config.yml
     flat: yes
     src: /etc/kubernetes/admin.conf
   run_once: yes
@@ -21,7 +21,7 @@
   local_action:
     module: copy
     content: "{{ k8s_token.stdout }}\n"
-    dest: k8s-token
+    dest: build/k8s-token
   run_once: yes
   vars:
     ansible_become: no

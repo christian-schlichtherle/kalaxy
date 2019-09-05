@@ -2,14 +2,14 @@
 - name: install k3s server
   shell: |
     export INSTALL_K3S_VERSION='{{ install_k3s_version }}'
-    curl -fsL https://get.k3s.io | sh -
+    curl -fsL https://get.k3s.io | sh -s server --docker
   args:
     creates: /usr/local/bin/k3s-uninstall.sh
     warn: no
   run_once: yes
 - name: fetch k3s config
   fetch:
-    dest: k3s-config.yml.bak
+    dest: build/k3s-config.yml.bak
     flat: yes
     src: /etc/rancher/k3s/k3s.yaml
   run_once: yes
@@ -18,7 +18,7 @@
     - edit k3s config
 - name: fetch k3s token
   fetch:
-    dest: k3s-token
+    dest: build/k3s-token
     flat: yes
     src: /var/lib/rancher/k3s/server/node-token
   run_once: yes

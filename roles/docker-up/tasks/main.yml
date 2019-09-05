@@ -18,26 +18,10 @@
 - name: install docker
   apt:
     force_apt_get: yes
-    name:
-      - containerd.io
-      - "{{ docker.apt.name }}"
+    name: "{{ docker.apt.name }}"
     update_cache: yes
-  notify: restart docker
 - name: hold docker updates
   dpkg_selections:
-    name: "{{ item }}"
+    name: "{{ item.split('=')[0] }}"
     selection: hold
-  with_items:
-    - containerd.io
-    - docker-ce
-- name: write docker daemon configuration
-  copy:
-    dest: /etc/docker/daemon.json
-    src: daemon.json
-  notify: restart docker
-- name: make docker service configuration directory
-  file:
-    path: /etc/systemd/system/docker.service.d
-    state: directory
-  notify: restart docker
-- meta: flush_handlers
+  with_items: "{{ docker.apt.name }}"

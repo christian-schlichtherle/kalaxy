@@ -16,7 +16,6 @@
       - kubelet
       - kubernetes-cni
     update_cache: yes
-  notify: restart kubelet
 - name: hold k8s updates
   dpkg_selections:
     name: "{{ item }}"
@@ -26,8 +25,3 @@
     - kubectl
     - kubelet
     - kubernetes-cni
-- name: install kubelet defaults
-  copy:
-    content: "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd\n"
-    dest: /etc/default/kubelet
-  notify: restart kubelet

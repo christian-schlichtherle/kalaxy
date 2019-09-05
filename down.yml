@@ -10,7 +10,6 @@
     - k8s_workers
   roles:
     - k8s-commons-down
-    - docker-down
 - hosts: k3s_workers
   roles:
     - k3s-worker-down
@@ -19,7 +18,9 @@
     - k3s-master-down
 - hosts: ubuntu_nodes
   roles:
+    - docker-down
     - swap-ubuntu-up
 - hosts: raspbian_nodes
   roles:
+    - docker-down
     - swap-raspbian-up
