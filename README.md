@@ -10,23 +10,23 @@ Other Kubernetes variants, OS images or versions may work, but haven't been test
 As of September 4th, the following constraints apply:
 
 - Only one master
-- Only k3s on Raspbian
 
 ![An array of Raspberry Pi 4's](docs/images/raspi-array.jpg)
 
 ```shell script
 $ make
 [...]
-$ export KUBECONFIG="$PWD/k?s-config.yml"
-$ kubectl get nodes -o wide
-NAME      STATUS   ROLES    AGE     VERSION         INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
-raspi-6   Ready    worker   3m51s   v1.15.3-k3s.1   192.168.0.26   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
-raspi-4   Ready    worker   3m40s   v1.15.3-k3s.1   192.168.0.24   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
-raspi-2   Ready    worker   3m44s   v1.15.3-k3s.1   192.168.0.22   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
-raspi-5   Ready    worker   4m4s    v1.15.3-k3s.1   192.168.0.25   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
-raspi-3   Ready    worker   3m50s   v1.15.3-k3s.1   192.168.0.23   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
-raspi-1   Ready    master   5m1s    v1.15.3-k3s.1   192.168.0.21   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      containerd://1.2.8-k3s.1
-$ kubectl run -it --restart=Never --image=openjdk:11-jdk doesntmatter
+$ kubectl --kubeconfig build/k3s-config.yml get nodes -o wide
+NAME     STATUS   ROLES    AGE   VERSION         INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
+raspi3   Ready    worker   39m   v1.15.3-k3s.1   192.168.71.23   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+raspi1   Ready    master   39m   v1.15.3-k3s.1   192.168.71.21   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+raspi2   Ready    worker   38m   v1.15.3-k3s.1   192.168.71.22   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+$ kubectl --kubeconfig build/k8s-config.yml get nodes -o wide
+NAME     STATUS   ROLES    AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
+raspi4   Ready    master   36m   v1.15.3   192.168.71.24   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+raspi5   Ready    <none>   15m   v1.15.3   192.168.71.25   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+raspi6   Ready    <none>   15m   v1.15.3   192.168.71.26   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+$ kubectl --kubeconfig build/k3s-config.yml run -it --restart=Never --image=openjdk:11-jdk doesntmatter
 If you don't see a command prompt, try pressing enter.
 Sep 01, 2019 7:34:03 PM java.util.prefs.FileSystemPreferences$1 run
 INFO: Created user preferences directory.
@@ -35,35 +35,37 @@ INFO: Created user preferences directory.
 
 jshell> /exit
 |  Goodbye
+$ kubectl --kubeconfig build/k8s-config.yml run -it --restart=Never --image=openjdk:11-jdk doesntmatter
+[...]
 $ ansible all -a 'free -m'
-raspi-2 | CHANGED | rc=0 >>
+raspi6 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
-Mem:           3858         223        3348          18         285        3567
+Mem:           3856         352         833           2        2671        3455
 Swap:             0           0           0
 
-raspi-5 | CHANGED | rc=0 >>
+raspi1 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
-Mem:           3858         223        3349          18         285        3568
+Mem:           3856         642        1893           3        1320        3177
 Swap:             0           0           0
 
-raspi-3 | CHANGED | rc=0 >>
+raspi2 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
-Mem:           3858         226        3345          18         285        3566
+Mem:           3856         330        1906           2        1620        3476
 Swap:             0           0           0
 
-raspi-6 | CHANGED | rc=0 >>
+raspi5 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
-Mem:           3858         226        3345          18         286        3567
+Mem:           3856         330        1538           2        1987        3476
 Swap:             0           0           0
 
-raspi-4 | CHANGED | rc=0 >>
+raspi3 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
-Mem:           3858         252        2370          18        1235        3561
+Mem:           3856         309        2488           2        1058        3497
 Swap:             0           0           0
 
-raspi-1 | CHANGED | rc=0 >>
+raspi4 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
-Mem:           3858         526        2954          18         377        3289
+Mem:           3856         684        1217           3        1954        3153
 Swap:             0           0           0
 
 ```

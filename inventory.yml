@@ -22,28 +22,20 @@ all:
       hosts:
         raspi2: {}
         raspi3: {}
-        raspi4: {}
-        raspi5: {}
-        raspi6: {}
     k8s_masters:
       hosts:
-      # Only one master!
+        # Only one master!
+        raspi4: {}
     k8s_workers:
       hosts:
+        raspi5: {}
+        raspi6: {}
     raspbian_nodes:
       hosts:
       vars:
-        docker:
-          apt:
-            name:
-              - containerd.io
-              - docker-ce
-              - docker-ce-cli
-          apt_key:
-            id: 8D81803C0EBFCD88
-            url: "https://download.docker.com/linux/raspbian/gpg"
-          apt_repository:
-            repo: "deb https://download.docker.com/linux/raspbian {{ ansible_lsb.codename }} stable"
+        docker_apt_key_url: https://download.docker.com/linux/raspbian/gpg
+        docker_apt_repository: "deb https://download.docker.com/linux/raspbian {{ ansible_lsb.codename }} stable"
+        docker_version: "5:18.09.9~3-0~raspbian-{{ ansible_lsb.codename }}"
     ubuntu_nodes:
       hosts:
         raspi1: {}
@@ -54,5 +46,8 @@ all:
         raspi6: {}
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    # https://github.com/rancher/k3s/releases :
-    install_k3s_version: ''
+    containerd_version: 1.2.6-3
+    docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
+    k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
+    k8s_version: 1.15.3-00
+    kuberneted_cni_version: 0.7.5-00

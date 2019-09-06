@@ -1,5 +1,19 @@
 ---
+- name: stat k3s agent uninstall script
+  stat:
+    path: /usr/local/bin/k3s-agent-uninstall.sh
+  register: k3s_agent
+- name: drain and delete node
+  local_action:
+    module: shell
+    _raw_params: |
+      export KUBECONFIG=build/k3s-config.yml
+      kubectl drain {{ inventory_hostname }} --delete-local-data --force --ignore-daemonsets
+      kubectl delete node {{ inventory_hostname }}
+    removes: build/k3s-config.yml # it doesn't, but it prevents this step from running if it is
+  vars:
+    ansible_become: no
+  when: k3s_agent.stat.exists
 - name: uninstall k3s agent
   command: k3s-agent-uninstall.sh
-  args:
-    removes: /usr/local/bin/k3s-agent-uninstall.sh
+  when: k3s_agent.stat.exists

@@ -7,21 +7,25 @@
       - ca-certificates
       - curl
       - software-properties-common
-    update_cache: yes
 - name: add apt-key for docker
   apt_key:
-    id: "{{ docker.apt_key.id }}"
-    url: "{{ docker.apt_key.url }}"
+    id: "{{ docker_apt_key_id }}"
+    url: "{{ docker_apt_key_url }}"
 - name: add apt-repository for docker
   apt_repository:
-    repo: "{{ docker.apt_repository.repo }}"
+    repo: "{{ docker_apt_repository }}"
 - name: install docker
   apt:
     force_apt_get: yes
-    name: "{{ docker.apt.name }}"
-    update_cache: yes
+    name:
+      - "containerd.io={{ containerd_version }}"
+      - "docker-ce={{ docker_version }}"
+      - "docker-ce-cli={{ docker_version }}"
 - name: hold docker updates
   dpkg_selections:
-    name: "{{ item.split('=')[0] }}"
+    name: "{{ item }}"
     selection: hold
-  with_items: "{{ docker.apt.name }}"
+  with_items:
+    - containerd.io
+    - docker-ce
+    - docker-ce-cli

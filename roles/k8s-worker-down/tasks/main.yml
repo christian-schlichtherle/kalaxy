@@ -10,12 +10,12 @@
       export KUBECONFIG=build/k8s-config.yml
       kubectl drain {{ inventory_hostname }} --delete-local-data --force --ignore-daemonsets
       kubectl delete node {{ inventory_hostname }}
-    removes: build/k8s-config.yml
-  when: kubelet_conf.stat.exists == true
+    removes: build/k8s-config.yml # it doesn't, but it prevents this step from running if it is
   vars:
     ansible_become: no
+  when: kubelet_conf.stat.exists
 - name: kubeadm reset
   shell: echo y | kubeadm reset
-  when: kubelet_conf.stat.exists == true
+  when: kubelet_conf.stat.exists
   notify: clean iptables
 - meta: flush_handlers

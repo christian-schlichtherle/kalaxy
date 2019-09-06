@@ -1,4 +1,8 @@
 ---
+- name: uninstall kubelet defaults
+  file:
+    path: /etc/default/kubelet
+    state: absent
 - name: unhold k8s updates
   dpkg_selections:
     name: "{{ item }}"
@@ -17,7 +21,9 @@
       - kubelet
       - kubernetes-cni
     state: absent
-- name: uninstall kubelet defaults
-  command: rm /etc/default/kubelet
-  args:
-    removes: /etc/default/kubelet
+- name: uninstall docker daemon configuration
+  file:
+    path: /etc/docker/daemon.json
+    state: absent
+  notify: restart docker
+- meta: flush_handlers

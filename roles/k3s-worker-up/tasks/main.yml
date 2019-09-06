@@ -13,10 +13,9 @@
     ansible_become: no
 - name: install k3s agent
   shell: |
-    export INSTALL_K3S_VERSION='{{ install_k3s_version }}'
+    export INSTALL_K3S_VERSION='{{ k3s_version }}'
     export K3S_TOKEN='{{ k3s_token.stdout }}'
     export K3S_URL='{{ k3s_url.stdout }}'
     curl -fsL https://get.k3s.io | sh -s agent --docker
   args:
     creates: /usr/local/bin/k3s-agent-uninstall.sh
-    warn: no

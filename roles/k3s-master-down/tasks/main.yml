@@ -1,5 +1,19 @@
 ---
+- name: stat k3s server uninstall script
+  stat:
+    path: /usr/local/bin/k3s-uninstall.sh
+  register: k3s_server
+- name: drain and delete node
+  local_action:
+    module: shell
+    _raw_params: |
+      export KUBECONFIG=build/k3s-config.yml
+      kubectl drain {{ inventory_hostname }} --delete-local-data --force --ignore-daemonsets
+      kubectl delete node {{ inventory_hostname }}
+    removes: build/k3s-config.yml # it doesn't, but it prevents this step from running if it is
+  vars:
+    ansible_become: no
+  when: k3s_server.stat.exists
 - name: uninstall k3s server
   command: k3s-uninstall.sh
-  args:
-    removes: /usr/local/bin/k3s-uninstall.sh
+  when: k3s_server.stat.exists

@@ -1,11 +1,17 @@
 ---
 - name: unhold docker updates
   dpkg_selections:
-    name: "{{ item.split('=')[0] }}"
+    name: "{{ item }}"
     selection: deinstall
-  with_items: "{{ docker.apt.name }}"
+  with_items:
+    - containerd.io
+    - docker-ce
+    - docker-ce-cli
 - name: uninstall docker
   apt:
     force_apt_get: yes
-    name: "{{ docker.apt.name }}"
+    name:
+      - containerd.io
+      - docker-ce
+      - docker-ce-cli
     state: absent

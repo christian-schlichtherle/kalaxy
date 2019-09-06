@@ -1,4 +1,9 @@
 ---
+- name: install docker daemon configuration
+  copy:
+    dest: /etc/docker/daemon.json
+    src: daemon.json
+  notify: restart docker
 - name: add apt-key for k8s
   apt_key:
     id: 6A030B21BA07F4FB
@@ -11,11 +16,10 @@
   apt:
     force_apt_get: yes
     name:
-      - kubeadm
-      - kubectl
-      - kubelet
-      - kubernetes-cni
-    update_cache: yes
+      - "kubernetes-cni={{ kubernetes_cni_version }}"
+      - "kubeadm={{ k8s_version }}"
+      - "kubectl={{ k8s_version }}"
+      - "kubelet={{ k8s_version }}"
 - name: hold k8s updates
   dpkg_selections:
     name: "{{ item }}"
@@ -25,3 +29,8 @@
     - kubectl
     - kubelet
     - kubernetes-cni
+- name: install kubelet defaults
+  copy:
+    content: "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd\n"
+    dest: /etc/default/kubelet
+- meta: flush_handlers

@@ -1,11 +1,10 @@
 ---
 - name: install k3s server
   shell: |
-    export INSTALL_K3S_VERSION='{{ install_k3s_version }}'
+    export INSTALL_K3S_VERSION='{{ k3s_version }}'
     curl -fsL https://get.k3s.io | sh -s server --docker
   args:
     creates: /usr/local/bin/k3s-uninstall.sh
-    warn: no
   run_once: yes
 - name: fetch k3s config
   fetch:
