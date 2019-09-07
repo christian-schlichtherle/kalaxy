@@ -19,6 +19,11 @@
   file:
     path: /etc/docker/daemon.json
     state: absent
+- name: uninstall docker environment
+  file:
+    path: /etc/systemd/system/multi-user.target.wants/docker.service
+    state: absent
+  when: proxy_url != ''
 - name: remove docker directory
   file:
     path: /var/lib/docker

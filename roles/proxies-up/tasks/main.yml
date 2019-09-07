@@ -6,7 +6,7 @@
   when: proxy_url != ''
 - name: add environment variable NO_PROXY
   lineinfile:
-    line: '{{ item }}=localhost,127.0.0.0/8,*.local'
+    line: '{{ item }}={{ no_proxy }}'
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*=\s*'
   notify: reboot system
