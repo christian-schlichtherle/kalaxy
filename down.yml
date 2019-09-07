@@ -24,3 +24,6 @@
   roles:
     - docker-down
     - swap-raspbian-up
+- hosts: all
+  roles:
+    - proxies-down

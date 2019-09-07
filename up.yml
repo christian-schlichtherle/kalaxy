@@ -1,4 +1,7 @@
 ---
+- hosts: all
+  roles:
+    - proxies-up
 - hosts: raspbian_nodes
   roles:
     - raspbian-up
