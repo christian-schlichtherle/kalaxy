@@ -22,14 +22,14 @@ all:
       hosts:
         raspi2: {}
         raspi3: {}
+        raspi4: {}
+        raspi5: {}
+        raspi6: {}
     k8s_masters:
       hosts:
         # Only one master!
-        raspi4: {}
     k8s_workers:
       hosts:
-        raspi5: {}
-        raspi6: {}
     raspbian_nodes:
       hosts:
       vars:
