@@ -1,10 +1,4 @@
 ---
-# https://jamesachambers.com/raspberry-pi-ubuntu-server-18-04-2-installation-guide :
-- name: set /boot/firmware/cmdline.txt
-  copy:
-    content: "dwc_otg.fiq_fix_enable=2 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait rootflags=noload net.ifnames=0\n"
-    dest: /boot/firmware/cmdline.txt
-  notify: reboot system
 - name: set video memory to 16mb
   lineinfile:
     line: "gpu_mem=16"
