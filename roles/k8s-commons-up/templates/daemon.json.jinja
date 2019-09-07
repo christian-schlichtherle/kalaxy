@@ -6,5 +6,10 @@
   "log-opts": {
     "max-size": "100m"
   },
+{% if docker_registry_mirror_url != '' %}
+  "registry-mirrors": [
+    "{{ docker_registry_mirror_url }}"
+  ],
+{% endif %}
   "storage-driver": "overlay2"
 }

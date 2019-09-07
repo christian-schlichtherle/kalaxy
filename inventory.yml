@@ -47,8 +47,9 @@ all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
     containerd_version: 1.2.6-3
+    #    docker_registry_mirror_url: https://my-registry-mirror.my-domain.com/
     docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
     k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
     k8s_version: 1.15.3-00
     kuberneted_cni_version: 0.7.5-00
-    proxy_url: http://192.168.71.1:3128/ # use an IP address, not a hostname!
+#    proxy_url: http://10.0.0.1:3128/ # use an IP address, not a hostname!

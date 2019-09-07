@@ -15,3 +15,11 @@
       - docker-ce
       - docker-ce-cli
     state: absent
+- name: uninstall docker daemon configuration
+  file:
+    path: /etc/docker/daemon.json
+    state: absent
+- name: remove docker directory
+  file:
+    path: /var/lib/docker
+    state: absent

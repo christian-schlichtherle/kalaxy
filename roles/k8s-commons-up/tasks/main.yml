@@ -1,8 +1,8 @@
 ---
 - name: install docker daemon configuration
-  copy:
+  template:
     dest: /etc/docker/daemon.json
-    src: daemon.json
+    src: daemon.json.jinja
   notify: restart docker
 - name: add apt-key for k8s
   apt_key:

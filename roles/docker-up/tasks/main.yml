@@ -29,3 +29,9 @@
     - containerd.io
     - docker-ce
     - docker-ce-cli
+- name: install docker daemon configuration
+  template:
+    dest: /etc/docker/daemon.json
+    src: daemon.json.jinja
+  notify: restart docker
+- meta: flush_handlers

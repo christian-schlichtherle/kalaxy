@@ -1,2 +1,3 @@
 ---
 ansible_become: yes
+docker_registry_mirror_url: ''
