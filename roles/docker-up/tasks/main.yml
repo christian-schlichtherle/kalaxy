@@ -14,6 +14,8 @@
 - name: add apt-repository for docker
   apt_repository:
     repo: "{{ docker_apt_repository }}"
+  notify: apt-get update
+- meta: flush_handlers
 - name: install docker
   apt:
     force_apt_get: yes
@@ -38,7 +40,7 @@
   lineinfile:
     insertafter: '^\s*[\s*Service\s*]'
     line: "Environment='HTTP_PROXY={{ proxy_url }}' 'HTTPS_PROXY={{ proxy_url }}' 'NO_PROXY={{ no_proxy }}'"
-    path: /etc/systemd/system/multi-user.target.wants/docker.service
+    path: /lib/systemd/system/docker.service
     regexp: '^\s*Environment\s*=\s*'
   notify: restart docker
   when: proxy_url != ''

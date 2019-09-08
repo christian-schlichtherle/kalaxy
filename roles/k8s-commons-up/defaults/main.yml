@@ -1,5 +1,4 @@
 ---
 ansible_become: yes
-docker_registry_mirror_url: ''
 k8s_version: 1.15.3-00
 kubernetes_cni_version: 0.7.5-00

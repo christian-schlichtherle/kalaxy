@@ -1,9 +1,4 @@
 ---
-- name: install docker daemon configuration
-  template:
-    dest: /etc/docker/daemon.json
-    src: daemon.json.jinja
-  notify: restart docker
 - name: add apt-key for k8s
   apt_key:
     id: 6A030B21BA07F4FB
@@ -12,6 +7,8 @@
   copy:
     content: "deb https://apt.kubernetes.io/ kubernetes-xenial main\n"
     dest: /etc/apt/sources.list.d/kubernetes.list
+  notify: apt-get update
+- meta: flush_handlers
 - name: install k8s
   apt:
     force_apt_get: yes
@@ -20,6 +17,7 @@
       - "kubeadm={{ k8s_version }}"
       - "kubectl={{ k8s_version }}"
       - "kubelet={{ k8s_version }}"
+    update_cache: yes
 - name: hold k8s updates
   dpkg_selections:
     name: "{{ item }}"
@@ -29,8 +27,3 @@
     - kubectl
     - kubelet
     - kubernetes-cni
-- name: install kubelet defaults
-  copy:
-    content: "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd\n"
-    dest: /etc/default/kubelet
-- meta: flush_handlers

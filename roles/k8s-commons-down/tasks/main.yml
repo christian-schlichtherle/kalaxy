@@ -21,9 +21,3 @@
       - kubelet
       - kubernetes-cni
     state: absent
-- name: uninstall docker daemon configuration
-  template:
-    dest: /etc/docker/daemon.json
-    src: daemon.json.jinja
-  notify: restart docker
-- meta: flush_handlers

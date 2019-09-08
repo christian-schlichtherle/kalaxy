@@ -1,35 +1,35 @@
 ---
 all:
   hosts:
-    raspi1:
+    node1:
       ansible_host: 192.168.71.21
-    raspi2:
+    node2:
       ansible_host: 192.168.71.22
-    raspi3:
+    node3:
       ansible_host: 192.168.71.23
-    raspi4:
+    node4:
       ansible_host: 192.168.71.24
-    raspi5:
+    node5:
       ansible_host: 192.168.71.25
-    raspi6:
+    node6:
       ansible_host: 192.168.71.26
   children:
     k3s_masters:
       hosts:
         # Only one master!
-        raspi1: {}
     k3s_workers:
       hosts:
-        raspi2: {}
-        raspi3: {}
-        raspi4: {}
-        raspi5: {}
-        raspi6: {}
     k8s_masters:
       hosts:
         # Only one master!
+        node1: {}
     k8s_workers:
       hosts:
+        node2: {}
+        node3: {}
+        node4: {}
+        node5: {}
+        node6: {}
     raspbian_nodes:
       hosts:
       vars:
@@ -38,22 +38,22 @@ all:
         docker_version: "5:18.09.9~3-0~raspbian-{{ ansible_lsb.codename }}"
     ubuntu_nodes:
       hosts:
-        raspi1: {}
-        raspi2: {}
-        raspi3: {}
-        raspi4: {}
-        raspi5: {}
-        raspi6: {}
+        node1: {}
+        node2: {}
+        node3: {}
+        node4: {}
+        node5: {}
+        node6: {}
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    containerd_version: 1.2.6-3
-    # Use a *.local FQDN or otherwise the access may get proxied - see `proxy_url`:
-    #docker_registry_mirror_url: https://my-registry-mirror.local/
-    docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
-    k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
-    k8s_version: 1.15.3-00
-    kuberneted_cni_version: 0.7.5-00
-    # Make sure to match `docker_registry_mirror_url`, unless it's empty:
-    #no_proxy: localhost,127.0.0.0/8,*.local
-    # Use an IP address, not a hostname:
+    #containerd_version: 1.2.6-3
+    # Make sure to match `no_proxy`:
+    #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
+    #docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
+    #k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
+    #k8s_version: 1.15.3-00
+    #kuberneted_cni_version: 0.7.5-00
+    # Make sure to match all nodes and the `docker_registry_mirror_url`:
+    #no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
+    # Use an IP address, not a hostname, or otherwise expect the Kubernetes set-up to fail:
     #proxy_url: http://10.0.0.1:3128/

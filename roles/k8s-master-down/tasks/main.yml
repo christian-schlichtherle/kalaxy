@@ -15,7 +15,7 @@
     ansible_become: no
   when: kubelet_conf.stat.exists
 - name: kubeadm reset
-  shell: echo y | kubeadm reset
+  command: kubeadm reset --force
   when: kubelet_conf.stat.exists
   notify: clean iptables
 - meta: flush_handlers

@@ -1,5 +1,5 @@
 ---
-- name: restart docker
-  service:
-    name: docker
-    state: restarted
+- name: apt-get update
+  apt:
+    force_apt_get: yes
+    update_cache: yes

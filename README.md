@@ -18,14 +18,14 @@ $ make
 [...]
 $ kubectl --kubeconfig build/k3s-config.yml get nodes -o wide
 NAME     STATUS   ROLES    AGE   VERSION         INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
-raspi3   Ready    worker   39m   v1.15.3-k3s.1   192.168.71.23   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
-raspi1   Ready    master   39m   v1.15.3-k3s.1   192.168.71.21   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
-raspi2   Ready    worker   38m   v1.15.3-k3s.1   192.168.71.22   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+node3    Ready    worker   39m   v1.15.3-k3s.1   192.168.71.23   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+node1    Ready    master   39m   v1.15.3-k3s.1   192.168.71.21   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+node2    Ready    worker   38m   v1.15.3-k3s.1   192.168.71.22   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
 $ kubectl --kubeconfig build/k8s-config.yml get nodes -o wide
 NAME     STATUS   ROLES    AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
-raspi4   Ready    master   36m   v1.15.3   192.168.71.24   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
-raspi5   Ready    <none>   15m   v1.15.3   192.168.71.25   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
-raspi6   Ready    <none>   15m   v1.15.3   192.168.71.26   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+node4    Ready    master   36m   v1.15.3   192.168.71.24   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+node5    Ready    <none>   15m   v1.15.3   192.168.71.25   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
+node6    Ready    <none>   15m   v1.15.3   192.168.71.26   <none>        Ubuntu 18.04.3 LTS   4.19.69-v8+      docker://18.9.9
 $ kubectl --kubeconfig build/k3s-config.yml run -it --restart=Never --image=openjdk:11-jdk doesntmatter
 If you don't see a command prompt, try pressing enter.
 Sep 01, 2019 7:34:03 PM java.util.prefs.FileSystemPreferences$1 run
@@ -38,32 +38,32 @@ jshell> /exit
 $ kubectl --kubeconfig build/k8s-config.yml run -it --restart=Never --image=openjdk:11-jdk doesntmatter
 [...]
 $ ansible all -a 'free -m'
-raspi6 | CHANGED | rc=0 >>
+node6 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
 Mem:           3856         352         833           2        2671        3455
 Swap:             0           0           0
 
-raspi1 | CHANGED | rc=0 >>
+node1 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
 Mem:           3856         642        1893           3        1320        3177
 Swap:             0           0           0
 
-raspi2 | CHANGED | rc=0 >>
+node2 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
 Mem:           3856         330        1906           2        1620        3476
 Swap:             0           0           0
 
-raspi5 | CHANGED | rc=0 >>
+node5 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
 Mem:           3856         330        1538           2        1987        3476
 Swap:             0           0           0
 
-raspi3 | CHANGED | rc=0 >>
+node3 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
 Mem:           3856         309        2488           2        1058        3497
 Swap:             0           0           0
 
-raspi4 | CHANGED | rc=0 >>
+node4 | CHANGED | rc=0 >>
               total        used        free      shared  buff/cache   available
 Mem:           3856         684        1217           3        1954        3153
 Swap:             0           0           0
@@ -124,27 +124,27 @@ For my setup, it shows:
 
 ```shell script
 $ ansible all -m ping
-raspi-1 | SUCCESS => {
+node1 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-raspi-4 | SUCCESS => {
+node4 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-raspi-3 | SUCCESS => {
+node3 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-raspi-5 | SUCCESS => {
+node5 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-raspi-2 | SUCCESS => {
+node2 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-raspi-6 | SUCCESS => {
+node6 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
