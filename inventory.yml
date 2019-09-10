@@ -22,13 +22,13 @@ all:
     k8s_masters:
       hosts:
         # Only one master!
-        node1: {}
+        node5: {}
     k8s_workers:
       hosts:
+        node1: {}
         node2: {}
         node3: {}
         node4: {}
-        node5: {}
         node6: {}
     raspberry_pi_nodes:
       hosts:
@@ -40,6 +40,7 @@ all:
         node6: {}
     raspbian_nodes:
       hosts:
+        node5: {}
       vars:
         boot_directory: /boot
         docker_apt_repository: "deb https://download.docker.com/linux/raspbian stretch stable"
@@ -50,7 +51,6 @@ all:
         node2: {}
         node3: {}
         node4: {}
-        node5: {}
         node6: {}
       vars:
         boot_directory: /boot/firmware
