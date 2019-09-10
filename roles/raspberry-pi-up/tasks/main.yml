@@ -1,0 +1,27 @@
+---
+- name: set video memory to 16mb
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "gpu_mem=16"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*gpu_mem\s*=\s*'
+  notify: reboot system
+- name: program usb boot mode
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "program_usb_boot_mode=1"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*program_usb_boot_mode\s*=\s*'
+  notify: reboot system
+- name: fix overscanning
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "#disable_overscan=1"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*disable_overscan\s*=\s*'
+  notify: reboot system
+- name: remove macos artifacts from /boot directory
+  file:
+    path: '{{ boot_directory }}/.Spotlight-V100'
+    state: absent
+- meta: flush_handlers

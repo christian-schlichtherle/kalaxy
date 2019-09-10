@@ -1,0 +1,7 @@
+---
+- name: reboot system
+  reboot: {}
+- name: reload avahi-daemon
+  service:
+    name: avahi-daemon
+    state: reloaded

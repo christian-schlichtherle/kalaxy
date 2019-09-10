@@ -1,16 +1,20 @@
 ---
-- hosts: all
+- hosts: raspberry_pi_nodes
   roles:
-    - proxies-up
+    - raspberry-pi-up
+- hosts:
+    - raspbian_nodes
+    - ubuntu_nodes
+  roles:
+    - debian-up
 - hosts: raspbian_nodes
   roles:
-    - raspbian-up
     - swap-raspbian-down
-    - docker-up
 - hosts: ubuntu_nodes
   roles:
-    - ubuntu-up
     - swap-ubuntu-down
+- hosts: all
+  roles:
     - docker-up
 - hosts: k3s_masters
   roles:

@@ -1,12 +1,4 @@
 ---
-- name: enable apt repositories using HTTPS
-  apt:
-    force_apt_get: yes
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
 - name: add apt-key for docker
   apt_key:
     id: "{{ docker_apt_key_id }}"

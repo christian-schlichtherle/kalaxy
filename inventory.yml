@@ -30,9 +30,18 @@ all:
         node4: {}
         node5: {}
         node6: {}
+    raspberry_pi_nodes:
+      hosts:
+        node1: {}
+        node2: {}
+        node3: {}
+        node4: {}
+        node5: {}
+        node6: {}
     raspbian_nodes:
       hosts:
       vars:
+        boot_directory: /boot
         docker_apt_key_url: https://download.docker.com/linux/raspbian/gpg
         docker_apt_repository: "deb https://download.docker.com/linux/raspbian {{ ansible_lsb.codename }} stable"
         docker_version: "5:18.09.9~3-0~raspbian-{{ ansible_lsb.codename }}"
@@ -44,6 +53,8 @@ all:
         node4: {}
         node5: {}
         node6: {}
+      vars:
+        boot_directory: /boot/firmware
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #containerd_version: 1.2.6-3

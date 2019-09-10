@@ -1,4 +1,9 @@
 ---
+- name: remove apt proxies
+  file:
+    path: /etc/apt/apt.conf.d/95proxies
+    state: absent
+  when: proxy_url != ''
 - name: remove environment variables HTTP_PROXY and HTTPS_PROXY
   lineinfile:
     path: /etc/environment
@@ -21,9 +26,4 @@
   with_items:
     - no_proxy
     - NO_PROXY
-- name: remove apt proxies
-  file:
-    path: /etc/apt/apt.conf.d/95proxies
-    state: absent
-  when: proxy_url != ''
 - meta: flush_handlers

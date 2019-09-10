@@ -1,0 +1,60 @@
+---
+- name: add environment variable NO_PROXY
+  lineinfile:
+    line: '{{ item }}={{ no_proxy }}'
+    path: /etc/environment
+    regexp: '^\s*{{ item }}\s*=\s*'
+  notify: reboot system
+  when: proxy_url != ''
+  with_items:
+    - no_proxy
+    - NO_PROXY
+- name: add environment variables HTTP_PROXY and HTTPS_PROXY
+  lineinfile:
+    line: '{{ item }}={{ proxy_url }}'
+    path: /etc/environment
+    regexp: '^\s*{{ item }}\s*=\s*'
+  notify: reboot system
+  when: proxy_url != ''
+  with_items:
+    - http_proxy
+    - HTTP_PROXY
+    - https_proxy
+    - HTTPS_PROXY
+- name: add apt proxies
+  template:
+    dest: /etc/apt/apt.conf.d/95proxies
+    src: 95proxies
+  when: proxy_url != ''
+- name: update and upgrade all existing packages
+  apt:
+    force_apt_get: yes
+    only_upgrade: yes
+    update_cache: yes
+    upgrade: yes
+  notify: reboot system
+- name: install common apt packages
+  apt:
+    force_apt_get: yes
+    name:
+      - apt-transport-https
+      - avahi-daemon
+      - ca-certificates
+      - curl
+      - software-properties-common
+- name: remove obsolete or unused packages
+  apt:
+    autoclean: yes
+    autoremove: yes
+    force_apt_get: yes
+  notify: reboot system
+- name: set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+  notify: reload avahi-daemon
+- name: edit /etc/hosts
+  lineinfile:
+    line: "{{ ansible_default_ipv4.address }}\t{{ inventory_hostname }}"
+    path: /etc/hosts
+    regexp: '^{{ ansible_default_ipv4.address }}\s+'
+- meta: flush_handlers

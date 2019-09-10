@@ -1,8 +1,0 @@
----
-- name: reboot system
-  reboot: {}
-- name: update avahi-daemon
-  systemd:
-    daemon_reload: yes
-    name: avahi-daemon
-    state: restarted

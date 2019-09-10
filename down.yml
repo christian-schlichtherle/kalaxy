@@ -16,14 +16,17 @@
 - hosts: k3s_masters
   roles:
     - k3s-master-down
-- hosts: ubuntu_nodes
-  roles:
-    - docker-down
-    - swap-ubuntu-up
-- hosts: raspbian_nodes
-  roles:
-    - docker-down
-    - swap-raspbian-up
 - hosts: all
   roles:
-    - proxies-down
+    - docker-down
+- hosts: raspbian_nodes
+  roles:
+    - swap-raspbian-up
+- hosts: ubuntu_nodes
+  roles:
+    - swap-ubuntu-up
+- hosts:
+    - raspbian_nodes
+    - ubuntu_nodes
+  roles:
+    - debian-down
