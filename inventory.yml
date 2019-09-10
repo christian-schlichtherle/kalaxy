@@ -42,9 +42,8 @@ all:
       hosts:
       vars:
         boot_directory: /boot
-        docker_apt_key_url: https://download.docker.com/linux/raspbian/gpg
-        docker_apt_repository: "deb https://download.docker.com/linux/raspbian {{ ansible_lsb.codename }} stable"
-        docker_version: "5:18.09.9~3-0~raspbian-{{ ansible_lsb.codename }}"
+        docker_apt_repository: "deb https://download.docker.com/linux/raspbian stretch stable"
+        docker_version: "5:18.09.0~3-0~raspbian-stretch"
     ubuntu_nodes:
       hosts:
         node1: {}
