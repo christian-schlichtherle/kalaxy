@@ -27,7 +27,7 @@
 - name: install docker daemon configuration
   template:
     dest: /etc/docker/daemon.json
-    src: daemon.json.jinja
+    src: daemon.json.j2
   notify: restart docker
 - name: update environment variables
   lineinfile:

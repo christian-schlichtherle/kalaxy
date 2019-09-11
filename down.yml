@@ -1,32 +1,26 @@
 ---
-- hosts: k8s_workers
-  roles:
-    - k8s-worker-down
-- hosts: k8s_masters
-  roles:
-    - k8s-master-down
 - hosts:
-    - k8s_masters
-    - k8s_workers
+    - k8s_master
+    - k8s_worker
   roles:
     - k8s-commons-down
-- hosts: k3s_workers
+- hosts: k3s_worker
   roles:
     - k3s-worker-down
-- hosts: k3s_masters
+- hosts: k3s_master
   roles:
     - k3s-master-down
 - hosts: all
   roles:
     - docker-down
-- hosts: raspbian_nodes
+- hosts: raspbian
   roles:
-    - swap-raspbian-up
-- hosts: ubuntu_nodes
+    - raspbian-swap-up
+- hosts: ubuntu
   roles:
-    - swap-ubuntu-up
+    - ubuntu-swap-up
 - hosts:
-    - raspbian_nodes
-    - ubuntu_nodes
+    - raspbian
+    - ubuntu
   roles:
     - debian-down

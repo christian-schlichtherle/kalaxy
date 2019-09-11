@@ -1,6 +1,7 @@
 ---
 all:
   hosts:
+    # Use only IP addresses here!
     node1:
       ansible_host: 192.168.71.21
     node2:
@@ -14,23 +15,23 @@ all:
     node6:
       ansible_host: 192.168.71.26
   children:
-    k3s_masters:
+    k3s_master:
       hosts:
         # Only one master!
-    k3s_workers:
+    k3s_worker:
       hosts:
-    k8s_masters:
+    k8s_master:
       hosts:
         # Only one master!
         node5: {}
-    k8s_workers:
+    k8s_worker:
       hosts:
         node1: {}
         node2: {}
         node3: {}
         node4: {}
         node6: {}
-    raspberry_pi_nodes:
+    raspberry_pi:
       hosts:
         node1: {}
         node2: {}
@@ -38,7 +39,7 @@ all:
         node4: {}
         node5: {}
         node6: {}
-    raspbian_nodes:
+    raspbian:
       hosts:
         node5: {}
       vars:
@@ -46,7 +47,7 @@ all:
         boot_directory: /boot
         docker_apt_repository: "deb https://download.docker.com/linux/raspbian stretch stable"
         docker_version: "5:18.09.0~3-0~raspbian-stretch"
-    ubuntu_nodes:
+    ubuntu:
       hosts:
         node1: {}
         node2: {}
@@ -59,7 +60,9 @@ all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #containerd_version: 1.2.6-3
-    # Make sure to match `no_proxy`:
+    # When uninstalling, delete local data in k3s, k8s and Docker?
+    #delete_local_data: yes
+    # Make sure to match the `no_proxy` pattern or otherwise expect Docker images to be proxied twice:
     #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
     #docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
     #k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
@@ -67,5 +70,5 @@ all:
     #kuberneted_cni_version: 0.7.5-00
     # Make sure to match all nodes and the `docker_registry_mirror_url`:
     #no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
-    # Use an IP address, not a hostname, or otherwise expect the Kubernetes set-up to fail:
+    # Make sure to use an IP address, not a hostname, or otherwise expect the Kubernetes setup to fail:
     #proxy_url: http://10.0.0.1:3128/

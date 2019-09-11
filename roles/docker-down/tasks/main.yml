@@ -23,3 +23,4 @@
   file:
     path: /var/lib/docker
     state: absent
+  when: delete_local_data

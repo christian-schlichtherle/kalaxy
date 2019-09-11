@@ -1,2 +1,3 @@
 ---
 ansible_become: yes
+delete_local_data: no

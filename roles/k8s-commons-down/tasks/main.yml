@@ -1,8 +1,23 @@
 ---
-- name: uninstall kubelet defaults
-  file:
-    path: /etc/default/kubelet
-    state: absent
+- name: stat kubelet configuration
+  stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_conf
+- name: drain and delete node
+  local_action:
+    module: shell
+    _raw_params: |
+      export KUBECONFIG=build/k8s-config.yml
+      kubectl drain {{ inventory_hostname }} --delete-local-data={% if delete_local_data %}true{% else %}false{% endif %} --force --ignore-daemonsets
+      kubectl delete node {{ inventory_hostname }}
+    removes: build/k8s-config.yml # it doesn't, but it prevents this step from running if it is
+  vars:
+    ansible_become: no
+  when: kubelet_conf.stat.exists
+- name: kubeadm reset
+  command: kubeadm reset --force
+  when: kubelet_conf.stat.exists
+  notify: clean iptables
 - name: unhold k8s updates
   dpkg_selections:
     name: "{{ item }}"
@@ -21,3 +36,4 @@
       - kubelet
       - kubernetes-cni
     state: absent
+- meta: flush_handlers
