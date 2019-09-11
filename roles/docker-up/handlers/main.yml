@@ -3,7 +3,7 @@
   apt:
     force_apt_get: yes
     update_cache: yes
-- name: restart docker
+- name: restart Docker
   systemd:
     daemon_reload: yes
     name: docker

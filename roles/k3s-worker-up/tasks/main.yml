@@ -1,6 +1,6 @@
 ---
 - name: register k3s token
-  local_action: 'command cat build/k3s-token'
+  local_action: command cat build/k3s-token
   register: k3s_token
   vars:
     ansible_become: no

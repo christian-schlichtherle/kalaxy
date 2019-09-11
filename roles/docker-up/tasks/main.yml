@@ -1,14 +1,14 @@
 ---
-- name: add apt-key for docker
+- name: add apt-key for Docker
   apt_key:
     id: "{{ docker_apt_key_id }}"
     url: "{{ docker_apt_key_url }}"
-- name: add apt-repository for docker
+- name: add apt-repository for Docker
   apt_repository:
     repo: "{{ docker_apt_repository }}"
   notify: apt-get update
 - meta: flush_handlers
-- name: install docker
+- name: install Docker
   apt:
     force_apt_get: yes
     install_recommends: no
@@ -16,7 +16,7 @@
       - "containerd.io={{ containerd_version }}"
       - "docker-ce={{ docker_version }}"
       - "docker-ce-cli={{ docker_version }}"
-- name: hold docker updates
+- name: hold Docker updates
   dpkg_selections:
     name: "{{ item }}"
     selection: hold
@@ -24,17 +24,17 @@
     - containerd.io
     - docker-ce
     - docker-ce-cli
-- name: install docker daemon configuration
+- name: install Docker daemon configuration
   template:
     dest: /etc/docker/daemon.json
     src: daemon.json.j2
-  notify: restart docker
+  notify: restart Docker
 - name: update environment variables
   lineinfile:
     insertafter: '^\s*\[\s*Service\s*\]'
     line: "Environment='HTTP_PROXY={{ proxy_url }}' 'HTTPS_PROXY={{ proxy_url }}' 'NO_PROXY={{ no_proxy }}'"
     path: /lib/systemd/system/docker.service
     regexp: '^\s*Environment\s*=\s*'
-  notify: restart docker
+  notify: restart Docker
   when: proxy_url != ''
 - meta: flush_handlers

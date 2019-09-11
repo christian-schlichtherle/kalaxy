@@ -1,6 +1,6 @@
 ---
 - name: register k8s token
-  local_action: 'command cat build/k8s-token'
+  local_action: command cat build/k8s-token
   register: k8s_token
   vars:
     ansible_become: no

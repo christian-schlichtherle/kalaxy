@@ -3,6 +3,17 @@
   stat:
     path: /etc/kubernetes/kubelet.conf
   register: kubelet_conf
+- name: apply pre-master-down hooks
+  local_action:
+    module: 'command kubectl --kubeconfig=build/k8s-config.yml {{ item.split("-")[0] }} --filename=hooks/{{ item }}.yml'
+    removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
+  run_once: yes
+  vars:
+    ansible_become: no
+  with_items:
+    - apply-k8s-pre-master-down
+    - apply-pre-master-down
+  when: kubelet_conf.stat.exists
 - name: drain and delete node
   local_action:
     module: shell

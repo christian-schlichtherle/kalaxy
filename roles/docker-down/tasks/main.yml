@@ -1,5 +1,5 @@
 ---
-- name: unhold docker updates
+- name: unhold Docker updates
   dpkg_selections:
     name: "{{ item }}"
     selection: deinstall
@@ -7,7 +7,7 @@
     - containerd.io
     - docker-ce
     - docker-ce-cli
-- name: uninstall docker
+- name: uninstall Docker
   apt:
     force_apt_get: yes
     name:
@@ -15,11 +15,11 @@
       - docker-ce
       - docker-ce-cli
     state: absent
-- name: uninstall docker daemon configuration
+- name: uninstall Docker daemon configuration
   file:
     path: /etc/docker/daemon.json
     state: absent
-- name: remove docker directory
+- name: remove Docker directory
   file:
     path: /var/lib/docker
     state: absent

@@ -20,7 +20,7 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*disable_overscan\s*=\s*'
   notify: reboot system
-- name: remove macos artifacts from /boot directory
+- name: remove macOS artifacts from /boot directory
   file:
     path: '{{ boot_directory }}/.Spotlight-V100'
     state: absent
