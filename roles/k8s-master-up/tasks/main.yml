@@ -27,11 +27,11 @@
     ansible_become: no
 - name: apply post-master-up hooks
   local_action:
-    module: 'command kubectl --kubeconfig=build/k8s-config.yml {{ item.split("-")[0] }} --filename=hooks/{{ item }}.yml'
+    module: 'command kubectl --kubeconfig=build/k8s-config.yml apply --filename=hooks/{{ item }}.yml'
     removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
   run_once: yes
   vars:
     ansible_become: no
   with_items:
-    - apply-post-master-up
-    - apply-k8s-post-master-up
+    - post-master-up
+    - k8s-post-master-up

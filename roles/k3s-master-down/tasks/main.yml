@@ -5,14 +5,14 @@
   register: k3s_server
 - name: apply pre-master-down hooks
   local_action:
-    module: 'command kubectl --kubeconfig=build/k3s-config.yml {{ item.split("-")[0] }} --filename=hooks/{{ item }}.yml'
+    module: 'command kubectl --kubeconfig=build/k3s-config.yml apply --filename=hooks/{{ item }}.yml'
     removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
   run_once: yes
   vars:
     ansible_become: no
   with_items:
-    - apply-k3s-pre-master-down
-    - apply-pre-master-down
+    - k3s-pre-master-down
+    - pre-master-down
   when: k3s_server.stat.exists
 - name: drain and delete node
   local_action:
