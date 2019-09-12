@@ -19,9 +19,9 @@ The Ansible playbooks support:
 - multi-node cluster setup
 - tear-down of the entire cluster or just individual nodes for re-purposing them
 - installation of original Kubernetes (k8s) or k3s
-- optional private Docker registry
-- optional Docker registry mirror
-- optional HTTP(S) proxies
+- external private Docker registry (optional)
+- external Docker registry mirror (optional)
+- external HTTP(S) proxies (optional)
 
 For more information, please refer to my
 [blog posting](https://illegalexception.schlichtherle.de/kubernetes/2019/09/12/provisioning-a-kubernetes-cluster-on-raspberry-pi-with-ansible/)
