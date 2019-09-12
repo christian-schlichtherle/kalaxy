@@ -29,9 +29,8 @@
 - name: update and upgrade all existing packages
   apt:
     force_apt_get: yes
-    only_upgrade: yes
     update_cache: yes
-    upgrade: yes
+    upgrade: dist
   notify: reboot system
 - name: install common apt packages
   apt:
