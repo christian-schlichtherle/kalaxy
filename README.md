@@ -15,5 +15,5 @@ The Ansible playbooks support:
 - optional HTTP(S) proxies
 
 As for the documentation, please refer to my
-[blog page](https://illegalexception.schlichtherle.de/kubernetes/2019/09/12/provisioning-a-kubernetes-cluster-on-raspberry-pi-with-ansible/)
+[blog posting](https://illegalexception.schlichtherle.de/kubernetes/2019/09/12/provisioning-a-kubernetes-cluster-on-raspberry-pi-with-ansible/)
 about this project.
