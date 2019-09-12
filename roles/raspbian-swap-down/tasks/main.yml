@@ -1,5 +1,5 @@
 ---
 - name: disable swap-space
-  command: dphys-swapfile uninstall
+  shell: dphys-swapfile uninstall && update-rc.d dphys-swapfile disable
   args:
     removes: /var/swap

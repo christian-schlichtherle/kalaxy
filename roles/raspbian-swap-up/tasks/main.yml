@@ -1,5 +1,5 @@
 ---
 - name: enable swap-space
-  shell: dphys-swapfile setup && dphys-swapfile swapon
+  shell: update-rc.d dphys-swapfile enable && dphys-swapfile setup && dphys-swapfile swapon
   args:
     creates: /var/swap
