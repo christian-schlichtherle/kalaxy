@@ -5,6 +5,15 @@ It was originally developed to install Kubernetes on an array of Raspberry Pi Mo
 support any hardware or virtual machine which runs a Debian based Linux distribution, e.g. AWS EC2 instances running Ubuntu
 Server.
 
+<div style="float: right">
+    <a href="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-1920x3406.jpg">
+        <picture>
+            <source media="(min-width: 576px)" srcset="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0510x0905.jpg">
+            <img src="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0320x0568.jpg" title="An array of Raspberry Pi Model 4B">
+        </picture>
+    </a>
+</div>
+
 The Ansible playbooks support:
 
 - multi-node cluster setup
@@ -14,6 +23,6 @@ The Ansible playbooks support:
 - optional Docker registry mirror
 - optional HTTP(S) proxies
 
-As for the documentation, please refer to my
+For more information, please refer to my
 [blog posting](https://illegalexception.schlichtherle.de/kubernetes/2019/09/12/provisioning-a-kubernetes-cluster-on-raspberry-pi-with-ansible/)
 about this project.
