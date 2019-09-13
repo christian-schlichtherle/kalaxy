@@ -60,8 +60,8 @@ all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #containerd_version: 1.2.6-3
-    # When uninstalling, delete local data in k3s, k8s and Docker?
-    #delete_local_data: yes
+    # Do you want to delete local data in k3s, k8s and Docker upon teardown?
+    #delete_local_data: no
     # Make sure to match the `no_proxy` pattern or otherwise expect Docker images to be proxied twice:
     #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
     #docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
@@ -72,3 +72,4 @@ all:
     #no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
     # Make sure to use an IP address, not a hostname, or otherwise expect the Kubernetes setup to fail:
     #proxy_url: http://10.0.0.1:3128/
+    #timezone: UTC

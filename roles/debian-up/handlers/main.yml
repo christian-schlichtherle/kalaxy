@@ -5,3 +5,7 @@
   service:
     name: avahi-daemon
     state: reloaded
+- name: restart cron
+  service:
+    name: crond
+    state: restarted

@@ -51,6 +51,10 @@
   hostname:
     name: "{{ inventory_hostname }}"
   notify: reload avahi-daemon
+- name: set timezone to UTC
+  timezone:
+    name: "{{ timezone }}"
+  notify: restart cron
 - name: edit /etc/hosts
   lineinfile:
     line: "127.0.1.1\t{{ inventory_hostname }}"
