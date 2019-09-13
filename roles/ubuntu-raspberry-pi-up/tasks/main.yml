@@ -1,0 +1,10 @@
+---
+- name: add apt repository for Raspberry Pi userland
+  apt_repository:
+    repo: ppa:ubuntu-raspi2/ppa
+  notify: apt-get update
+- meta: flush_handlers
+- name: install libraspberrypi-bin
+  apt:
+    force_apt_get: yes
+    name: libraspberrypi-bin
