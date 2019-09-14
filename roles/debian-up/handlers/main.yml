@@ -1,6 +1,4 @@
 ---
-- name: reboot system
-  reboot: {}
 - name: reload avahi-daemon
   service:
     name: avahi-daemon
@@ -9,3 +7,5 @@
   service:
     name: crond
     state: restarted
+- name: reboot system
+  reboot: {}
