@@ -55,6 +55,12 @@
   timezone:
     name: "{{ timezone }}"
   notify: restart cron
+- name: "set locale to {{ locale }}"
+  lineinfile:
+    line: 'LANG={{ locale }}'
+    path: /etc/default/locale
+    regexp: '^\s*#?\s*LANG\s*=\s*'
+  notify: reboot system
 - name: edit /etc/hosts
   lineinfile:
     line: "127.0.1.1\t{{ inventory_hostname }}"

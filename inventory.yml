@@ -68,6 +68,7 @@ all:
     #k3s_version: v0.9.0-rc2 # https://github.com/rancher/k3s/releases
     #k8s_version: 1.15.3-00
     #kuberneted_cni_version: 0.7.5-00
+    #locale: C.UTF-8
     # Make sure to match all nodes and the `docker_registry_mirror_url`:
     #no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
     # Make sure to use an IP address, not a hostname, or otherwise expect the Kubernetes setup to fail:
