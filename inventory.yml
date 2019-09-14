@@ -41,7 +41,6 @@ all:
         node6: {}
     raspbian:
       hosts:
-        node5: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
@@ -53,6 +52,7 @@ all:
         node2: {}
         node3: {}
         node4: {}
+        node5: {}
         node6: {}
       vars:
         ansible_ssh_user: ubuntu
