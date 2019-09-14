@@ -51,7 +51,7 @@
   hostname:
     name: "{{ inventory_hostname }}"
   notify: reload avahi-daemon
-- name: set timezone to UTC
+- name: "set timezone to {{ timezone }}"
   timezone:
     name: "{{ timezone }}"
   notify: restart cron
