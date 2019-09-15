@@ -33,5 +33,5 @@
   vars:
     ansible_become: no
   with_items:
-    - post-master-up
     - k8s-post-master-up
+    - post-master-up

@@ -11,8 +11,8 @@
   vars:
     ansible_become: no
   with_items:
-    - k3s-pre-master-down
     - pre-master-down
+    - k3s-pre-master-down
   when: k3s_server.stat.exists
 - name: drain and delete node
   local_action:

@@ -11,8 +11,8 @@
   vars:
     ansible_become: no
   with_items:
-    - k8s-pre-master-down
     - pre-master-down
+    - k8s-pre-master-down
   when: kubelet_conf.stat.exists
 - name: drain and delete node
   local_action:
