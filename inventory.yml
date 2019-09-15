@@ -18,19 +18,19 @@ all:
     k3s_master:
       hosts:
         # Only one master!
+        node4: {}
     k3s_worker:
-      hosts:
-    k8s_master:
-      hosts:
-        # Only one master!
-        node5: {}
-    k8s_worker:
       hosts:
         node1: {}
         node2: {}
         node3: {}
-        node4: {}
+        node5: {}
         node6: {}
+    k8s_master:
+      hosts:
+        # Only one master!
+    k8s_worker:
+      hosts:
     raspberry_pi:
       hosts:
         node1: {}
