@@ -14,6 +14,8 @@ all:
       ansible_host: 192.168.71.25
     node6:
       ansible_host: 192.168.71.26
+    node7:
+      ansible_host: 192.168.71.27
   children:
     k3s_master:
       hosts:
@@ -26,6 +28,7 @@ all:
         node3: {}
         node5: {}
         node6: {}
+        node7: {}
     k8s_master:
       hosts:
         # Only one master!
@@ -39,6 +42,7 @@ all:
         node4: {}
         node5: {}
         node6: {}
+        node7: {}
     raspbian:
       hosts:
       vars:
@@ -54,6 +58,7 @@ all:
         node4: {}
         node5: {}
         node6: {}
+        node7: {}
       vars:
         ansible_ssh_user: ubuntu
         boot_directory: /boot/firmware
