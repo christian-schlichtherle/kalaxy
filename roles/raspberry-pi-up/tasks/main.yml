@@ -6,13 +6,6 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*gpu_mem\s*=\s*'
   notify: reboot system
-- name: program usb boot mode
-  lineinfile:
-    insertafter: '^\s*\[\s*all\s*\]'
-    line: "program_usb_boot_mode=1"
-    path: '{{ boot_directory }}/config.txt'
-    regexp: '^\s*#?\s*program_usb_boot_mode\s*=\s*'
-  notify: reboot system
 - name: fix overscanning
   lineinfile:
     insertafter: '^\s*\[\s*all\s*\]'
