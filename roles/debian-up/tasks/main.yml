@@ -26,7 +26,7 @@
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
   when: proxy_url != ''
-- name: update and upgrade all existing packages
+- name: update and upgrade OS
   apt:
     force_apt_get: yes
     update_cache: yes
