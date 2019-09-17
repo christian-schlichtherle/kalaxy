@@ -3,7 +3,7 @@ ansible_become: yes
 containerd_version: 1.2.6-3
 docker_apt_key_id: 8D81803C0EBFCD88
 docker_apt_key_url: "https://download.docker.com/linux/{{ ansible_lsb.id.lower() }}/gpg"
-docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_lsb.id.lower() }} {{ ansible_lsb.codename }} stable"
+docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_lsb.id.lower() }} {{ ansible_lsb.codename.lower() }} stable"
 docker_registry_mirror_url: ''
-docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename }}"
+docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}"
 no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
