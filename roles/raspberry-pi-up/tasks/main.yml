@@ -4,14 +4,14 @@
     insertafter: '^\s*\[\s*all\s*\]'
     line: "gpu_mem=16"
     path: '{{ boot_directory }}/config.txt'
-    regexp: '^\s*#?\s*gpu_mem\s*=\s*'
+    regexp: '^\s*#?\s*gpu_mem\s*='
   notify: reboot system
 - name: fix overscanning
   lineinfile:
     insertafter: '^\s*\[\s*all\s*\]'
     line: "#disable_overscan=1"
     path: '{{ boot_directory }}/config.txt'
-    regexp: '^\s*#?\s*disable_overscan\s*=\s*'
+    regexp: '^\s*#?\s*disable_overscan\s*='
   notify: reboot system
 - name: remove macOS artifacts from /boot directory
   file:
