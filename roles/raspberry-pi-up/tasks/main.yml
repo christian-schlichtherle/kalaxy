@@ -13,6 +13,20 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*disable_overscan\s*='
   notify: reboot system
+- name: set over_voltage
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "over_voltage=2"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*over_voltage\s*='
+  notify: reboot system
+- name: set arm_freq
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "arm_freq=1750"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*arm_freq\s*='
+  notify: reboot system
 - name: remove macOS artifacts from /boot directory
   file:
     path: '{{ boot_directory }}/.Spotlight-V100'
