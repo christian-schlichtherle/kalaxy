@@ -40,6 +40,7 @@
       - avahi-daemon
       - ca-certificates
       - curl
+      - nfs-common
       - software-properties-common
 - name: remove obsolete or unused packages
   apt:
