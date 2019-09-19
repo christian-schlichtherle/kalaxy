@@ -6,7 +6,7 @@
     ansible_become: no
 - name: register k3s url
   local_action:
-    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yml'
+    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
     warn: no
   register: k3s_url
   vars:

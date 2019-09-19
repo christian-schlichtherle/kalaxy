@@ -6,7 +6,7 @@
     ansible_become: no
 - name: register k8s address
   local_action:
-    module: 'command sed -n -E -e "s/^ +server: +https?:\/\/([^\/]+)$/\1/p" build/k8s-config.yml'
+    module: 'command sed -n -E -e "s/^ +server: +https?:\/\/([^\/]+)$/\1/p" build/k8s-config.yaml'
     warn: no
   register: k8s_address
   vars:

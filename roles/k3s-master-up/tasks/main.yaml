@@ -7,7 +7,7 @@
     creates: /usr/local/bin/k3s-uninstall.sh
 - name: fetch k3s config
   fetch:
-    dest: build/k3s-config.yml.bak
+    dest: build/k3s-config.yaml.bak
     flat: yes
     src: /etc/rancher/k3s/k3s.yaml
   notify:
@@ -21,8 +21,8 @@
 - meta: flush_handlers
 - name: apply post-master-up hooks
   local_action:
-    module: 'command kubectl --kubeconfig=build/k3s-config.yml apply --filename=hooks/{{ item }}.yml'
-    removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
+    module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=hooks/{{ item }}.yaml'
+    removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
   vars:
     ansible_become: no
   with_items:

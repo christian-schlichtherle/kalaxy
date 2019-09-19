@@ -5,8 +5,8 @@
   register: k3s_server
 - name: apply pre-master-down hooks
   local_action:
-    module: 'command kubectl --kubeconfig=build/k3s-config.yml apply --filename=hooks/{{ item }}.yml'
-    removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
+    module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=hooks/{{ item }}.yaml'
+    removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
   vars:
     ansible_become: no
   with_items:
@@ -17,10 +17,10 @@
   local_action:
     module: shell
     _raw_params: |
-      export KUBECONFIG=build/k3s-config.yml
+      export KUBECONFIG=build/k3s-config.yaml
       kubectl drain {{ inventory_hostname }} --delete-local-data={% if delete_local_data %}true{% else %}false{% endif %} --force --ignore-daemonsets
       kubectl delete node {{ inventory_hostname }}
-    removes: build/k3s-config.yml # it doesn't, but it prevents this step from running if it is
+    removes: build/k3s-config.yaml # it doesn't, but it prevents this step from running if it is
   vars:
     ansible_become: no
   when: k3s_server.stat.exists

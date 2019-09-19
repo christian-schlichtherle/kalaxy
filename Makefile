@@ -1,7 +1,7 @@
 .PHONY: up down clean
 
 up down:
-	ansible-playbook $(OPTS) $@.yml
+	ansible-playbook $(OPTS) $@.yaml
 
 clean:
 	rm -rf build
