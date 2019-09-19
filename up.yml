@@ -23,6 +23,7 @@
 - hosts: k3s_master
   roles:
     - k3s-master-up
+  run_once: yes
 - hosts: k3s_worker
   roles:
     - k3s-worker-up
@@ -34,6 +35,7 @@
 - hosts: k8s_master
   roles:
     - k8s-master-up
+  run_once: yes
 - hosts: k8s_worker
   roles:
     - k8s-worker-up

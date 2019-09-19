@@ -5,13 +5,11 @@
     curl -fsL https://get.k3s.io | sh -s server --docker
   args:
     creates: /usr/local/bin/k3s-uninstall.sh
-  run_once: yes
 - name: fetch k3s config
   fetch:
     dest: build/k3s-config.yml.bak
     flat: yes
     src: /etc/rancher/k3s/k3s.yaml
-  run_once: yes
   notify:
     - write k3s config
     - edit k3s config
@@ -20,13 +18,11 @@
     dest: build/k3s-token
     flat: yes
     src: /var/lib/rancher/k3s/server/node-token
-  run_once: yes
 - meta: flush_handlers
 - name: apply post-master-up hooks
   local_action:
     module: 'command kubectl --kubeconfig=build/k3s-config.yml apply --filename=hooks/{{ item }}.yml'
     removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
-  run_once: yes
   vars:
     ansible_become: no
   with_items:

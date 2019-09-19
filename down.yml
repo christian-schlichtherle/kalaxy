@@ -10,6 +10,7 @@
 - hosts: k3s_master
   roles:
     - k3s-master-down
+  run_once: yes
 - hosts: all
   roles:
     - docker-down
