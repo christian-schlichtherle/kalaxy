@@ -21,9 +21,11 @@
   vars:
     ansible_become: no
 - name: apply post-master-up hooks
+  changed_when: "'created' in post_master_up.stdout or 'configured' in post_master_up.stdout"
   local_action:
     module: 'command kubectl --kubeconfig=build/k8s-config.yaml apply --filename=hooks/{{ item }}.yaml'
     removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
+  register: post_master_up
   vars:
     ansible_become: no
   with_items:

@@ -1,13 +1,13 @@
 ---
 - name: register k8s token
+  changed_when: false
   local_action: command cat build/k8s-token
   register: k8s_token
   vars:
     ansible_become: no
 - name: register k8s address
-  local_action:
-    module: 'command sed -n -E -e "s/^ +server: +https?:\/\/([^\/]+)$/\1/p" build/k8s-config.yaml'
-    warn: no
+  changed_when: false
+  local_action: 'command sed -n -E -e "s/^ +server: +https?:\/\/([^\/]+)$/\1/p" build/k8s-config.yaml'
   register: k8s_address
   vars:
     ansible_become: no

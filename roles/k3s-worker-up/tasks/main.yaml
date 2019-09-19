@@ -1,13 +1,13 @@
 ---
 - name: register k3s token
+  changed_when: false
   local_action: command cat build/k3s-token
   register: k3s_token
   vars:
     ansible_become: no
 - name: register k3s url
-  local_action:
-    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
-    warn: no
+  changed_when: false
+  local_action: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
   register: k3s_url
   vars:
     ansible_become: no

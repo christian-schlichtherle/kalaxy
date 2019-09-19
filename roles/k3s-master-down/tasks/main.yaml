@@ -4,9 +4,11 @@
     path: /usr/local/bin/k3s-uninstall.sh
   register: k3s_server
 - name: apply pre-master-down hooks
+  changed_when: "'created' in pre_master_down.stdout or 'configured' in pre_master_down.stdout"
   local_action:
     module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=hooks/{{ item }}.yaml'
     removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
+  register: pre_master_down
   vars:
     ansible_become: no
   with_items:
