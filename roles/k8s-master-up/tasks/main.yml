@@ -3,33 +3,27 @@
   command: "kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --pod-network-cidr=10.244.0.0/16"
   args:
     creates: /etc/kubernetes/kubelet.conf
-  run_once: yes
 - name: fetch k8s config
   fetch:
     dest: build/k8s-config.yml
     flat: yes
     src: /etc/kubernetes/admin.conf
-  run_once: yes
 - name: apply flannel
   shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf apply --filename=https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-  run_once: yes
 - name: register k8s token
   shell: kubeadm token list | awk 'NR == 2 { print $1 }'
   register: k8s_token
-  run_once: yes
 - name: save k8s token
   local_action:
     module: copy
     content: "{{ k8s_token.stdout }}\n"
     dest: build/k8s-token
-  run_once: yes
   vars:
     ansible_become: no
 - name: apply post-master-up hooks
   local_action:
     module: 'command kubectl --kubeconfig=build/k8s-config.yml apply --filename=hooks/{{ item }}.yml'
     removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
-  run_once: yes
   vars:
     ansible_become: no
   with_items:

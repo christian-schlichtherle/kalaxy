@@ -7,7 +7,6 @@
   local_action:
     module: 'command kubectl --kubeconfig=build/k3s-config.yml apply --filename=hooks/{{ item }}.yml'
     removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
-  run_once: yes
   vars:
     ansible_become: no
   with_items:
