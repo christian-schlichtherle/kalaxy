@@ -41,6 +41,7 @@
       - ca-certificates
       - curl
       - nfs-common
+      - open-iscsi
       - software-properties-common
 - name: remove obsolete or unused packages
   apt:
@@ -67,4 +68,9 @@
     line: "127.0.1.1\t{{ inventory_hostname }}"
     path: /etc/hosts
     regexp: '^127.0.1.1\s+'
+- name: set iscsi node startup to automatic
+  lineinfile:
+    line: "node.startup = automatic"
+    path: /etc/iscsi/iscsid.conf
+    regexp: '^\s*#?\s*node\s*\.\s*startup\s*='
 - meta: flush_handlers

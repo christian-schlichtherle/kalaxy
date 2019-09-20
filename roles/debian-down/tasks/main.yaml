@@ -1,4 +1,9 @@
 ---
+- name: set iscsi node startup to manual
+  lineinfile:
+    line: "node.startup = manual"
+    path: /etc/iscsi/iscsid.conf
+    regexp: '^\s*#?\s*node\s*\.\s*startup\s*='
 - name: remove apt proxies
   file:
     path: /etc/apt/apt.conf.d/95proxies
