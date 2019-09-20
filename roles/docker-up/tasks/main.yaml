@@ -34,7 +34,7 @@
     insertafter: '^\s*\[\s*Service\s*\]'
     line: "Environment='HTTP_PROXY={{ proxy_url }}' 'HTTPS_PROXY={{ proxy_url }}' 'NO_PROXY={{ no_proxy }}'"
     path: /lib/systemd/system/docker.service
-    regexp: '^\s*Environment\s*=\s*'
+    regexp: '^\s*Environment\s*='
   notify: restart Docker
   when: proxy_url != ''
 - meta: flush_handlers
