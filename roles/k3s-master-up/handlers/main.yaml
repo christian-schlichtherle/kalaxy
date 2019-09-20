@@ -2,8 +2,8 @@
 - name: write k3s config
   local_action:
     module: copy
-    dest: build/k3s-config.yml
-    src: build/k3s-config.yml.bak
+    dest: build/k3s-config.yaml
+    src: build/k3s-config.yaml.bak
   run_once: yes
   vars:
     ansible_become: no
@@ -12,7 +12,7 @@
     backrefs: yes
     line: '\g<1>{{ ansible_default_ipv4.address }}\g<2>'
     module: lineinfile
-    path: build/k3s-config.yml
+    path: build/k3s-config.yaml
     regexp: '^(\s+server:\s+https?://)(?:[a-zA-Z0-9.-]+)([\W$].*)$'
   vars:
     ansible_become: no

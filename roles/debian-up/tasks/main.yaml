@@ -3,7 +3,7 @@
   lineinfile:
     line: '{{ item }}={{ no_proxy }}'
     path: /etc/environment
-    regexp: '^\s*{{ item }}\s*=\s*'
+    regexp: '^\s*{{ item }}\s*='
   notify: reboot system
   when: proxy_url != ''
   with_items:
@@ -13,7 +13,7 @@
   lineinfile:
     line: '{{ item }}={{ proxy_url }}'
     path: /etc/environment
-    regexp: '^\s*{{ item }}\s*=\s*'
+    regexp: '^\s*{{ item }}\s*='
   notify: reboot system
   when: proxy_url != ''
   with_items:
@@ -41,6 +41,7 @@
       - ca-certificates
       - curl
       - nfs-common
+      - open-iscsi
       - software-properties-common
 - name: remove obsolete or unused packages
   apt:
@@ -60,11 +61,16 @@
   lineinfile:
     line: 'LANG={{ locale }}'
     path: /etc/default/locale
-    regexp: '^\s*#?\s*LANG\s*=\s*'
+    regexp: '^\s*#?\s*LANG\s*='
   notify: reboot system
 - name: edit /etc/hosts
   lineinfile:
     line: "127.0.1.1\t{{ inventory_hostname }}"
     path: /etc/hosts
     regexp: '^127.0.1.1\s+'
+- name: set iscsi node startup to automatic
+  lineinfile:
+    line: "node.startup = automatic"
+    path: /etc/iscsi/iscsid.conf
+    regexp: '^\s*#?\s*node\s*\.\s*startup\s*='
 - meta: flush_handlers

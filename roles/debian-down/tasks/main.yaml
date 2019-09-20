@@ -1,4 +1,9 @@
 ---
+- name: set iscsi node startup to manual
+  lineinfile:
+    line: "node.startup = manual"
+    path: /etc/iscsi/iscsid.conf
+    regexp: '^\s*#?\s*node\s*\.\s*startup\s*='
 - name: remove apt proxies
   file:
     path: /etc/apt/apt.conf.d/95proxies
@@ -7,7 +12,7 @@
 - name: remove environment variables HTTP_PROXY and HTTPS_PROXY
   lineinfile:
     path: /etc/environment
-    regexp: '^\s*{{ item }}\s*=\s*'
+    regexp: '^\s*{{ item }}\s*='
     state: absent
   notify: reboot system
   when: proxy_url != ''
@@ -19,7 +24,7 @@
 - name: remove environment variable NO_PROXY
   lineinfile:
     path: /etc/environment
-    regexp: '^\s*{{ item }}\s*=\s*'
+    regexp: '^\s*{{ item }}\s*='
     state: absent
   notify: reboot system
   when: proxy_url != ''

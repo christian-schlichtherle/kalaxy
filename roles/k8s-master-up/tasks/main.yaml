@@ -5,7 +5,7 @@
     creates: /etc/kubernetes/kubelet.conf
 - name: fetch k8s config
   fetch:
-    dest: build/k8s-config.yml
+    dest: build/k8s-config.yaml
     flat: yes
     src: /etc/kubernetes/admin.conf
 - name: apply flannel
@@ -21,9 +21,11 @@
   vars:
     ansible_become: no
 - name: apply post-master-up hooks
+  changed_when: "'created' in post_master_up.stdout or 'configured' in post_master_up.stdout"
   local_action:
-    module: 'command kubectl --kubeconfig=build/k8s-config.yml apply --filename=hooks/{{ item }}.yml'
-    removes: 'hooks/{{ item }}.yml' # it doesn't, but it prevents this step from running if it is
+    module: 'command kubectl --kubeconfig=build/k8s-config.yaml apply --filename=hooks/{{ item }}.yaml'
+    removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
+  register: post_master_up
   vars:
     ansible_become: no
   with_items:
