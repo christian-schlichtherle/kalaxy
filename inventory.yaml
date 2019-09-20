@@ -3,19 +3,19 @@ all:
   hosts:
     # Use only IP addresses here!
     node-0:
-      ansible_host: 192.168.71.21
+      ansible_host: 192.168.71.20
     node-1:
-      ansible_host: 192.168.71.22
+      ansible_host: 192.168.71.21
     node-2:
-      ansible_host: 192.168.71.23
+      ansible_host: 192.168.71.22
     node-3:
-      ansible_host: 192.168.71.24
+      ansible_host: 192.168.71.23
     node-4:
-      ansible_host: 192.168.71.25
+      ansible_host: 192.168.71.24
     node-5:
-      ansible_host: 192.168.71.26
+      ansible_host: 192.168.71.25
     node-6:
-      ansible_host: 192.168.71.27
+      ansible_host: 192.168.71.26
   children:
     k3s_master:
       hosts:
