@@ -13,6 +13,7 @@
   register: flannel_up
   shell: kubectl --kubeconfig=/etc/kubernetes/admin.conf apply --filename=https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 - name: register k8s token
+  changed_when: false
   shell: kubeadm token list | awk 'NR == 2 { print $1 }'
   register: k8s_token
 - name: save k8s token
