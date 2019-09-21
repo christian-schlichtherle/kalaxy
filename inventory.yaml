@@ -48,8 +48,6 @@ all:
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
-        docker_apt_repository: "deb https://download.docker.com/linux/raspbian stretch stable"
-        docker_version: "5:18.09.0~3-0~raspbian-stretch"
     ubuntu:
       hosts:
         node-0: {}
@@ -72,7 +70,7 @@ all:
     #docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_lsb.id.lower() }} {{ ansible_lsb.codename.lower() }} stable"
     # Make sure to match the `no_proxy` pattern or otherwise expect Docker images to be proxied twice:
     #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
-    #docker_version: "5:18.09.9~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}"
+    #docker_version: "5:19.03.2~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}"
     #k3s_version: v0.9.0 # https://github.com/rancher/k3s/releases
     #k8s_version: 1.16.0-00
     #kuberneted_cni_version: 0.7.5-00
