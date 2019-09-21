@@ -5,7 +5,7 @@
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
   notify: reboot system
-  when: proxy_url != ''
+  when: proxy_url != None
   with_items:
     - no_proxy
     - NO_PROXY
@@ -15,7 +15,7 @@
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
   notify: reboot system
-  when: proxy_url != ''
+  when: proxy_url != None
   with_items:
     - http_proxy
     - HTTP_PROXY
@@ -25,7 +25,7 @@
   template:
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
-  when: proxy_url != ''
+  when: proxy_url != None
 - name: update and upgrade OS
   apt:
     force_apt_get: yes

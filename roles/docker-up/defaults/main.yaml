@@ -7,3 +7,4 @@ docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_lsb.id.
 docker_registry_mirror_url: ''
 docker_version: "5:19.03.2~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}"
 no_proxy: 10.0.0.0/8,127.0.0.0/8,192.168.0.0/16,*.local,localhost
+proxy_url: None

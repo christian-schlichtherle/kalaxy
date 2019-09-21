@@ -36,5 +36,5 @@
     path: /lib/systemd/system/docker.service
     regexp: '^\s*Environment\s*='
   notify: restart Docker
-  when: proxy_url != ''
+  when: proxy_url != None
 - meta: flush_handlers
