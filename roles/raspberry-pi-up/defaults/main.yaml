@@ -1,3 +1,4 @@
 ---
 ansible_become: yes
 #boot_directory: /boot
+set_arm_64bit: no
