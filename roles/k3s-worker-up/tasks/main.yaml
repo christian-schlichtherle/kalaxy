@@ -7,8 +7,11 @@
   vars:
     ansible_become: no
 - name: register k3s url
+  args:
+    warn: no
   changed_when: false
-  local_action: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
+  command: 'sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
+  delegate_to: localhost
   register: k3s_url
   run_once: yes
   vars:
