@@ -63,11 +63,6 @@
     path: /etc/default/locale
     regexp: '^\s*#?\s*LANG\s*='
   notify: reboot system
-- name: edit /etc/hosts
-  lineinfile:
-    line: "127.0.1.1\t{{ inventory_hostname }}"
-    path: /etc/hosts
-    regexp: '^127.0.1.1\s+'
 - name: set iscsi node startup to automatic
   lineinfile:
     line: "node.startup = automatic"
