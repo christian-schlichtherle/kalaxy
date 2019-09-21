@@ -44,7 +44,9 @@ all:
         node-5: {}
         node-6: {}
       vars:
-      #set_arm_64bit: no
+      #arm_64bit: None
+      #arm_freq: None
+      #over_voltage: None
     raspbian:
       hosts:
         node-0: {}
