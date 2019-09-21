@@ -3,12 +3,14 @@
   changed_when: false
   local_action: command cat build/k3s-token
   register: k3s_token
+  run_once: yes
   vars:
     ansible_become: no
 - name: register k3s url
   changed_when: false
   local_action: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
   register: k3s_url
+  run_once: yes
   vars:
     ansible_become: no
 - name: install k3s agent
