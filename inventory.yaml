@@ -43,12 +43,9 @@ all:
         node-4: {}
         node-5: {}
         node-6: {}
-    raspbian:
-      hosts:
       vars:
-        ansible_ssh_user: pi
-        boot_directory: /boot
-    ubuntu:
+      #set_arm_64bit: no
+    raspbian:
       hosts:
         node-0: {}
         node-1: {}
@@ -57,6 +54,11 @@ all:
         node-4: {}
         node-5: {}
         node-6: {}
+      vars:
+        ansible_ssh_user: pi
+        boot_directory: /boot
+    ubuntu:
+      hosts:
       vars:
         ansible_ssh_user: ubuntu
         boot_directory: /boot/firmware
