@@ -13,6 +13,14 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*disable_overscan\s*='
   notify: reboot system
+- name: set ARM 64 bit
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "arm_64bit=1"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*arm_64bit\s*='
+  notify: reboot system
+  when: set_arm_64bit
 - name: remove macOS artifacts from /boot directory
   file:
     path: '{{ boot_directory }}/.Spotlight-V100'
