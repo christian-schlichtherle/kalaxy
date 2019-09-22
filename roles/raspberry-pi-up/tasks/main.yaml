@@ -1,12 +1,12 @@
 ---
-- name: set video memory to 16mb
+- name: set gpu_mem
   lineinfile:
     insertafter: '^\s*\[\s*all\s*\]'
     line: "gpu_mem=16"
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*gpu_mem\s*='
   notify: reboot system
-- name: fix overscanning
+- name: unset disable_oversan
   lineinfile:
     insertafter: '^\s*\[\s*all\s*\]'
     line: "#disable_overscan=1"
