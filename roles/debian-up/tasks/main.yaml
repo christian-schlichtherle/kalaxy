@@ -48,7 +48,6 @@
     autoclean: yes
     autoremove: yes
     force_apt_get: yes
-  notify: reboot system
 - name: set hostname
   hostname:
     name: "{{ inventory_hostname }}"
