@@ -4,6 +4,7 @@
     path: /usr/local/bin/k3s-agent-uninstall.sh
   register: k3s_agent
 - name: drain and delete node
+  failed_when: false
   local_action:
     module: shell
     _raw_params: |

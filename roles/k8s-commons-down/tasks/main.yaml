@@ -17,6 +17,7 @@
     - k8s-pre-master-down
   when: kubelet_conf.stat.exists
 - name: drain and delete node
+  failed_when: false
   local_action:
     module: shell
     _raw_params: |
