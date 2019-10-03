@@ -49,6 +49,11 @@ all:
       #over_voltage: None
     raspbian:
       hosts:
+      vars:
+        ansible_ssh_user: pi
+        boot_directory: /boot
+    ubuntu:
+      hosts:
         node-0: {}
         node-1: {}
         node-2: {}
@@ -56,11 +61,6 @@ all:
         node-4: {}
         node-5: {}
         node-6: {}
-      vars:
-        ansible_ssh_user: pi
-        boot_directory: /boot
-    ubuntu:
-      hosts:
       vars:
         ansible_ssh_user: ubuntu
         boot_directory: /boot/firmware
