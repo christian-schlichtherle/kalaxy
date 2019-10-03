@@ -7,9 +7,9 @@ Server.
 
 <div style="float: right">
     <a href="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-1920x3406.jpg">
-        <picture style="float: right">
-            <source media="(min-width: 576px)" srcset="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0510x0905.jpg" style="float: right">
-            <img src="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0320x0568.jpg" title="An array of Raspberry Pi Model 4B" style="float: right">
+        <picture>
+            <source media="(min-width: 576px)" srcset="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0510x0905.jpg">
+            <img src="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0320x0568.jpg" title="An array of Raspberry Pi Model 4B">
         </picture>
     </a>
 </div>
