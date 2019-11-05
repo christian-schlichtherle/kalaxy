@@ -7,10 +7,6 @@
     - ubuntu
   roles:
     - debian-up
-- hosts:
-    - ubuntu:&raspberry_pi
-  roles:
-    - ubuntu-raspberry-pi-up
 - hosts: raspbian
   roles:
     - raspbian-swap-down
