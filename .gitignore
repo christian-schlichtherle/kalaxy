@@ -1,5 +1,6 @@
 *.iml
 /.idea/
+/.ssh/
 /build/
 /group_vars/
 /hooks/
