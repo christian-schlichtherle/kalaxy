@@ -75,8 +75,8 @@ all:
     # Make sure to match the `no_proxy` pattern or otherwise expect Docker images to be proxied twice:
     #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
     #docker_version: "5:19.03.4~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}"
-    #k3s_version: v0.10.2 # https://github.com/rancher/k3s/releases
-    #k8s_version: 1.16.2-00
+    #k3s_version: v1.0.0-rc5 # https://github.com/rancher/k3s/releases
+    #k8s_version: 1.16.3-00
     #kuberneted_cni_version: 0.7.5-00
     #locale: C.UTF-8
     # Make sure to match all nodes and the `docker_registry_mirror_url`:
