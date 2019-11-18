@@ -40,6 +40,7 @@
       - avahi-daemon
       - ca-certificates
       - curl
+      - net-tools
       - nfs-common
       - open-iscsi
       - software-properties-common
