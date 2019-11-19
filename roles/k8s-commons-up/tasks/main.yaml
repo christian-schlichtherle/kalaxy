@@ -1,4 +1,24 @@
 ---
+- name: use arptables-legacy
+  alternatives:
+    name: arptables
+    path: /usr/sbin/arptables-legacy
+  failed_when: false
+- name: use ebtables-legacy
+  alternatives:
+    name: ebtables
+    path: /usr/sbin/ebtables-legacy
+  failed_when: false
+- name: use iptables-legacy
+  alternatives:
+    name: iptables
+    path: /usr/sbin/iptables-legacy
+  failed_when: false
+- name: use ip6tables-legacy
+  alternatives:
+    name: ip6tables
+    path: /usr/sbin/ip6tables-legacy
+  failed_when: false
 - name: add apt-key for k8s
   apt_key:
     id: 6A030B21BA07F4FB
