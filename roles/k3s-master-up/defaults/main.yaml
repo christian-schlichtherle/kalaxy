@@ -1,4 +1,4 @@
 ---
 ansible_become: yes
 # https://github.com/rancher/k3s/releases :
-k3s_version: v1.0.0-rc5
+k3s_version: v1.0.0
