@@ -20,7 +20,15 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*arm_64bit\s*='
   notify: reboot system
-  when: arm_64bit != None
+  when: arm_64bit is defined
+- name: "#set arm_64bit="
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "#arm_64bit="
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*arm_64bit\s*='
+  notify: reboot system
+  when: arm_64bit is not defined
 - name: "set arm_freq={{ arm_freq }}"
   lineinfile:
     insertafter: '^\s*\[\s*all\s*\]'
@@ -28,7 +36,15 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*arm_freq\s*='
   notify: reboot system
-  when: arm_freq != None
+  when: arm_freq is defined
+- name: "#set arm_freq="
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "#arm_freq="
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*arm_freq\s*='
+  notify: reboot system
+  when: arm_freq is not defined
 - name: "set over_voltage={{ over_voltage }}"
   lineinfile:
     insertafter: '^\s*\[\s*all\s*\]'
@@ -36,7 +52,15 @@
     path: '{{ boot_directory }}/config.txt'
     regexp: '^\s*#?\s*over_voltage\s*='
   notify: reboot system
-  when: over_voltage != None
+  when: over_voltage is defined
+- name: "#set over_voltage="
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "#over_voltage="
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*over_voltage\s*='
+  notify: reboot system
+  when: over_voltage is not defined
 - name: remove macOS artifacts from /boot directory
   file:
     path: '{{ boot_directory }}/.Spotlight-V100'

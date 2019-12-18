@@ -1,6 +1,6 @@
 ---
 ansible_become: yes
 #boot_directory: /boot
-arm_64bit: None
-arm_freq: None
-over_voltage: None
+#arm_64bit: None
+#arm_freq: None
+#over_voltage: None
