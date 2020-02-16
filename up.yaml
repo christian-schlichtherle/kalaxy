@@ -2,17 +2,17 @@
 - hosts: raspberry_pi
   roles:
     - raspberry-pi-up
+- hosts: raspbian
+  roles:
+    - raspbian-up
+- hosts: ubuntu
+  roles:
+    - ubuntu-up
 - hosts:
     - raspbian
     - ubuntu
   roles:
     - debian-up
-- hosts: raspbian
-  roles:
-    - raspbian-swap-down
-- hosts: ubuntu
-  roles:
-    - ubuntu-swap-down
 - hosts: all
   roles:
     - docker-up

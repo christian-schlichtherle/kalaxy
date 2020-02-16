@@ -14,14 +14,14 @@
 - hosts: all
   roles:
     - docker-down
-- hosts: raspbian
-  roles:
-    - raspbian-swap-up
-- hosts: ubuntu
-  roles:
-    - ubuntu-swap-up
 - hosts:
     - raspbian
     - ubuntu
   roles:
     - debian-down
+- hosts: raspbian
+  roles:
+    - raspbian-down
+- hosts: ubuntu
+  roles:
+    - ubuntu-down

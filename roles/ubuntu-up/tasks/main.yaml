@@ -1,0 +1,13 @@
+---
+- name: disable swap-space
+  replace:
+    path: /etc/fstab
+    regexp: '^(.*\sswap\s+sw\s.*)$'
+    replace: '#\1'
+  notify: disable swap-space
+- name: hold flash-kernel
+  dpkg_selections:
+    name: flash-kernel
+    selection: hold
+  # TODO: This hack prevents the task from failing if this node is not a Raspberry Pi:
+  failed_when: false
