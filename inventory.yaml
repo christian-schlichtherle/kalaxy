@@ -19,10 +19,11 @@ all:
   children:
     k3s_master:
       hosts:
-        # Only one master!
+        # At most one master:
         node-1: {}
     k3s_worker:
       hosts:
+        # At least one worker unless there is no master:
         node-0: {}
         node-2: {}
         node-3: {}
@@ -31,9 +32,10 @@ all:
         node-6: {}
     k8s_master:
       hosts:
-        # Only one master!
+      # At most one master:
     k8s_worker:
       hosts:
+      # At least one worker unless there is no master:
     raspberry_pi:
       hosts:
         node-0: {}
@@ -74,9 +76,9 @@ all:
     #docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_lsb.id.lower() }} {{ ansible_lsb.codename.lower() }} stable"
     # Make sure to match the `no_proxy` pattern or otherwise expect Docker images to be proxied twice:
     #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
-    #docker_version: "5:19.03.4~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}"
-    #k3s_version: v1.0.1 # https://github.com/rancher/k3s/releases
-    #k8s_version: 1.16.3-00
+    #docker_version: "5:19.03.6~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}" (https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+    #k3s_version: v1.17.3-rc1+k3s1 (https://github.com/rancher/k3s/releases)
+    #k8s_version: 1.17.3-00
     #kubernetes_cni_version: 0.7.5-00
     #locale: C.UTF-8
     # Make sure to match all nodes and the `docker_registry_mirror_url`:
