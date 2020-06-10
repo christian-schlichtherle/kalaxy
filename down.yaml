@@ -19,9 +19,12 @@
     - ubuntu
   roles:
     - debian-down
-- hosts: raspbian
-  roles:
-    - raspbian-down
 - hosts: ubuntu
   roles:
     - ubuntu-down
+- hosts: raspbian
+  roles:
+    - raspbian-down
+- hosts: raspberry_pi
+  roles:
+    - raspberry-pi-down
