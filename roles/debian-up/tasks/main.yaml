@@ -63,9 +63,4 @@
     path: /etc/default/locale
     regexp: '^\s*#?\s*LANG\s*='
   notify: reboot system
-- name: set iscsi node startup to automatic
-  lineinfile:
-    line: "node.startup = automatic"
-    path: /etc/iscsi/iscsid.conf
-    regexp: '^\s*#?\s*node\s*\.\s*startup\s*='
 - meta: flush_handlers
