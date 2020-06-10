@@ -1,4 +1,3 @@
 ---
 ansible_become: yes
 #boot_directory: /boot
-#cmdline_txt: '{{ boot_directory }}/cmdline.txt'

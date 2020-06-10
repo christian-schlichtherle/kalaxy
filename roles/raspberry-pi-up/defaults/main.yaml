@@ -3,5 +3,4 @@ ansible_become: yes
 #arm_64bit: None
 #arm_freq: None
 #boot_directory: /boot
-#cmdline_txt: '{{ boot_directory }}/cmdline.txt'
 #over_voltage: None

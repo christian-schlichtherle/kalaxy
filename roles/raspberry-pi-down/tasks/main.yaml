@@ -1,9 +1,13 @@
 ---
 - name: ensure cgroup kernel params
+  failed_when: false
   lineinfile:
     backrefs: yes
     line: '\g<1>\g<2>'
-    path: '{{ cmdline_txt }}'
+    path: '{{ boot_directory }}/{{ item }}'
     regexp: '^(.*\bconsole=tty1\b).*( root=LABEL\b.*)$'
   notify: reboot system
+  with_items:
+    - cmdline.txt
+    - nobtcmd.txt
 - meta: flush_handlers

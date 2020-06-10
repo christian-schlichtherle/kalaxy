@@ -54,7 +54,6 @@ all:
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
-        cmdline_txt: '{{ boot_directory }}/cmdline.txt'
     ubuntu:
       hosts:
         node-0: {}
@@ -67,7 +66,6 @@ all:
       vars:
         ansible_ssh_user: ubuntu
         boot_directory: /boot/firmware
-        cmdline_txt: '{{ boot_directory }}/nobtcmd.txt'
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #containerd_version: 1.2.13-2
