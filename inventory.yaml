@@ -1,7 +1,6 @@
 ---
 all:
   hosts:
-    # Use only IP addresses here!
     node-0:
       ansible_host: 192.168.71.20
     node-1:
@@ -35,7 +34,7 @@ all:
         # At most one master:
     k8s_worker:
       hosts:
-      # At least one worker unless there is no master:
+        # At least one worker unless there is no master:
     raspberry_pi:
       hosts:
         node-0: {}
