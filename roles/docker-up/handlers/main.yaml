@@ -1,7 +1,6 @@
 ---
 - name: apt-get update
   apt:
-    force_apt_get: yes
     update_cache: yes
 - name: restart Docker
   systemd:

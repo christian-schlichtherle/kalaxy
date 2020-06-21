@@ -10,7 +10,6 @@
 - meta: flush_handlers
 - name: install Docker
   apt:
-    force_apt_get: yes
     install_recommends: no
     name:
       - "containerd.io={{ containerd_version }}"

@@ -9,7 +9,6 @@
     - docker-ce-cli
 - name: uninstall Docker
   apt:
-    force_apt_get: yes
     name:
       - containerd.io
       - docker-ce

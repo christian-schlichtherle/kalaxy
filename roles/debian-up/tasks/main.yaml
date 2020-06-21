@@ -26,15 +26,13 @@
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
   when: proxy_url != None
-- name: update and upgrade OS
+- name: update cache and upgrade dist
   apt:
-    force_apt_get: yes
     update_cache: yes
     upgrade: dist
   notify: reboot system
 - name: install common apt packages
   apt:
-    force_apt_get: yes
     name:
       - apt-transport-https
       - avahi-daemon
@@ -48,7 +46,6 @@
   apt:
     autoclean: yes
     autoremove: yes
-    force_apt_get: yes
 - name: set hostname
   hostname:
     name: "{{ inventory_hostname }}"

@@ -31,7 +31,6 @@
 - meta: flush_handlers
 - name: install k8s
   apt:
-    force_apt_get: yes
     name:
       - "kubernetes-cni={{ kubernetes_cni_version }}"
       - "kubeadm={{ k8s_version }}"

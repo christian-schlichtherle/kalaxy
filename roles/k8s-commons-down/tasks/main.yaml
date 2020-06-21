@@ -43,7 +43,6 @@
     - kubernetes-cni
 - name: uninstall k8s
   apt:
-    force_apt_get: yes
     name:
       - kubeadm
       - kubectl
