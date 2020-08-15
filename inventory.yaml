@@ -17,12 +17,12 @@ all:
       ansible_host: 192.168.71.26
   children:
     k3s_master:
+      # At most one master:
       hosts:
-        # At most one master:
         node-1: {}
     k3s_worker:
+      # At least one worker unless there is no master:
       hosts:
-        # At least one worker unless there is no master:
         node-0: {}
         node-2: {}
         node-3: {}
@@ -30,11 +30,11 @@ all:
         node-5: {}
         node-6: {}
     k8s_master:
-      hosts:
-        # At most one master:
+      # At most one master:
+      hosts: {}
     k8s_worker:
-      hosts:
-        # At least one worker unless there is no master:
+      # At least one worker unless there is no master:
+      hosts: {}
     raspberry_pi:
       hosts:
         node-0: {}
@@ -45,7 +45,7 @@ all:
         node-5: {}
         node-6: {}
     raspbian:
-      hosts:
+      hosts: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
