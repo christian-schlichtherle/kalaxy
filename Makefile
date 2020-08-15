@@ -1,6 +1,8 @@
 .PHONY: up down
 up down:
-	ansible-playbook $(OPTS) $@.yaml
+	@date '+# Start time: %+'
+	time ansible-playbook $(OPTS) $@.yaml
+	@date '+# Finish time: %+'
 
 .PHONY: clean
 clean:
