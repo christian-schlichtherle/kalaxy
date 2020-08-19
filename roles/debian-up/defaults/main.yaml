@@ -2,5 +2,5 @@
 ansible_become: yes
 locale: C.UTF-8
 no_proxy: 127.0.0.1,.local,localhost
-proxy_url: None
+proxy_url: null
 timezone: UTC
