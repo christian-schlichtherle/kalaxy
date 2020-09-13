@@ -26,9 +26,11 @@
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
   when: proxy_url != None
-- name: update cache and upgrade dist
+- name: update cache
   apt:
     update_cache: yes
+- name: upgrade dist
+  apt:
     upgrade: dist
   notify: reboot system
 - name: install common apt packages
