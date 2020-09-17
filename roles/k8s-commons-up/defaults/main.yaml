@@ -1,4 +1,4 @@
 ---
 ansible_become: yes
-k8s_version: 1.17.11-00
+k8s_version: 1.17.12-00
 kubernetes_cni_version: 0.7.5-00
