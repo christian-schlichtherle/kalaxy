@@ -63,7 +63,7 @@ all:
         boot_directory: /boot/firmware
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    #containerd_version: 1.2.13-2
+    #containerd_version: 1.3.7-1
     # Do you want to delete local data in k3s, k8s and Docker upon teardown?
     #delete_local_data: no
     #docker_apt_key_id: 8D81803C0EBFCD88
@@ -71,7 +71,7 @@ all:
     #docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_lsb.id.lower() }} {{ ansible_lsb.codename.lower() }} stable"
     # Make sure to match the `no_proxy` list or otherwise expect Docker images to be proxied twice:
     #docker_registry_mirror_url: https://my-docker-registry-mirror.local/
-    #docker_version: "5:19.03.12~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}" # (https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+    #docker_version: "5:19.03.13~3-0~{{ ansible_lsb.id.lower() }}-{{ ansible_lsb.codename.lower() }}" # (https://docs.docker.com/install/linux/docker-ce/ubuntu/)
     #k3s_version: v1.17.12+k3s1 # (https://github.com/rancher/k3s/releases)
     #k8s_version: 1.17.12-00 # (https://github.com/kubernetes/kubernetes/releases)
     #kubernetes_cni_version: 0.7.5-00 # (https://github.com/containernetworking/plugins/releases)
