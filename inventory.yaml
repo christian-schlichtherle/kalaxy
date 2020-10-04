@@ -45,19 +45,19 @@ all:
         node-5: { }
         node-6: { }
     raspberry_pi_os:
-      hosts: { }
+      hosts:
+        node-0: { }
+        node-1: { }
+        node-2: { }
+        node-3: { }
+        node-4: { }
+        node-5: { }
+        node-6: { }
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
     ubuntu:
-      hosts:
-        node-0: {}
-        node-1: {}
-        node-2: {}
-        node-3: {}
-        node-4: {}
-        node-5: {}
-        node-6: {}
+      hosts: { }
       vars:
         ansible_ssh_user: ubuntu
         boot_directory: /boot/firmware
