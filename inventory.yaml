@@ -35,17 +35,17 @@ all:
     k8s_worker:
       # At least one worker unless there is no master:
       hosts: {}
-    raspberry_pi:
+    raspberry_pi_hw:
       hosts:
-        node-0: {}
-        node-1: {}
-        node-2: {}
-        node-3: {}
-        node-4: {}
-        node-5: {}
-        node-6: {}
-    raspbian:
-      hosts: {}
+        node-0: { }
+        node-1: { }
+        node-2: { }
+        node-3: { }
+        node-4: { }
+        node-5: { }
+        node-6: { }
+    raspberry_pi_os:
+      hosts: { }
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot

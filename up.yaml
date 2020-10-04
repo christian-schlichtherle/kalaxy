@@ -1,15 +1,15 @@
 ---
-- hosts: raspberry_pi
+- hosts: raspberry_pi_hw
   roles:
-    - raspberry-pi-up
-- hosts: raspbian
+    - raspberry-pi-hw-up
+- hosts: raspberry_pi_os
   roles:
-    - raspbian-up
+    - raspberry-pi-os-up
 - hosts: ubuntu
   roles:
     - ubuntu-up
 - hosts:
-    - raspbian
+    - raspberry_pi_os
     - ubuntu
   roles:
     - debian-up

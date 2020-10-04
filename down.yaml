@@ -15,16 +15,16 @@
   roles:
     - docker-down
 - hosts:
-    - raspbian
+    - raspberry_pi_os
     - ubuntu
   roles:
     - debian-down
 - hosts: ubuntu
   roles:
     - ubuntu-down
-- hosts: raspbian
+- hosts: raspberry_pi_os
   roles:
-    - raspbian-down
-- hosts: raspberry_pi
+    - raspberry-pi-os-down
+- hosts: raspberry_pi_hw
   roles:
-    - raspberry-pi-down
+    - raspberry-pi-hw-down
