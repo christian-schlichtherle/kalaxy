@@ -1,7 +1,7 @@
 *.iml
-/.idea/
-/.ssh/
-/build/
-/group_vars/
-/hooks/
-/host_vars/
+/.idea
+/.ssh
+/build
+/group_vars
+/hooks
+/host_vars
