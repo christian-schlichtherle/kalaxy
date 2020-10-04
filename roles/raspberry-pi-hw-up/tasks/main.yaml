@@ -1,4 +1,20 @@
 ---
+- name: "set arm_64bit={{ arm_64bit }}"
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "arm_64bit={{ arm_64bit }}"
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*arm_64bit\s*='
+  notify: reboot system
+  when: arm_64bit is defined
+- name: "#set arm_64bit="
+  lineinfile:
+    insertafter: '^\s*\[\s*all\s*\]'
+    line: "#arm_64bit="
+    path: '{{ boot_directory }}/config.txt'
+    regexp: '^\s*#?\s*arm_64bit\s*='
+  notify: reboot system
+  when: arm_64bit is not defined
 - name: ensure cgroup kernel params
   failed_when: false
   lineinfile:
