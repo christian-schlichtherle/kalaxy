@@ -40,6 +40,7 @@
       - avahi-daemon
       - ca-certificates
       - curl
+      - gnupg-agent
       - net-tools
       - nfs-common
       - open-iscsi
