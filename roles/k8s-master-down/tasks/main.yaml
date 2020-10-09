@@ -1,0 +1,18 @@
+---
+- name: stat kubelet configuration
+  stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_conf
+- name: apply pre-master-down hooks
+  changed_when: "'created' in pre_master_down.stdout or 'configured' in pre_master_down.stdout"
+  local_action:
+    module: 'command kubectl --kubeconfig=build/k8s-config.yaml apply --filename=hooks/{{ item }}.yaml'
+    removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
+  register: pre_master_down
+  run_once: yes
+  vars:
+    ansible_become: no
+  with_items:
+    - pre-master-down
+    - k8s-pre-master-down
+  when: kubelet_conf.stat.exists
