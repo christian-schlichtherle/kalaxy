@@ -41,6 +41,7 @@
       - ca-certificates
       - curl
       - gnupg-agent
+      - initramfs-tools
       - net-tools
       - nfs-common
       - open-iscsi
