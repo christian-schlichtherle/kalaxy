@@ -1,4 +1,15 @@
 ---
+- name: fix search in /etc/resolv.conf
+  lineinfile:
+    backrefs: yes
+    line: 'search\g<1>'
+    path: /etc/resolv.conf
+    regexp: '^(?:domain|search)(\s.*)'
+- name: make /etc/resolv.conf immutable
+  changed_when: false
+  file:
+    attributes: +i
+    path: /etc/resolv.conf
 - name: disable swap-space
   shell: dphys-swapfile uninstall && update-rc.d dphys-swapfile disable
   args:

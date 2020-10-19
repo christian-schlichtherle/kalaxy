@@ -3,3 +3,8 @@
   shell: update-rc.d dphys-swapfile enable && dphys-swapfile setup && dphys-swapfile swapon
   args:
     creates: /var/swap
+- name: make /etc/resolv.conf mutable
+  changed_when: false
+  file:
+    attributes: -i
+    path: /etc/resolv.conf
