@@ -5,7 +5,7 @@
     backrefs: yes
     line: '\g<1>\g<2>'
     path: '{{ boot_directory }}/{{ item }}'
-    regexp: '^(.*\bconsole=tty1\b).*( root=LABEL\b.*)$'
+    regexp: '^(.*console=tty1)(?: cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1)?(.*)$'
   notify: reboot system
   with_items:
     - cmdline.txt
