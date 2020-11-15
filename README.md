@@ -5,7 +5,7 @@ It was originally developed to install Kubernetes on an array of Raspberry Pi Mo
 support any hardware or virtual machine which runs a Debian based Linux distribution, e.g. AWS EC2 instances running
 Ubuntu Server.
 
-<p style="alignment: center">
+<p align="center">
 <a href="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-1920x3406.jpg">
 <img src="https://illegalexception.schlichtherle.de/assets/2019/09/raspi-array-0320x0568.jpg" alt="An array of Raspberry Pi Model 4B">
 </a>
