@@ -63,7 +63,7 @@ all:
         boot_directory: /boot/firmware
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    #containerd_version: 1.3.7-1
+    #containerd_version: 1.4.3-1
     # Do you want to delete local data in k3s, k8s and Docker upon teardown?
     #delete_local_data: no
     #docker_apt_key_id: 8D81803C0EBFCD88
