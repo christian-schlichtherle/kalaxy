@@ -1,7 +1,7 @@
 ---
 - name: add environment variable NO_PROXY
   lineinfile:
-    line: '{{ item }}={{ no_proxy }}'
+    line: '{{ item }}="{{ no_proxy }}"'
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
   notify: reboot system
@@ -11,7 +11,7 @@
     - NO_PROXY
 - name: add environment variables HTTP_PROXY and HTTPS_PROXY
   lineinfile:
-    line: '{{ item }}={{ proxy_url }}'
+    line: '{{ item }}="{{ proxy_url }}"'
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
   notify: reboot system
