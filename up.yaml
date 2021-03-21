@@ -13,7 +13,9 @@
     - ubuntu
   roles:
     - debian-up
-- hosts: all
+- hosts:
+    - k8s_master
+    - k8s_worker
   roles:
     - docker-up
 - hosts: k3s_master

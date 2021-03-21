@@ -16,7 +16,9 @@
   roles:
     - k3s-master-down
   run_once: yes
-- hosts: all
+- hosts:
+    - k8s_master
+    - k8s_worker
   roles:
     - docker-down
 - hosts:
