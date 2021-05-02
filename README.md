@@ -16,8 +16,8 @@ The Ansible playbooks support:
 - multi-node cluster setup
 - tear-down of the entire cluster or just individual nodes for re-purposing them
 - installation of K3s, a Rancher distribution of Kubernetes
-- external private Docker registry (optional)
-- external Docker registry mirror (optional)
+- external private container registry (optional)
+- external container registry mirror (optional)
 - external HTTP(S) proxies (optional)
 
 For more information, please refer to my
