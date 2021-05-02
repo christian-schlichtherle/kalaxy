@@ -1,3 +1,0 @@
----
-- name: clean iptables
-  shell: iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X

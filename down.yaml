@@ -1,14 +1,4 @@
 ---
-- hosts:
-    - k8s_worker
-  roles:
-    - k8s-commons-down
-- hosts:
-    - k8s_master
-  roles:
-    - k8s-master-down
-    - k8s-commons-down
-  run_once: yes
 - hosts: k3s_worker
   roles:
     - k3s-worker-down
@@ -16,11 +6,6 @@
   roles:
     - k3s-master-down
   run_once: yes
-- hosts:
-    - k8s_master
-    - k8s_worker
-  roles:
-    - docker-down
 - hosts:
     - raspberry_pi_os
     - ubuntu

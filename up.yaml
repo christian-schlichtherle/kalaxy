@@ -13,11 +13,6 @@
     - ubuntu
   roles:
     - debian-up
-- hosts:
-    - k8s_master
-    - k8s_worker
-  roles:
-    - docker-up
 - hosts: k3s_master
   roles:
     - k3s-master-up
@@ -25,15 +20,3 @@
 - hosts: k3s_worker
   roles:
     - k3s-worker-up
-- hosts:
-    - k8s_master
-    - k8s_worker
-  roles:
-    - k8s-commons-up
-- hosts: k8s_master
-  roles:
-    - k8s-master-up
-  run_once: yes
-- hosts: k8s_worker
-  roles:
-    - k8s-worker-up

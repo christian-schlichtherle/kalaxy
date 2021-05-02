@@ -29,12 +29,6 @@ all:
         node-4: { }
         node-5: { }
         node-6: { }
-    k8s_master:
-      # At most one master:
-      hosts: { }
-    k8s_worker:
-      # None if there is no master, otherwise at least one worker:
-      hosts: { }
     raspberry_pi_hw:
       hosts:
         node-0: { }
@@ -65,10 +59,9 @@ all:
     ansible_python_interpreter: /usr/bin/python3
     #container_registry_mirror_url: https://my-container-registry-mirror.local/
     #containerd_version: 1.4.4-1
-    # Do you want to delete local data in k3s and k8s upon teardown?
+    # Do you want to delete local data in the Kubernetes cluster upon teardown?
     #delete_local_data: no
     #k3s_version: v1.21.0+k3s1 # (https://github.com/rancher/k3s/releases)
-    #k8s_version: 1.19.10-00 # (https://github.com/kubernetes/kubernetes/releases)
     #locale: C.UTF-8
     # Make sure to match all nodes:
     #no_proxy: 127.0.0.1,.local,localhost
