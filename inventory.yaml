@@ -67,5 +67,4 @@ all:
     #no_proxy: 127.0.0.1,.local,localhost
     # Make sure to use an IP address, not a hostname, or otherwise expect the Kubernetes setup to fail:
     #proxy_url: http://10.0.0.1:3128/
-    #serviceNodePortRange: 30000-32767
     #timezone: UTC
