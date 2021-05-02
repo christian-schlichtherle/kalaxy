@@ -16,12 +16,12 @@ all:
     node-6:
       ansible_host: 192.168.71.26
   children:
-    k3s_master:
-      # At most one master:
+    k3s_server:
+      # At most one server:
       hosts:
         node-0: { }
-    k3s_worker:
-      # None if there is no master, otherwise at least one worker:
+    k3s_agent:
+      # None if there is no server, otherwise at least one agent:
       hosts:
         node-1: { }
         node-2: { }

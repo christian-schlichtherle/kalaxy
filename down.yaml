@@ -1,10 +1,10 @@
 ---
-- hosts: k3s_worker
+- hosts: k3s_agent
   roles:
-    - k3s-worker-down
-- hosts: k3s_master
+    - k3s-agent-down
+- hosts: k3s_server
   roles:
-    - k3s-master-down
+    - k3s-server-down
   run_once: yes
 - hosts:
     - raspberry_pi_os

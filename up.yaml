@@ -13,10 +13,10 @@
     - ubuntu
   roles:
     - debian-up
-- hosts: k3s_master
+- hosts: k3s_server
   roles:
-    - k3s-master-up
+    - k3s-server-up
   run_once: yes
-- hosts: k3s_worker
+- hosts: k3s_agent
   roles:
-    - k3s-worker-up
+    - k3s-agent-up

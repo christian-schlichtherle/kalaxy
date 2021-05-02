@@ -30,14 +30,15 @@
     flat: yes
     src: /var/lib/rancher/k3s/server/node-token
 - meta: flush_handlers
-- name: apply post-master-up hooks
-  changed_when: "'created' in post_master_up.stdout or 'configured' in post_master_up.stdout"
+- name: apply post-server-up hooks
+  changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
   local_action:
     module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=hooks/{{ item }}.yaml'
     removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
-  register: post_master_up
+  register: post_server_up
   vars:
     ansible_become: no
   with_items:
+    - post-server-up
     - k3s-post-master-up
     - post-master-up
