@@ -16,6 +16,17 @@
   run_once: yes
   vars:
     ansible_become: no
+- name: install container registry mirror configuration
+  block:
+    - file:
+        path: /etc/rancher/k3s
+        state: directory
+      name: make config directory
+    - template:
+        dest: /etc/rancher/k3s/registries.yaml
+        src: registries.yaml.j2
+      name: write registries.yaml
+  when: container_registry_mirror_url != None
 - name: install k3s agent
   shell: |
     export INSTALL_K3S_VERSION='{{ k3s_version }}'
