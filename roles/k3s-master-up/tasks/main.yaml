@@ -2,7 +2,7 @@
 - name: install k3s server
   shell: |
     export INSTALL_K3S_VERSION='{{ k3s_version }}'
-    curl --fail --location --silent https://get.k3s.io | sh -s server
+    curl --fail --location --silent https://get.k3s.io | sh -s server --service-node-port-range='{{ serviceNodePortRange }}'
   args:
     creates: /usr/local/bin/k3s-uninstall.sh
 - name: fetch k3s config
