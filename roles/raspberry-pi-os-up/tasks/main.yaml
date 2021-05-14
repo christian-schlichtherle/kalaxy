@@ -14,11 +14,4 @@
   shell: dphys-swapfile uninstall && update-rc.d dphys-swapfile disable
   args:
     removes: /var/swap
-#- name: rpi-update
-#  changed_when: "'already up to date' not in rpi_update.stdout or 'reboot is needed' in rpi_update.stdout"
-#  environment:
-#    SKIP_WARNING: 1
-#  notify: reboot system
-#  register: rpi_update
-#  shell: rpi-update
 - meta: flush_handlers
