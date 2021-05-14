@@ -1,0 +1,53 @@
+---
+- name: apt update
+  ansible.builtin.apt:
+    update_cache: yes
+- name: apt install -y rpi-eeprom
+  ansible.builtin.apt:
+    name:
+      - rpi-eeprom
+  notify: reboot
+- name: apt install -y rpi-update
+  ansible.builtin.apt:
+    name:
+      - rpi-update
+- name: rpi-update
+  ansible.builtin.command: rpi-update
+  changed_when: "'already up to date' not in rpi_update.stdout or 'reboot is needed' in rpi_update.stdout"
+  environment:
+    BOOT_PATH: "{{ boot_directory }}"
+    GITHUB_API_TOKEN: "{{ github_api_token }}"
+    ROOT_PATH: /
+    SKIP_REPODELETE: 1
+    SKIP_WARNING: 1
+  notify: reboot
+  register: rpi_update
+- name: stat /root/.rpi-firmware
+  ansible.builtin.stat:
+    path: /root/.rpi-firmware
+  register: rpi_firmware
+- block:
+    - name: "find kernel versions"
+      ansible.builtin.find:
+        file_type: directory
+        paths: /root/.rpi-firmware/modules
+        patterns: "*-v8+"
+        recurse: no
+      register: found
+    - block:
+        - name: "update-initramfs -c -b {{ boot_directory }}"
+          ansible.builtin.shell:
+            cmd: update-initramfs -c -k {{ item }} -b {{ boot_directory }}
+            creates: "{{ boot_directory }}/initrd.img-{{ item }}"
+          with_items: "{{ versions }}"
+        - name: "set initramfs in {{ boot_directory }}"
+          ansible.builtin.lineinfile:
+            insertafter: '^\s*\[\s*all\s*\]'
+            line: "initramfs initrd.img-{{ item }}"
+            path: '{{ boot_directory }}/config.txt'
+            regexp: '^initramfs\s'
+          with_items: "{{ versions }}"
+          notify: reboot
+      vars:
+        versions: "{{ found.files | map(attribute='path') | map('basename') }}"
+  when: rpi_firmware.stat.exists
