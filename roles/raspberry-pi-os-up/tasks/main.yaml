@@ -14,4 +14,3 @@
   shell: dphys-swapfile uninstall && update-rc.d dphys-swapfile disable
   args:
     removes: /var/swap
-- meta: flush_handlers

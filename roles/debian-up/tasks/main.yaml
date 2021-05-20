@@ -64,4 +64,3 @@
     path: /etc/default/locale
     regexp: '^\s*#?\s*LANG\s*='
   notify: reboot
-- meta: flush_handlers

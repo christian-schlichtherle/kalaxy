@@ -10,4 +10,3 @@
   with_items:
     - cmdline.txt
     - nobtcmd.txt
-- meta: flush_handlers
