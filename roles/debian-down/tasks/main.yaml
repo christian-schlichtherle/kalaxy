@@ -9,7 +9,7 @@
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
     state: absent
-  notify: reboot system
+  notify: reboot
   when: proxy_url != None
   with_items:
     - http_proxy

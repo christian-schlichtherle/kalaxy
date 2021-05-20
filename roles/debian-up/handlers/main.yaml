@@ -7,5 +7,5 @@
   service:
     name: cron
     state: restarted
-- name: reboot system
-  reboot: {}
+- name: reboot
+  reboot: { }

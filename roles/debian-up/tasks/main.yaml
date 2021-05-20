@@ -4,7 +4,7 @@
     line: '{{ item }}="{{ no_proxy }}"'
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
-  notify: reboot system
+  notify: reboot
   when: proxy_url != None
   with_items:
     - no_proxy
@@ -14,7 +14,7 @@
     line: '{{ item }}="{{ proxy_url }}"'
     path: /etc/environment
     regexp: '^\s*{{ item }}\s*='
-  notify: reboot system
+  notify: reboot
   when: proxy_url != None
   with_items:
     - http_proxy
@@ -32,7 +32,7 @@
 - name: upgrade dist
   apt:
     upgrade: dist
-  notify: reboot system
+  notify: reboot
 - name: install common apt packages
   apt:
     name:
@@ -63,5 +63,5 @@
     line: 'LANG={{ locale }}'
     path: /etc/default/locale
     regexp: '^\s*#?\s*LANG\s*='
-  notify: reboot system
+  notify: reboot
 - meta: flush_handlers
