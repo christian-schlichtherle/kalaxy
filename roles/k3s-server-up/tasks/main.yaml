@@ -17,7 +17,7 @@
   fetch:
     dest: build/k3s-token
     flat: yes
-    src: /var/lib/rancher/k3s/server/node-token
+    src: /var/lib/rancher/k3s/server/token
 - meta: flush_handlers
 - name: apply post-server-up hooks
   changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
