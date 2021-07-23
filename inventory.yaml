@@ -60,7 +60,7 @@ all:
     #container_registry_mirror_url: https://my-container-registry-mirror.local/
     # Do you want to delete local data in the Kubernetes cluster upon teardown?
     #delete_local_data: no
-    #k3s_version: v1.21.2+k3s1 # (https://github.com/rancher/k3s/releases)
+    #k3s_version: v1.21.3+k3s1 # (https://github.com/rancher/k3s/releases)
     #locale: C.UTF-8
     # Make sure to match all nodes:
     #no_proxy: 127.0.0.1,.local,localhost
