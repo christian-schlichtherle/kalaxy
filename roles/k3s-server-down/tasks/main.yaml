@@ -24,6 +24,7 @@
       kubectl drain {{ inventory_hostname }} --delete-local-data={% if delete_local_data %}true{% else %}false{% endif %} --force --ignore-daemonsets
       kubectl delete node {{ inventory_hostname }}
     removes: build/k3s-config.yaml # it doesn't, but it prevents this step from running if it is
+  notify: reboot
   vars:
     ansible_become: no
   when: k3s_server.stat.exists
