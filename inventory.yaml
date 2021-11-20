@@ -49,7 +49,7 @@ all:
         node-6: { }
       vars:
         ansible_ssh_user: pi
-        boot_directory: /boot
+        #boot_directory: /boot
     rpi_update:
       hosts:
         node-0: { }
@@ -63,7 +63,6 @@ all:
       hosts: { }
       vars:
         ansible_ssh_user: ubuntu
-        boot_directory: /boot/firmware
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #container_registry_mirror_url: https://my-container-registry-mirror.local/
