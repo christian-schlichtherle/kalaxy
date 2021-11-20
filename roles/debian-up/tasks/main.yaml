@@ -26,9 +26,10 @@
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
   when: proxy_url != None
-- name: update cache
+- name: update && upgrade full
   apt:
     update_cache: yes
+    upgrade: full
 - name: upgrade dist
   apt:
     upgrade: dist
