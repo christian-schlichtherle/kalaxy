@@ -1,2 +1,3 @@
 ---
 ansible_become: yes
+container_registry_mirror_url: null
