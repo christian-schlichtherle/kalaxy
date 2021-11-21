@@ -6,17 +6,17 @@
   roles:
     - k3s-server-down
   run_once: yes
-- hosts:
-    - raspberry_pi_os
-    - ubuntu
-  roles:
-    - debian-down
-- hosts: ubuntu
-  roles:
-    - ubuntu-down
-- hosts: raspberry_pi_os
-  roles:
-    - raspberry-pi-os-down
-- hosts: raspberry_pi_hw
-  roles:
-    - raspberry-pi-hw-down
+#- hosts:
+#    - raspberry_pi_os
+#    - ubuntu
+#  roles:
+#    - debian-down
+#- hosts: ubuntu
+#  roles:
+#    - ubuntu-down
+#- hosts: raspberry_pi_os
+#  roles:
+#    - raspberry-pi-os-down
+#- hosts: raspberry_pi_hw
+#  roles:
+#    - raspberry-pi-hw-down
