@@ -1,36 +1,32 @@
 ---
 all:
   hosts:
-    node-0:
-      ansible_host: 192.168.71.20
-    node-1:
-      ansible_host: 192.168.71.21
-    node-2:
-      ansible_host: 192.168.71.22
-    node-3:
-      ansible_host: 192.168.71.23
-    node-4:
-      ansible_host: 192.168.71.24
+    dev-0-agent-amd64-0:
+      ansible_host: 172.16.2.4
+    dev-0-agent-arm64-0:
+      ansible_host: 172.16.1.4
     node-5:
       ansible_host: 192.168.71.25
     node-6:
       ansible_host: 192.168.71.26
+    dev-0-server-arm64-0:
+      ansible_host: 172.16.0.4
   children:
     k3s_server:
       # At most one server:
       hosts:
-        node-0: { }
+        dev-0-server-arm64-0: { }
     k3s_agent:
       # None if there is no server, otherwise at least one agent:
       hosts:
-        node-1: { }
-        node-2: { }
-        node-3: { }
-        node-4: { }
+        dev-0-agent-amd64-0: { }
+        dev-0-agent-arm64-0: { }
         node-5: { }
         node-6: { }
     openvpn_client:
-      hosts: { }
+      hosts:
+        node-5: { }
+        node-6: { }
       vars:
       # The path of the pki directory where easy-rsa keeps the certificates and keys for the root CA for the VPN:
       #openvpn_pki_dir: /my/path/to/easy-rsa
@@ -38,20 +34,10 @@ all:
       #openvpn_server_fqdn: my.vpn.server.name
     raspberry_pi_hw:
       hosts:
-        node-0: { }
-        node-1: { }
-        node-2: { }
-        node-3: { }
-        node-4: { }
         node-5: { }
         node-6: { }
     raspberry_pi_os:
       hosts:
-        node-0: { }
-        node-1: { }
-        node-2: { }
-        node-3: { }
-        node-4: { }
         node-5: { }
         node-6: { }
       vars:
@@ -59,17 +45,15 @@ all:
         #boot_directory: /boot
     rpi_update:
       hosts:
-        node-0: { }
-        node-1: { }
-        node-2: { }
-        node-3: { }
-        node-4: { }
         node-5: { }
         node-6: { }
     ubuntu:
-      hosts: { }
+      hosts:
+        dev-0-agent-amd64-0: { }
+        dev-0-agent-arm64-0: { }
+        dev-0-server-arm64-0: { }
       vars:
-        ansible_ssh_user: ubuntu
+      #ansible_ssh_user: ubuntu
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #container_registry_mirror_url: https://my-container-registry-mirror.local/
