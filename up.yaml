@@ -18,6 +18,10 @@
   roles:
     - rpi-update-up
 - hosts:
+    - openvpn_client
+  roles:
+    - openvpn-client-up
+- hosts:
     - k3s_server
     - k3s_agent
   roles:

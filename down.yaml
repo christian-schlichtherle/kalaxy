@@ -1,22 +1,31 @@
 ---
-- hosts: k3s_agent
+- hosts:
+    - k3s_agent
   roles:
     - k3s-agent-down
-- hosts: k3s_server
+- hosts:
+    - k3s_server
   roles:
     - k3s-server-down
   run_once: yes
+- hosts:
+    - openvpn_client
+  roles:
+    - openvpn-client-down
 #- hosts:
 #    - raspberry_pi_os
 #    - ubuntu
 #  roles:
 #    - debian-down
-#- hosts: ubuntu
+#- hosts:
+#    - ubuntu
 #  roles:
 #    - ubuntu-down
-#- hosts: raspberry_pi_os
+#- hosts:
+#    - raspberry_pi_os
 #  roles:
 #    - raspberry-pi-os-down
-#- hosts: raspberry_pi_hw
+#- hosts:
+#    - raspberry_pi_hw
 #  roles:
 #    - raspberry-pi-hw-down

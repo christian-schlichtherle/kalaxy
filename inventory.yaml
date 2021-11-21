@@ -29,6 +29,13 @@ all:
         node-4: { }
         node-5: { }
         node-6: { }
+    openvpn_client:
+      hosts: { }
+      vars:
+      # The path of the pki directory where easy-rsa keeps the certificates and keys for the root CA for the VPN:
+      #openvpn_pki_dir: /my/path/to/easy-rsa
+      # The fully qualified domain name of the VPN server:
+      #openvpn_server_fqdn: my.vpn.server.name
     raspberry_pi_hw:
       hosts:
         node-0: { }
