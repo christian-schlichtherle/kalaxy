@@ -1,3 +1,4 @@
 ---
 ansible_become: yes
+boot_directory: /boot
 github_api_token: ""
