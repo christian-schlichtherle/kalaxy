@@ -1,9 +1,9 @@
 ---
 all:
   hosts:
-    dev-0-arm64_agent-0:
+    dev-0-agent-arm64-0:
       ansible_host: 172.16.1.4
-    dev-0-arm64_server-0:
+    dev-0-server-arm64-0:
       ansible_host: 172.16.0.4
     node-5:
       ansible_host: 192.168.71.25
@@ -13,11 +13,11 @@ all:
     k3s_server:
       # At most one server:
       hosts:
-        dev-0-arm64_server-0: { }
+        dev-0-server-arm64-0: { }
     k3s_agent:
       # None if there is no server, otherwise at least one agent:
       hosts:
-        dev-0-arm64_agent-0: { }
+        dev-0-agent-arm64-0: { }
         node-5: { }
         node-6: { }
     openvpn_client:
@@ -46,8 +46,8 @@ all:
         node-6: { }
     ubuntu:
       hosts:
-        dev-0-arm64_agent-0: { }
-        dev-0-arm64_server-0: { }
+        dev-0-agent-arm64-0: { }
+        dev-0-server-arm64-0: { }
       vars:
       #ansible_ssh_user: ubuntu
   vars:
