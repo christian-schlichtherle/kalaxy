@@ -1,9 +1,9 @@
 ---
 - name: install k3s server
-  shell: |
-    export INSTALL_K3S_VERSION='{{ k3s_version }}'
-    curl --fail --location --silent https://get.k3s.io | sh -s server
-  args:
+  environment:
+    INSTALL_K3S_VERSION: '{{ k3s_version }}'
+  shell:
+    cmd: curl --fail --location --silent https://get.k3s.io | sh -s server
     creates: /usr/local/bin/k3s-uninstall.sh
 - name: fetch k3s config
   fetch:
