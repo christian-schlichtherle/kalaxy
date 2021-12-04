@@ -1,0 +1,7 @@
+---
+- name: reload /etc/sysctl.conf
+  command: sysctl -p
+- name: restart openvpn server
+  service:
+    name: openvpn@server
+    state: restarted

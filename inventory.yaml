@@ -1,53 +1,36 @@
 ---
 all:
-  hosts:
-    dev-0-agent-arm64-0:
-      ansible_host: 172.16.1.4
-    dev-0-server-arm64-0:
-      ansible_host: 172.16.0.4
-    node-5:
-      ansible_host: 192.168.71.25
-    node-6:
-      ansible_host: 192.168.71.26
+  hosts: { }
   children:
     k3s_server:
       # At most one server:
-      hosts:
-        dev-0-server-arm64-0: { }
+      hosts: { }
     k3s_agent:
       # None if there is no server, otherwise at least one agent:
-      hosts:
-        dev-0-agent-arm64-0: { }
-        node-5: { }
-        node-6: { }
+      hosts: { }
     openvpn_client:
-      hosts:
-        node-5: { }
-        node-6: { }
+      hosts: { }
       vars:
       # The path of the pki directory where easy-rsa keeps the certificates and keys for the root CA for the VPN:
-      #openvpn_pki_dir: /my/path/to/easy-rsa
-      # The fully qualified domain name of the VPN server:
-      #openvpn_server_fqdn: my.vpn.server.name
+      #easyrsa_pki_dir: /my/path/to/easy-rsa/pki
+      # The fully qualified domain name or IP address of the VPN server:
+      #openvpn_server: my.vpn.server.name
+    openvpn_server:
+      hosts: { }
+      vars:
+      # The path of the pki directory where easy-rsa keeps the certificates and keys for the root CA for the VPN:
+      #easyrsa_pki_dir: /my/path/to/easy-rsa/pki
     raspberry_pi_hw:
-      hosts:
-        node-5: { }
-        node-6: { }
+      hosts: { }
     raspberry_pi_os:
-      hosts:
-        node-5: { }
-        node-6: { }
+      hosts: { }
       vars:
         ansible_ssh_user: pi
         #boot_directory: /boot
     rpi_update:
-      hosts:
-        node-5: { }
-        node-6: { }
+      hosts: { }
     ubuntu:
-      hosts:
-        dev-0-agent-arm64-0: { }
-        dev-0-server-arm64-0: { }
+      hosts: { }
       vars:
       #ansible_ssh_user: ubuntu
   vars:

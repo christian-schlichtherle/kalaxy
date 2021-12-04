@@ -1,0 +1,37 @@
+---
+- name: enable routing in /etc/sysctl.conf
+  lineinfile:
+    line: net.ipv4.ip_forward=1
+    path: /etc/sysctl.conf
+    regexp: '^\s*#?\s*net.ipv4.ip_forward\s*='
+  notify: reload /etc/sysctl.conf
+- name: install openvpn
+  apt:
+    name: openvpn
+    update_cache: yes
+- name: copy files to /etc/openvpn/server
+  copy:
+    dest: /etc/openvpn/server/{{ item | basename }}
+    mode: "0600"
+    src: "{{ easyrsa_pki_dir }}/{{ item }}"
+  loop:
+    - ca.crt
+    - crl.pem
+    - dh.pem
+    - issued/client.crt
+    - issued/server.crt
+    - private/ca.key
+    - private/client.key
+    - private/server.key
+    - ta.key
+  notify: restart openvpn server
+- name: configure openvpn server
+  template:
+    dest: /etc/openvpn/server.conf
+    src: server.conf.j2
+  notify: restart openvpn server
+- name: enable and start openvpn server
+  service:
+    enabled: yes
+    name: openvpn@server
+    state: started

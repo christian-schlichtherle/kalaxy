@@ -12,6 +12,10 @@
     - openvpn_client
   roles:
     - openvpn-client-down
+- hosts:
+    - openvpn_server
+  roles:
+    - openvpn-server-down
 #- hosts:
 #    - raspberry_pi_os
 #    - ubuntu

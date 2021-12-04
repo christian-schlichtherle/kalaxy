@@ -1,0 +1,22 @@
+{{ ansible_managed | comment }}
+ca /etc/openvpn/server/ca.crt
+cert /etc/openvpn/server/server.crt
+dh /etc/openvpn/server/dh.pem
+explicit-exit-notify 1
+dev tun
+duplicate-cn
+#group nogroup
+ifconfig-pool-persist ipp.txt
+keepalive 10 120
+key /etc/openvpn/server/server.key
+#persist-key
+#persist-tun
+#push "redirect-gateway"
+push "route 172.16.0.0 255.255.0.0"
+#remote-cert-tls client
+server 10.16.0.0 255.255.192.0
+status openvpn-status.log
+#tls-auth /etc/openvpn/server/ta.key 0
+topology subnet
+#user nobody
+verb 3

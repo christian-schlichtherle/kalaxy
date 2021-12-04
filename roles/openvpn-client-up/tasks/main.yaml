@@ -3,23 +3,24 @@
   apt:
     name: openvpn
     update_cache: yes
+- name: copy files to /etc/openvpn/client
+  copy:
+    dest: /etc/openvpn/client/{{ item | basename }}
+    mode: "0600"
+    src: "{{ easyrsa_pki_dir }}/{{ item }}"
+  loop:
+    - ca.crt
+    - issued/client.crt
+    - private/client.key
+    - ta.key
+  notify: restart openvpn client
+- name: configure openvpn client
+  template:
+    dest: /etc/openvpn/client.conf
+    src: client.conf.j2
+  notify: restart openvpn client
 - name: enable and start openvpn client
   service:
     enabled: yes
     name: openvpn@client
     state: started
-- name: copy certificate and key files
-  copy:
-    dest: "/etc/openvpn/client/{{ item | basename }}"
-    src: "{{ openvpn_pki_dir }}/{{ item }}"
-  loop:
-    - ca.crt
-    - issued/client.crt
-    - private/client.key
-- name: configure openvpn client
-  template:
-    dest: /etc/openvpn/client.conf
-    mode: "0640"
-    src: client.conf.j2
-  notify: restart openvpn client
-  when: openvpn_server_fqdn != None

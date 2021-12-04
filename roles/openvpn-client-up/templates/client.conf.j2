@@ -1,15 +1,18 @@
 {{ ansible_managed | comment }}
-client
-dev tun
-proto udp
-remote {{ openvpn_server_fqdn }} 443
-remote-random-hostname
-resolv-retry infinite
-nobind
-remote-cert-tls server
-cipher AES-256-GCM
-verb 3
-reneg-sec 0
+#auth SHA512
 ca /etc/openvpn/client/ca.crt
 cert /etc/openvpn/client/client.crt
+client
+#compress lz4
+dev tun
 key /etc/openvpn/client/client.key
+#key-direction 1
+nobind
+remote {{ openvpn_server }}
+#remote-cert-tls server
+#tls-auth /etc/openvpn/client/ta.key 1
+#persist-key
+#persist-tun
+#user nobody
+#group nogroup
+verb 3

@@ -1,0 +1,11 @@
+---
+#- name: stop and disable openvpn client
+#  failed_when: false
+#  service:
+#    enabled: no
+#    name: openvpn@client
+#    state: stopped
+- name: uninstall openvpn
+  apt:
+    name: openvpn
+    state: absent
