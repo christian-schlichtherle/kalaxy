@@ -1,16 +1,14 @@
 {{ ansible_managed | comment }}
-#auth SHA512
-ca /etc/openvpn/client/ca.crt
-cert /etc/openvpn/client/client.crt
+ca client/ca.crt
+cert client/client.crt
 client
-#compress lz4
 dev tun
-key /etc/openvpn/client/client.key
-#key-direction 1
+#ifconfig {{ client_ip }} {{ client_netmask }}
+key client/client.key
 nobind
 remote {{ openvpn_server }}
-#remote-cert-tls server
-#tls-auth /etc/openvpn/client/ta.key 1
+remote-cert-tls server
+tls-auth client/ta.key 1
 #persist-key
 #persist-tun
 #user nobody

@@ -1,6 +1,7 @@
 ---
 - name: install k3s server
   environment:
+    INSTALL_K3S_EXEC: --node-ip {{ k3s_node_ip }}
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s server
@@ -22,12 +23,11 @@
 - name: apply post-server-up hooks
   changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
   local_action:
-    module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=hooks/{{ item }}.yaml'
-    removes: 'hooks/{{ item }}.yaml' # it doesn't, but it prevents this step from running if it is
+    module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename={{ item }}'
   register: post_server_up
   vars:
     ansible_become: no
-  with_items:
-    - post-server-up
-    - k3s-post-master-up
-    - post-master-up
+  with_fileglob:
+    - hooks/post-server-up.yaml
+    - hooks/k3s-post-master-up.yaml
+    - hooks/post-master-up.yaml

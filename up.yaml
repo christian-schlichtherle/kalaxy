@@ -1,22 +1,22 @@
 ---
-#- hosts: raspberry_pi_hw
-#  roles:
-#    - raspberry-pi-hw-up
-#- hosts: raspberry_pi_os
-#  roles:
-#    - raspberry-pi-os-up
-#- hosts: ubuntu
-#  roles:
-#    - ubuntu-up
-#- hosts:
-#    - raspberry_pi_os
-#    - ubuntu
-#  roles:
-#    - debian-up
-#- hosts:
-#    - rpi_update
-#  roles:
-#    - rpi-update-up
+- hosts: raspberry_pi_hw
+  roles:
+    - raspberry-pi-hw-up
+- hosts: raspberry_pi_os
+  roles:
+    - raspberry-pi-os-up
+- hosts: ubuntu
+  roles:
+    - ubuntu-up
+- hosts:
+    - raspberry_pi_os
+    - ubuntu
+  roles:
+    - debian-up
+- hosts:
+    - rpi_update
+  roles:
+    - rpi-update-up
 - hosts:
     - openvpn_server
   roles:
