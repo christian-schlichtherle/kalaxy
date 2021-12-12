@@ -1,6 +1,7 @@
 ---
 all:
   hosts: { }
+  #hosts:
     #node-0:
       #ansible_host: 1.2.3.4
     #node-1:
@@ -9,21 +10,25 @@ all:
     k3s_server:
       # At most one server:
       hosts: { }
-        #node-0: { }
+      #hosts:
+        #node-0:
           # Optional IP address of the node for node-to-node communication:
           #k3s_node_ip: 1.2.3.4
     k3s_agent:
       # None if there is no server, otherwise at least one agent:
       hosts: { }
-        #node-1: { }
+      #hosts:
+        #node-1:
           # Optional IP address of the node for node-to-node communication:
           #k3s_node_ip: 2.3.4.5
     raspberry_pi_hw:
       hosts: { }
+      #hosts:
         #node-0: { }
         #node-1: { }
     raspberry_pi_os:
       hosts: { }
+      #hosts:
         #node-0: { }
         #node-1: { }
       vars:
@@ -32,6 +37,7 @@ all:
         #rpi_update: true
     ubuntu:
       hosts: { }
+      #hosts:
         #node-0: { }
         #node-1: { }
       vars:
