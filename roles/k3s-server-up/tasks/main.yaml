@@ -1,7 +1,7 @@
 ---
 - name: install k3s server
   environment:
-    INSTALL_K3S_EXEC: --node-ip {{ k3s_node_ip }}
+    INSTALL_K3S_EXEC: --node-ip {{ k3s_node_ip }} {% if not k3s_server_schedule_pods %}--node-taint 'node-role.kubernetes.io/master:NoSchedule'{% endif %}
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s server
