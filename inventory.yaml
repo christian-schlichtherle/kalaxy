@@ -29,10 +29,7 @@ all:
       vars:
         ansible_ssh_user: pi
         #boot_directory: /boot
-    rpi_update:
-      hosts: { }
-        #node-0: { }
-        #node-1: { }
+        #rpi_update: true
     ubuntu:
       hosts: { }
       vars:

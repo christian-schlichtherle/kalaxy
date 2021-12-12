@@ -14,7 +14,7 @@
   roles:
     - debian-up
 - hosts:
-    - rpi_update
+    - raspberry_pi_os
   roles:
     - rpi-update-up
 - hosts:
