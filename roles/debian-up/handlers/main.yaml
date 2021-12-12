@@ -1,8 +1,4 @@
 ---
-- name: reload avahi-daemon
-  service:
-    name: avahi-daemon
-    state: reloaded
 - name: restart cron
   service:
     name: cron

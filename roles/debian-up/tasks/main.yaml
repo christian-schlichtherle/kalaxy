@@ -38,15 +38,13 @@
   apt:
     name:
       - apt-transport-https
-      - avahi-daemon
       - ca-certificates
       - curl
-      - gnupg-agent
-      - initramfs-tools
       - net-tools
       - nfs-common
       - open-iscsi
       - software-properties-common
+      - traceroute
 - name: remove obsolete or unused packages
   apt:
     autoclean: yes
@@ -54,7 +52,6 @@
 - name: set hostname
   hostname:
     name: "{{ inventory_hostname }}"
-  notify: reload avahi-daemon
 - name: "set timezone to {{ timezone }}"
   timezone:
     name: "{{ timezone }}"
