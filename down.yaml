@@ -8,10 +8,6 @@
   roles:
     - k3s-server-down
   run_once: yes
-- hosts:
-    - openvpn_client
-  roles:
-    - openvpn-client-down
 #- hosts:
 #    - raspberry_pi_os
 #    - ubuntu

@@ -1,4 +1,0 @@
----
-ansible_become: yes
-openvpn_pki_dir: null
-openvpn_server_fqdn: null

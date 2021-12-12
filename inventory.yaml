@@ -10,17 +10,14 @@ all:
       # At most one server:
       hosts: { }
         #node-0: { }
+          # Optional IP address of the node for node-to-node communication:
+          #k3s_node_ip: 1.2.3.4
     k3s_agent:
       # None if there is no server, otherwise at least one agent:
       hosts: { }
         #node-1: { }
-    openvpn_client:
-      hosts: { }
-      vars:
-        # The path of the pki directory where easy-rsa keeps the certificates and keys for the root CA for the VPN:
-        #openvpn_pki_dir: /my/path/to/easy-rsa/pki
-        # The fully qualified domain name of the VPN server:
-        #openvpn_server_fqdn: my.vpn.server.name
+          # Optional IP address of the node for node-to-node communication:
+          #k3s_node_ip: 2.3.4.5
     raspberry_pi_hw:
       hosts: { }
         #node-0: { }
