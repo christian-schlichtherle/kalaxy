@@ -10,3 +10,13 @@
         src: registries.yaml.j2
       name: write registries.yaml
   when: container_registry_mirror_url != None
+- name: install ipsec
+  apt:
+    name: strongswan
+    update_cache: yes
+  when: k3s_flannel_backend == 'ipsec'
+- name: install wireguard
+  apt:
+    name: wireguard
+    update_cache: yes
+  when: k3s_flannel_backend == 'wireguard'
