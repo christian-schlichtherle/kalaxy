@@ -18,7 +18,7 @@
     ansible_become: no
 - name: install k3s agent
   environment:
-    INSTALL_K3S_EXEC: {% if k3s_node_ip != None %} --node-ip {{ k3s_node_ip }}{% endif %}
+    INSTALL_K3S_EXEC: '{% if k3s_node_ip != None %} --node-ip {{ k3s_node_ip }}{% endif %}'
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
     K3S_TOKEN: '{{ k3s_token.stdout }}'
     K3S_URL: '{{ k3s_url.stdout }}'
