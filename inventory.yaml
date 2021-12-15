@@ -33,7 +33,6 @@ all:
 #        node-1: { }
       vars:
         ansible_ssh_user: pi
-#        boot_directory: /boot
 #        rpi_update: true
     ubuntu:
       hosts: { }
@@ -44,6 +43,7 @@ all:
         ansible_ssh_user: ubuntu
   vars:
     ansible_python_interpreter: /usr/bin/python3
+#    boot_directory: /boot
 #    container_registry_mirror_url: https://my-container-registry-mirror.local/
 #    # Do you want to delete local data in the Kubernetes cluster upon teardown?
 #    delete_local_data: no
