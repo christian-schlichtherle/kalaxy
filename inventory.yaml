@@ -4,7 +4,7 @@ all:
     ## [all Ansible hosts]
   children:
     k3s_server:
-      ## [at most K3s server]
+      ## [at most one K3s server]
     k3s_agent:
       ## [all K3s agents]
     raspberry_pi_hw:
