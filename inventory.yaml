@@ -1,59 +1,36 @@
 ---
 all:
-  hosts: { }
-#  hosts:
-#    node-0:
-#      ansible_host: 1.2.3.4
-#    node-1:
-#      ansible_host: 2.3.4.5
+  hosts:
+    ## [all Ansible hosts]
   children:
     k3s_server:
-      # At most one server:
-      hosts: { }
-#      hosts:
-#        node-0:
-#          # Optional IP address of the node for node-to-node communication:
-#          k3s_node_ip: 1.2.3.4
+      ## [at most K3s server]
     k3s_agent:
-      # None if there is no server, otherwise at least one agent:
-      hosts: { }
-#      hosts:
-#        node-1:
-#          # Optional IP address of the node for node-to-node communication:
-#          k3s_node_ip: 2.3.4.5
+      ## [all K3s agents]
     raspberry_pi_hw:
-      hosts: { }
-#      hosts:
-#        node-0: { }
-#        node-1: { }
+      ## [all Raspberry Pi hardware]
     raspberry_pi_os:
-      hosts: { }
-#      hosts:
-#        node-0: { }
-#        node-1: { }
+      ## [all hosts running Raspberry Pi OS]
       vars:
         ansible_ssh_user: pi
-#        rpi_update: true
+        #rpi_update: true
     ubuntu:
-      hosts: { }
-#      hosts:
-#        node-0: { }
-#        node-1: { }
+      ## [all hosts running Ubuntu]
       vars:
         ansible_ssh_user: ubuntu
   vars:
     ansible_python_interpreter: /usr/bin/python3
-#    boot_directory: /boot
-#    container_registry_mirror_url: https://my-container-registry-mirror.local/
-#    # Do you want to delete local data in the Kubernetes cluster upon teardown?
-#    delete_local_data: no
-#    # API Token for cloning repos from GitHub:
-#    github_api_token: ""
-#    k3s_version: v1.22.4+k3s1 # (https://github.com/rancher/k3s/releases)
-#    locale: C.UTF-8
-#    no_proxy: 127.0.0.1,.local,localhost
-#    proxy_url: http://10.0.0.1:3128/
-#    k3s_flannel_backend: vxlan
-#    # Should pods for your workloads be scheduled on K3s servers?
-#    k3s_server_schedule_pods: yes
-#    timezone: UTC
+    #boot_directory: /boot
+    #container_registry_mirror_url: https://my-container-registry-mirror.local/
+    ## Do you want to delete local data in the Kubernetes cluster upon teardown?
+    #delete_local_data: no
+    ## API Token for cloning repos from GitHub:
+    #github_api_token: ""
+    #k3s_version: v1.22.4+k3s1 # (https://github.com/rancher/k3s/releases)
+    #locale: C.UTF-8
+    #no_proxy: 127.0.0.1,.local,localhost
+    #proxy_url: http://10.0.0.1:3128/
+    #k3s_flannel_backend: vxlan
+    ## Should pods for your workloads be scheduled on K3s servers?
+    #k3s_server_schedule_pods: yes
+    #timezone: UTC
