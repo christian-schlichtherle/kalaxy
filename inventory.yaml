@@ -26,11 +26,11 @@ all:
     #delete_local_data: no
     ## API Token for cloning repos from GitHub:
     #github_api_token: ""
-    #k3s_version: v1.22.4+k3s1 # (https://github.com/rancher/k3s/releases)
-    #locale: C.UTF-8
-    #no_proxy: 127.0.0.1,.local,localhost
-    #proxy_url: http://10.0.0.1:3128/
     #k3s_flannel_backend: vxlan
     ## Should pods for your workloads be scheduled on K3s servers?
     #k3s_server_schedule_pods: yes
+    #k3s_version: v1.22.5+k3s1 # (https://github.com/rancher/k3s/releases)
+    #locale: C.UTF-8
+    #no_proxy: 127.0.0.1,.local,localhost
+    #proxy_url: http://10.0.0.1:3128/
     #timezone: UTC
