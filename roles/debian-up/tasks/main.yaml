@@ -45,10 +45,12 @@
       - open-iscsi
       - software-properties-common
       - traceroute
-- name: remove obsolete or unused packages
+- name: autoremove packages
+  apt:
+    autoremove: yes
+- name: autoclean packages
   apt:
     autoclean: yes
-    autoremove: yes
 - name: set hostname
   hostname:
     name: "{{ inventory_hostname }}"
