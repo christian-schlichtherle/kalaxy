@@ -15,8 +15,8 @@
     name: strongswan
     update_cache: yes
   when: k3s_flannel_backend == 'ipsec'
-- name: install wireguard
+- name: install wireguard-tools
   apt:
-    name: wireguard
+    name: wireguard-tools
     update_cache: yes
   when: k3s_flannel_backend == 'wireguard'
