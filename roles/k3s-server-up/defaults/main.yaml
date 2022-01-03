@@ -1,7 +1,8 @@
 ---
 ansible_become: yes
-# https://github.com/rancher/k3s/releases :
+k3s_cni_plugin: flannel
 k3s_flannel_backend: vxlan
 k3s_node_ip: null
 k3s_server_schedule_pods: yes
+# https://github.com/rancher/k3s/releases :
 k3s_version: v1.22.5+k3s1

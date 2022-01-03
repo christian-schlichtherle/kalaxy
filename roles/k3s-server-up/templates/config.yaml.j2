@@ -1,5 +1,10 @@
 ---
+{% if k3s_cni_plugin == 'calico' %}
+disable-network-policy: true
+flannel-backend: none
+{% else %}
 flannel-backend: {{ k3s_flannel_backend }}
+{% endif %}
 {% if k3s_node_ip %}
 node-ip: {{ k3s_node_ip }}
 {% endif %}

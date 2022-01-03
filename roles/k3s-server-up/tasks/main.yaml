@@ -27,6 +27,23 @@
     flat: yes
     src: /var/lib/rancher/k3s/server/token
 - meta: flush_handlers
+- name: install calico cni plugin
+  block:
+    - name: install operator for calico
+      changed_when: "'created' in calico_operator_up.stdout or 'configured' in calico_operator_up.stdout"
+      local_action:
+        module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=https://docs.projectcalico.org/manifests/tigera-operator.yaml'
+      register: calico_operator_up
+      vars:
+        ansible_become: no
+    - name: install custom resources for calico
+      changed_when: "'created' in custom_resources_up.stdout or 'configured' in custom_resources_up.stdout"
+      local_action:
+        module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=roles/k3s-server-up/templates/custom-resources.yaml'
+      register: custom_resources_up
+      vars:
+        ansible_become: no
+  when: k3s_cni_plugin == 'calico'
 - name: apply post-server-up hooks
   changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
   local_action:
