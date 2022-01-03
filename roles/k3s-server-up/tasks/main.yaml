@@ -1,7 +1,14 @@
 ---
+- name: make /etc/rancher/k3s directory
+  file:
+    path: /etc/rancher/k3s
+    state: directory
+- name: write /etc/rancher/k3s/config.yaml
+  template:
+    dest: /etc/rancher/k3s/config.yaml
+    src: config.yaml.j2
 - name: install k3s server
   environment:
-    INSTALL_K3S_EXEC: '--flannel-backend {{ k3s_flannel_backend }}{% if k3s_node_ip %} --node-ip {{ k3s_node_ip }}{% endif %}{% if not k3s_server_schedule_pods %} --node-taint node-role.kubernetes.io/master:NoSchedule{% endif %}'
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s server

@@ -1,0 +1,8 @@
+---
+flannel-backend: {{ k3s_flannel_backend }}
+{% if k3s_node_ip %}
+node-ip: {{ k3s_node_ip }}
+{% endif %}
+{% if not k3s_server_schedule_pods %}
+node-taint: node-role.kubernetes.io/master:NoSchedule
+{% endif %}

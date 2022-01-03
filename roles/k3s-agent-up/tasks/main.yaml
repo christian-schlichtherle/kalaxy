@@ -1,26 +1,25 @@
 ---
-- name: register k3s token
-  changed_when: false
-  local_action: command cat build/k3s-token
-  register: k3s_token
-  run_once: yes
-  vars:
-    ansible_become: no
 - name: register k3s url
-  args:
-    warn: no
   changed_when: false
-  command: 'sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
-  delegate_to: localhost
+  local_action:
+    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
+    warn: no
   register: k3s_url
   run_once: yes
   vars:
     ansible_become: no
+- name: make /etc/rancher/k3s directory
+  file:
+    path: /etc/rancher/k3s
+    state: directory
+- name: write /etc/rancher/k3s/config.yaml
+  template:
+    dest: /etc/rancher/k3s/config.yaml
+    src: config.yaml.j2
 - name: install k3s agent
   environment:
-    INSTALL_K3S_EXEC: '{% if k3s_node_ip %} --node-ip {{ k3s_node_ip }}{% endif %}'
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
-    K3S_TOKEN: '{{ k3s_token.stdout }}'
+    K3S_TOKEN: '{{ lookup("file", "build/k3s-token") }}'
     K3S_URL: '{{ k3s_url.stdout }}'
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s agent
