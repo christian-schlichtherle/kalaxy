@@ -61,4 +61,5 @@
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
     creates: /usr/local/bin/k3s-uninstall.sh
+  throttle: 1
   when: inventory_hostname != groups.k3s_server[0]
