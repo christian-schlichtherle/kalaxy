@@ -14,3 +14,11 @@
   shell: dphys-swapfile uninstall && update-rc.d dphys-swapfile disable
   args:
     removes: /var/swap
+- name: use legacy iptables
+  alternatives:
+    name: '{{ item }}'
+    path: /usr/sbin/{{ item }}-legacy
+  loop:
+    - iptables
+    - ip6tables
+  notify: reboot
