@@ -7,7 +7,6 @@
     - k3s_server
   roles:
     - k3s-server-down
-  run_once: yes
 #- hosts:
 #    - raspberry_pi_os
 #    - ubuntu

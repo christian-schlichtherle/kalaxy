@@ -1,14 +1,12 @@
 ---
-- name: install container registry mirror configuration
-  block:
-    - name: make /etc/rancher/k3s directory
-      file:
-        path: /etc/rancher/k3s
-        state: directory
-    - name: write /etc/rancher/k3s/registries.yaml
-      template:
-        dest: /etc/rancher/k3s/registries.yaml
-        src: registries.yaml.j2
+- name: make directory /etc/rancher/k3s
+  file:
+    path: /etc/rancher/k3s
+    state: directory
+- name: put /etc/rancher/k3s/registries.yaml
+  template:
+    dest: /etc/rancher/k3s/registries.yaml
+    src: registries.yaml.j2
   when: container_registry_mirror_url != None
 - name: install ipsec
   apt:

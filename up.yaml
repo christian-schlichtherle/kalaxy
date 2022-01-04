@@ -25,7 +25,6 @@
 - hosts: k3s_server
   roles:
     - k3s-server-up
-  run_once: yes
 - hosts: k3s_agent
   roles:
     - k3s-agent-up

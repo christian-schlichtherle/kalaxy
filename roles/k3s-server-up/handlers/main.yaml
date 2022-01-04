@@ -1,18 +1,19 @@
 ---
-- name: write k3s config
+- name: backup kubeconfig
   local_action:
+    dest: build/kubeconfig.yaml
     module: copy
-    dest: build/k3s-config.yaml
-    src: build/k3s-config.yaml.bak
+    src: build/kubeconfig.yaml.bak
   run_once: yes
   vars:
     ansible_become: no
-- name: edit k3s config
+- name: edit kubeconfig
   local_action:
     backrefs: yes
     line: '\g<1>{{ ansible_default_ipv4.address }}\g<2>'
     module: lineinfile
-    path: build/k3s-config.yaml
+    path: build/kubeconfig.yaml
     regexp: '^(\s+server:\s+https?://)(?:[a-zA-Z0-9.-]+)([\W$].*)$'
+  run_once: yes
   vars:
     ansible_become: no

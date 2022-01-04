@@ -1,17 +1,4 @@
 ---
-- name: register k3s url
-  changed_when: false
-  local_action:
-    module: 'command sed -n -E -e "s/^ +server: +(.*)$/\1/p" build/k3s-config.yaml'
-    warn: no
-  register: k3s_url
-  run_once: yes
-  vars:
-    ansible_become: no
-- name: make /etc/rancher/k3s directory
-  file:
-    path: /etc/rancher/k3s
-    state: directory
 - name: write /etc/rancher/k3s/config.yaml
   template:
     dest: /etc/rancher/k3s/config.yaml
@@ -20,7 +7,6 @@
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
     K3S_TOKEN: '{{ lookup("file", "build/k3s-token") }}'
-    K3S_URL: '{{ k3s_url.stdout }}'
   shell:
-    cmd: curl --fail --location --silent https://get.k3s.io | sh -s agent
+    cmd: curl --fail --location --silent https://get.k3s.io | sh -s - agent
     creates: /usr/local/bin/k3s-agent-uninstall.sh

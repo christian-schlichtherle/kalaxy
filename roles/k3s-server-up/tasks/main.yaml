@@ -1,57 +1,64 @@
 ---
-- name: make /etc/rancher/k3s directory
-  file:
-    path: /etc/rancher/k3s
-    state: directory
 - name: write /etc/rancher/k3s/config.yaml
   template:
     dest: /etc/rancher/k3s/config.yaml
     src: config.yaml.j2
-- name: install k3s server
+- name: run_once
+  block:
+    - name: install first k3s server
+      environment:
+        INSTALL_K3S_VERSION: '{{ k3s_version }}'
+      shell:
+        cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
+        creates: /usr/local/bin/k3s-uninstall.sh
+    - name: fetch k3s token
+      fetch:
+        dest: build/k3s-token
+        flat: yes
+        src: /var/lib/rancher/k3s/server/token
+    - name: fetch kubeconfig
+      fetch:
+        dest: build/kubeconfig.yaml.bak
+        flat: yes
+        src: /etc/rancher/k3s/k3s.yaml
+      notify:
+        - backup kubeconfig
+        - edit kubeconfig
+    - meta: flush_handlers
+    - name: install calico cni plugin
+      block:
+        - name: install operator for calico
+          changed_when: "'created' in calico_operator_up.stdout or 'configured' in calico_operator_up.stdout"
+          local_action:
+            module: 'command kubectl --kubeconfig=build/kubeconfig.yaml apply --filename=https://docs.projectcalico.org/manifests/tigera-operator.yaml'
+          register: calico_operator_up
+          vars:
+            ansible_become: no
+        - name: install custom resources for calico
+          changed_when: "'created' in custom_resources_up.stdout or 'configured' in custom_resources_up.stdout"
+          local_action:
+            module: 'command kubectl --kubeconfig=build/kubeconfig.yaml apply --filename=roles/k3s-server-up/templates/custom-resources.yaml'
+          register: custom_resources_up
+          vars:
+            ansible_become: no
+      when: k3s_cni_plugin == 'calico'
+    - name: apply post-server-up hooks
+      changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
+      local_action:
+        module: 'command kubectl --kubeconfig=build/kubeconfig.yaml apply --filename={{ item }}'
+      register: post_server_up
+      vars:
+        ansible_become: no
+      with_fileglob:
+        - hooks/post-server-up.yaml
+        - hooks/k3s-post-master-up.yaml
+        - hooks/post-master-up.yaml
+  run_once: yes
+- name: install remaining k3s servers
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
+    K3S_TOKEN: '{{ lookup("file", "build/k3s-token") }}'
   shell:
-    cmd: curl --fail --location --silent https://get.k3s.io | sh -s server
+    cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
     creates: /usr/local/bin/k3s-uninstall.sh
-- name: fetch k3s config
-  fetch:
-    dest: build/k3s-config.yaml.bak
-    flat: yes
-    src: /etc/rancher/k3s/k3s.yaml
-  notify:
-    - write k3s config
-    - edit k3s config
-- name: fetch k3s token
-  fetch:
-    dest: build/k3s-token
-    flat: yes
-    src: /var/lib/rancher/k3s/server/token
-- meta: flush_handlers
-- name: install calico cni plugin
-  block:
-    - name: install operator for calico
-      changed_when: "'created' in calico_operator_up.stdout or 'configured' in calico_operator_up.stdout"
-      local_action:
-        module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=https://docs.projectcalico.org/manifests/tigera-operator.yaml'
-      register: calico_operator_up
-      vars:
-        ansible_become: no
-    - name: install custom resources for calico
-      changed_when: "'created' in custom_resources_up.stdout or 'configured' in custom_resources_up.stdout"
-      local_action:
-        module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename=roles/k3s-server-up/templates/custom-resources.yaml'
-      register: custom_resources_up
-      vars:
-        ansible_become: no
-  when: k3s_cni_plugin == 'calico'
-- name: apply post-server-up hooks
-  changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
-  local_action:
-    module: 'command kubectl --kubeconfig=build/k3s-config.yaml apply --filename={{ item }}'
-  register: post_server_up
-  vars:
-    ansible_become: no
-  with_fileglob:
-    - hooks/post-server-up.yaml
-    - hooks/k3s-post-master-up.yaml
-    - hooks/post-master-up.yaml
+  when: inventory_hostname != groups.k3s_server[0]

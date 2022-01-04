@@ -1,4 +1,7 @@
 ---
+{% if inventory_hostname == groups.k3s_server[0] and groups.k3s_server | length > 1 %}
+cluster-init: true
+{% endif %}
 {% if k3s_cni_plugin == 'calico' %}
 disable-network-policy: true
 flannel-backend: none
@@ -10,4 +13,7 @@ node-ip: {{ k3s_node_ip }}
 {% endif %}
 {% if not k3s_server_schedule_pods %}
 node-taint: node-role.kubernetes.io/master:NoSchedule
+{% endif %}
+{% if inventory_hostname != groups.k3s_server[0] %}
+server: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip | default(hostvars[groups.k3s_server[0]].ansible_default_ipv4.address) }}:6443
 {% endif %}
