@@ -3,19 +3,24 @@
   stat:
     path: /usr/local/bin/k3s-agent-uninstall.sh
   register: k3s_agent
-- name: drain and delete node
+- block:
+    - name: drain node
+      local_action:
+        module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if delete_local_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
+      notify: reboot
+      vars:
+        ansible_become: no
+    - name: delete node
+      local_action:
+        kind: Node
+        module: kubernetes.core.k8s
+        name: '{{ inventory_hostname }}'
+        state: absent
+      notify: reboot
+      vars:
+        ansible_become: no
+    - name: uninstall k3s agent
+      command: k3s-agent-uninstall.sh
   environment:
-    KUBECONFIG: build/k3s-config.yaml
-  local_action:
-    module: shell
-    _raw_params: |
-      kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if delete_local_data %}true{% else %}false{% endif %} --force --ignore-daemonsets
-      kubectl delete node {{ inventory_hostname }}
-    removes: build/k3s-config.yaml # it doesn't, but it prevents this step from running if it is
-  notify: reboot
-  vars:
-    ansible_become: no
-  when: k3s_agent.stat.exists
-- name: uninstall k3s agent
-  command: k3s-agent-uninstall.sh
+    KUBECONFIG: build/kubeconfig.yaml
   when: k3s_agent.stat.exists

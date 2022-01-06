@@ -3,8 +3,7 @@
   template:
     dest: /etc/rancher/k3s/config.yaml
     src: config.yaml.j2
-- name: server bootstrap
-  block:
+- block:
     - name: install first k3s server
       environment:
         INSTALL_K3S_VERSION: '{{ k3s_version }}'
@@ -16,15 +15,6 @@
         dest: build/k3s-token
         flat: yes
         src: /var/lib/rancher/k3s/server/token
-    - name: fetch kubeconfig
-      fetch:
-        dest: build/kubeconfig.yaml.bak
-        flat: yes
-        src: /etc/rancher/k3s/k3s.yaml
-      notify:
-        - backup kubeconfig
-        - edit kubeconfig
-    - meta: flush_handlers
   run_once: yes
 - name: install remaining k3s servers
   environment:
@@ -35,34 +25,44 @@
     creates: /usr/local/bin/k3s-uninstall.sh
   throttle: 1
   when: inventory_hostname != groups.k3s_server[0]
-- name: post install
-  block:
-    - name: install calico cni plugin
-      block:
+- name: fetch kubeconfig
+  fetch:
+    dest: build/kubeconfig.yaml.bak
+    flat: yes
+    src: /etc/rancher/k3s/k3s.yaml
+  notify:
+    - backup kubeconfig
+    - edit kubeconfig
+  run_once: yes
+- meta: flush_handlers
+- block:
+    - block:
         - name: install operator for calico
-          changed_when: "'created' in calico_operator_up.stdout or 'configured' in calico_operator_up.stdout"
           local_action:
-            module: 'command kubectl --kubeconfig=build/kubeconfig.yaml apply --filename=https://docs.projectcalico.org/manifests/tigera-operator.yaml'
-          register: calico_operator_up
+            module: kubernetes.core.k8s
+            src: https://docs.projectcalico.org/manifests/tigera-operator.yaml
+            state: present
           vars:
             ansible_become: no
         - name: install custom resources for calico
-          changed_when: "'created' in custom_resources_up.stdout or 'configured' in custom_resources_up.stdout"
           local_action:
-            module: 'command kubectl --kubeconfig=build/kubeconfig.yaml apply --filename=roles/k3s-server-up/templates/custom-resources.yaml'
-          register: custom_resources_up
+            module: kubernetes.core.k8s
+            template: custom-resources.yaml.j2
+            state: present
           vars:
             ansible_become: no
       when: k3s_cni_plugin == 'calico'
     - name: apply post-server-up hooks
-      changed_when: "'created' in post_server_up.stdout or 'configured' in post_server_up.stdout"
       local_action:
-        module: 'command kubectl --kubeconfig=build/kubeconfig.yaml apply --filename={{ item }}'
-      register: post_server_up
+        module: kubernetes.core.k8s
+        src: '{{ item }}'
+        state: present
       vars:
         ansible_become: no
       with_fileglob:
         - hooks/post-server-up.yaml
         - hooks/k3s-post-master-up.yaml
         - hooks/post-master-up.yaml
+  environment:
+    KUBECONFIG: build/kubeconfig.yaml
   run_once: yes
