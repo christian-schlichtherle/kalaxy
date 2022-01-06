@@ -10,10 +10,10 @@
 - name: edit kubeconfig
   local_action:
     backrefs: yes
-    line: '\g<1>{{ ansible_default_ipv4.address }}\g<2>'
+    line: '\g<1>{{ k3s_server_url }}'
     module: lineinfile
     path: build/kubeconfig.yaml
-    regexp: '^(\s+server:\s+https?://)(?:[a-zA-Z0-9.-]+)([\W$].*)$'
+    regexp: '^(\s+server:\s*)https?://.*'
   run_once: yes
   vars:
     ansible_become: no

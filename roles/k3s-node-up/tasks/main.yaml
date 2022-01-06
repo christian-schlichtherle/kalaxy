@@ -3,7 +3,7 @@
   file:
     path: /etc/rancher/k3s
     state: directory
-- name: put /etc/rancher/k3s/registries.yaml
+- name: write /etc/rancher/k3s/registries.yaml
   template:
     dest: /etc/rancher/k3s/registries.yaml
     src: registries.yaml.j2

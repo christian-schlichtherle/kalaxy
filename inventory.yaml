@@ -26,9 +26,12 @@ all:
     #delete_local_data: no
     ## API Token for cloning repos from GitHub:
     #github_api_token: ""
+    #k3s_cni_plugin: flannel
     #k3s_flannel_backend: vxlan
+    #k3s_node_ip: null
     ## Should pods for your workloads be scheduled on K3s servers?
     #k3s_server_schedule_pods: yes
+    #k3s_server_url: https://localhost:6443
     #k3s_version: v1.22.5+k3s1 # (https://github.com/rancher/k3s/releases)
     #locale: C.UTF-8
     #no_proxy: 127.0.0.1,.local,localhost
