@@ -1,5 +1,5 @@
 mirrors:
-{% for registry, url in k3s_container_registry_mirror_urls %}
+{% for registry, url in k3s_container_registry_mirror_urls.items() %}
   {{ registry }}:
     endpoint:
       - "{{ url }}"
