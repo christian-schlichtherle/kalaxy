@@ -2,3 +2,4 @@
 ansible_become: yes
 k3s_build_dir: build
 k3s_delete_emptydir_data: no
+k3s_hooks_dir: hooks

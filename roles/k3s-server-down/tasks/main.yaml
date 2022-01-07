@@ -12,9 +12,9 @@
       vars:
         ansible_become: no
       with_fileglob:
-        - hooks/pre-master-down.yaml
-        - hooks/k3s-pre-master-down.yaml
-        - hooks/pre-server-down.yaml
+        - '{{ k3s_hooks_dir }}/pre-master-down.yaml'
+        - '{{ k3s_hooks_dir }}/k3s-pre-master-down.yaml'
+        - '{{ k3s_hooks_dir }}/pre-server-down.yaml'
     - name: drain node
       local_action:
         module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if k3s_delete_emptydir_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
