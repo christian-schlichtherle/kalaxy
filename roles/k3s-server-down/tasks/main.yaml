@@ -17,7 +17,7 @@
         - hooks/pre-server-down.yaml
     - name: drain node
       local_action:
-        module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if delete_local_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
+        module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if k3s_delete_emptydir_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
       notify: reboot
       vars:
         ansible_become: no
