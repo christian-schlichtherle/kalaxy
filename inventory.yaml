@@ -23,6 +23,7 @@ all:
     #boot_directory: /boot
     #container_registry_mirror_url: https://my-container-registry-mirror.local/
     ## Do you want to delete local data in the Kubernetes cluster upon teardown?
+    #k3s_build_dir: build
     #k3s_delete_emptydir_data: no
     ## API Token for cloning repos from GitHub:
     #github_api_token: ""

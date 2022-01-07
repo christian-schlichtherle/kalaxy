@@ -33,5 +33,5 @@
     - name: uninstall k3s server
       command: k3s-uninstall.sh
   environment:
-    KUBECONFIG: build/kubeconfig.yaml
+    KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
   when: k3s_server.stat.exists

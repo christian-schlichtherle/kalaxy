@@ -1,9 +1,9 @@
 ---
 - name: backup kubeconfig
   local_action:
-    dest: build/kubeconfig.yaml
+    dest: '{{ k3s_build_dir }}/kubeconfig.yaml'
     module: copy
-    src: build/kubeconfig.yaml.bak
+    src: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
   run_once: yes
   vars:
     ansible_become: no
@@ -12,7 +12,7 @@
     backrefs: yes
     line: '\g<1>{{ k3s_server_url }}'
     module: lineinfile
-    path: build/kubeconfig.yaml
+    path: '{{ k3s_build_dir }}/kubeconfig.yaml'
     regexp: '^(\s+server:\s*)https?://.*'
   run_once: yes
   vars:

@@ -12,14 +12,14 @@
         creates: /usr/local/bin/k3s-uninstall.sh
     - name: fetch k3s token
       fetch:
-        dest: build/k3s-token
+        dest: '{{ k3s_build_dir }}/k3s-token'
         flat: yes
         src: /var/lib/rancher/k3s/server/token
   run_once: yes
 - name: install remaining k3s servers
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
-    K3S_TOKEN: '{{ lookup("file", "build/k3s-token") }}'
+    K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/k3s-token") }}'
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
     creates: /usr/local/bin/k3s-uninstall.sh
@@ -27,7 +27,7 @@
   when: inventory_hostname != groups.k3s_server[0]
 - name: fetch kubeconfig
   fetch:
-    dest: build/kubeconfig.yaml.bak
+    dest: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
     flat: yes
     src: /etc/rancher/k3s/k3s.yaml
   notify:
@@ -64,5 +64,5 @@
         - hooks/k3s-post-master-up.yaml
         - hooks/post-master-up.yaml
   environment:
-    KUBECONFIG: build/kubeconfig.yaml
+    KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
   run_once: yes
