@@ -7,7 +7,7 @@
   template:
     dest: /etc/rancher/k3s/registries.yaml
     src: registries.yaml.j2
-  when: container_registry_mirror_url != None
+  when: k3s_container_registry_mirror_urls
 - name: install ipsec
   apt:
     name: strongswan

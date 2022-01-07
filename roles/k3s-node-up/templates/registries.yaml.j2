@@ -1,4 +1,6 @@
 mirrors:
-  docker.io:
+{% for registry, url in k3s_container_registry_mirror_urls %}
+  {{ registry }}:
     endpoint:
-      - "{{ container_registry_mirror_url }}"
+      - "{{ url }}"
+{% endfor %}

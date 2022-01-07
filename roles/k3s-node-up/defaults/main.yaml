@@ -1,4 +1,4 @@
 ---
 ansible_become: yes
-container_registry_mirror_url: null
+k3s_container_registry_mirror_urls: null
 k3s_flannel_backend: vxlan
