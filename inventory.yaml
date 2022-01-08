@@ -31,11 +31,15 @@ all:
     #k3s_cni_plugin: flannel
     #k3s_flannel_backend: vxlan
     #k3s_hooks_dir: hooks
+    #k3s_labels: [ ]
+    #k3s_node_external_ip: null
     #k3s_node_ip: null
     ## Should pods for your workloads be scheduled on K3s servers?
     #k3s_server_schedule_pods: yes
     #k3s_server_url: https://localhost:6443
-    #k3s_version: v1.22.5+k3s1 # (https://github.com/rancher/k3s/releases)
+    #k3s_taints: [ ]
+    ## https://github.com/rancher/k3s/releases :
+    #k3s_version: v1.22.5+k3s1
     #locale: C.UTF-8
     #no_proxy: 127.0.0.1,.local,localhost
     #proxy_url: http://10.0.0.1:3128/

@@ -1,5 +1,14 @@
 ---
+{% if k3s_node_external_ip %}
+node-external-ip: {{ k3s_node_external_ip }}
+{% endif %}
 {% if k3s_node_ip %}
 node-ip: {{ k3s_node_ip }}
 {% endif %}
+{% for label in k3s_labels %}
+node-label: {{ label }}
+{% endfor %}
 server: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip | default(hostvars[groups.k3s_server[0]].ansible_default_ipv4.address) }}:6443
+{% for taint in k3s_taints %}
+node-taint: {{ taint }}
+{% endfor %}

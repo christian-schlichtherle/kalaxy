@@ -8,12 +8,22 @@ flannel-backend: none
 {% else %}
 flannel-backend: {{ k3s_flannel_backend }}
 {% endif %}
+{% if k3s_node_external_ip %}
+node-external-ip: {{ k3s_node_external_ip }}
+{% endif %}
 {% if k3s_node_ip %}
 node-ip: {{ k3s_node_ip }}
 {% endif %}
+{% for label in k3s_labels %}
+node-label: {{ label }}
+{% endfor %}
 {% if not k3s_server_schedule_pods %}
 node-taint: node-role.kubernetes.io/control-plane:NoSchedule
+node-taint: node-role.kubernetes.io/master:NoSchedule
 {% endif %}
+{% for taint in k3s_taints %}
+node-taint: {{ taint }}
+{% endfor %}
 {% if inventory_hostname != groups.k3s_server[0] %}
 server: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip | default(hostvars[groups.k3s_server[0]].ansible_default_ipv4.address) }}:6443
 {% endif %}
