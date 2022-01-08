@@ -7,7 +7,6 @@
     - name: drain node
       local_action:
         module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if k3s_delete_emptydir_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
-      notify: reboot
       vars:
         ansible_become: no
     - name: delete node
@@ -16,7 +15,6 @@
         module: kubernetes.core.k8s
         name: '{{ inventory_hostname }}'
         state: absent
-      notify: reboot
       vars:
         ansible_become: no
     - name: uninstall k3s agent
