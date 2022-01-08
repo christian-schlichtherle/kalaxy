@@ -30,6 +30,7 @@ all:
     #github_api_token: ""
     #k3s_cni_plugin: flannel
     #k3s_flannel_backend: vxlan
+    #k3s_flannel_iface: null
     #k3s_hooks_dir: hooks
     #k3s_labels: [ ]
     #k3s_node_external_ip: null

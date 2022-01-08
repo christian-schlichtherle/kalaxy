@@ -7,6 +7,9 @@ disable-network-policy: true
 flannel-backend: none
 {% else %}
 flannel-backend: {{ k3s_flannel_backend }}
+{% if k3s_flannel_iface %}
+flannel-iface: {{ k3s_flannel_iface }}
+{% endif %}
 {% endif %}
 {% if k3s_node_external_ip %}
 node-external-ip: {{ k3s_node_external_ip }}

@@ -1,4 +1,7 @@
 ---
+{% if k3s_flannel_iface %}
+flannel-iface: {{ k3s_flannel_iface }}
+{% endif %}
 {% if k3s_node_external_ip %}
 node-external-ip: {{ k3s_node_external_ip }}
 {% endif %}

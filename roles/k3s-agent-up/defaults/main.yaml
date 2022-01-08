@@ -1,6 +1,7 @@
 ---
 ansible_become: yes
 k3s_build_dir: build
+k3s_flannel_iface: null
 k3s_labels: [ ]
 k3s_node_external_ip: null
 k3s_node_ip: null
