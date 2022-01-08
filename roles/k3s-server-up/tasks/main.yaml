@@ -20,6 +20,8 @@
         mode: '600'
         module: file
         path: '{{ k3s_build_dir }}/k3s-token'
+      vars:
+        ansible_become: no
   run_once: yes
 - name: install remaining k3s servers
   environment:

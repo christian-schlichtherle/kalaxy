@@ -4,6 +4,8 @@
     mode: '600'
     module: file
     path: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
+  vars:
+    ansible_become: no
 - name: backup kubeconfig
   local_action:
     dest: '{{ k3s_build_dir }}/kubeconfig.yaml'
