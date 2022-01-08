@@ -10,11 +10,15 @@
       shell:
         cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
         creates: /usr/local/bin/k3s-uninstall.sh
-    - name: fetch k3s token
+    - name: fetch k3s-token
       fetch:
         dest: '{{ k3s_build_dir }}/k3s-token'
         flat: yes
         src: /var/lib/rancher/k3s/server/token
+    - name: fix access to k3s-token
+      file:
+        mode: '600'
+        path: '{{ k3s_build_dir }}/k3s-token'
   run_once: yes
 - name: install remaining k3s servers
   environment:
@@ -31,6 +35,7 @@
     flat: yes
     src: /etc/rancher/k3s/k3s.yaml
   notify:
+    - fix access to kubeconfig
     - backup kubeconfig
     - edit kubeconfig
   run_once: yes

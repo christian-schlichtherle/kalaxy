@@ -1,4 +1,8 @@
 ---
+- name: fix access to kubeconfig
+  file:
+    mode: '600'
+    path: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
 - name: backup kubeconfig
   local_action:
     dest: '{{ k3s_build_dir }}/kubeconfig.yaml'
@@ -12,6 +16,7 @@
     backrefs: yes
     line: '\g<1>{{ k3s_server_url }}'
     module: lineinfile
+    mode: '600'
     path: '{{ k3s_build_dir }}/kubeconfig.yaml'
     regexp: '^(\s+server:\s*)https?://.*'
   run_once: yes
