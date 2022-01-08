@@ -34,8 +34,8 @@ all:
     #k3s_labels: [ ]
     #k3s_node_external_ip: null
     #k3s_node_ip: null
-    ## Should pods for your workloads be scheduled on K3s servers?
-    #k3s_server_schedule_pods: yes
+    ## Should pods be scheduled on K3s servers?
+    #k3s_server_schedule_pods: '{{ groups.k3s_agent | length == 0 }}'
     #k3s_server_url: https://localhost:6443
     #k3s_taints: [ ]
     ## https://github.com/rancher/k3s/releases :
