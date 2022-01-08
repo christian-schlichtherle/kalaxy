@@ -1,7 +1,8 @@
 ---
 - name: fix access to kubeconfig
-  file:
+  local_action:
     mode: '600'
+    module: file
     path: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
 - name: backup kubeconfig
   local_action:
