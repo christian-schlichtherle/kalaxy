@@ -13,7 +13,6 @@ all:
       ## [all hosts running Raspberry Pi OS]
       vars:
         ansible_ssh_user: pi
-        #rpi_update: true
     ubuntu:
       ## [all hosts running Ubuntu]
       vars:
@@ -44,4 +43,5 @@ all:
     #locale: C.UTF-8
     #no_proxy: 127.0.0.1,.local,localhost
     #proxy_url: http://10.0.0.1:3128/
+    #rpi_update: yes
     #timezone: UTC
