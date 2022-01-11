@@ -10,23 +10,23 @@
       shell:
         cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
         creates: /usr/local/bin/k3s-uninstall.sh
-    - name: fetch k3s-token
+    - name: fetch server token
       fetch:
-        dest: '{{ k3s_build_dir }}/k3s-token'
+        dest: '{{ k3s_build_dir }}/server-token'
         flat: yes
         src: /var/lib/rancher/k3s/server/token
-    - name: fix access to k3s-token
+    - name: fix access to server token
       local_action:
         mode: '600'
         module: file
-        path: '{{ k3s_build_dir }}/k3s-token'
+        path: '{{ k3s_build_dir }}/server-token'
       vars:
         ansible_become: no
   run_once: yes
 - name: install remaining k3s servers
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
-    K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/k3s-token") }}'
+    K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
   shell:
     cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
     creates: /usr/local/bin/k3s-uninstall.sh
