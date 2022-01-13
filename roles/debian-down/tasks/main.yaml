@@ -3,18 +3,16 @@
   file:
     path: /etc/apt/apt.conf.d/95proxies
     state: absent
-  when: proxy_url != None
-- name: remove environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY
-  lineinfile:
-    path: /etc/environment
-    regexp: '^\s*{{ item }}\s*='
-    state: absent
-  notify: reboot
-  when: proxy_url != None
-  with_items:
-    - http_proxy
-    - HTTP_PROXY
-    - https_proxy
-    - HTTPS_PROXY
-    - no_proxy
-    - NO_PROXY
+#- name: remove environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY
+#  lineinfile:
+#    path: /etc/environment
+#    regexp: '^\s*{{ item }}\s*='
+#    state: absent
+#  notify: reboot
+#  with_items:
+#    - http_proxy
+#    - HTTP_PROXY
+#    - https_proxy
+#    - HTTPS_PROXY
+#    - no_proxy
+#    - NO_PROXY
