@@ -11,7 +11,7 @@
       changed_when: "'already up to date' not in rpi_update.stdout or 'reboot is needed' in rpi_update.stdout"
       environment:
         BOOT_PATH: "{{ boot_directory }}"
-        GITHUB_API_TOKEN: "{{ github_api_token }}"
+        GITHUB_API_TOKEN: "{{ github_api_token | default(omit, true) }}"
         ROOT_PATH: /
         SKIP_REPODELETE: 1
         SKIP_WARNING: 1
