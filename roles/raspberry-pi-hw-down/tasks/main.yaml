@@ -1,6 +1,6 @@
 ---
 - name: ensure cgroup kernel params
-  failed_when: false
+  ignore_errors: yes
   lineinfile:
     backrefs: yes
     line: '\g<1>\g<2>'

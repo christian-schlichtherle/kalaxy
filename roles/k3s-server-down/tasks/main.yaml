@@ -15,19 +15,21 @@
         - '{{ k3s_hooks_dir }}/pre-master-down.yaml'
         - '{{ k3s_hooks_dir }}/k3s-pre-master-down.yaml'
         - '{{ k3s_hooks_dir }}/pre-server-down.yaml'
-    - name: drain node
-      local_action:
-        module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if k3s_delete_emptydir_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
-      vars:
-        ansible_become: no
-    - name: delete node
-      local_action:
-        kind: Node
-        module: kubernetes.core.k8s
-        name: '{{ inventory_hostname }}'
-        state: absent
-      vars:
-        ansible_become: no
+    - block:
+        - name: drain node
+          local_action:
+            module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if k3s_delete_emptydir_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
+          vars:
+            ansible_become: no
+        - name: delete node
+          local_action:
+            kind: Node
+            module: kubernetes.core.k8s
+            name: '{{ inventory_hostname }}'
+            state: absent
+          vars:
+            ansible_become: no
+      ignore_errors: yes
     - name: uninstall k3s server
       command: k3s-uninstall.sh
   environment:
