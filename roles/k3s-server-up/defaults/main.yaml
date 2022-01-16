@@ -13,3 +13,4 @@ k3s_server_url: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip | default(
 k3s_taints: [ ]
 # https://github.com/rancher/k3s/releases :
 k3s_version: v1.22.5+k3s1
+proxy_url: null

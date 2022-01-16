@@ -8,3 +8,4 @@ k3s_node_ip: null
 k3s_taints: [ ]
 # https://github.com/rancher/k3s/releases :
 k3s_version: v1.22.5+k3s1
+proxy_url: null
