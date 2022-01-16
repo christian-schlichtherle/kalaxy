@@ -26,7 +26,7 @@ all:
     ## Do you want to delete all data from emptydir volumes upon teardown?
     #k3s_delete_emptydir_data: no
     ## API Token for cloning repos from GitHub:
-    #github_api_token: ""
+    #github_api_token: null
     #k3s_cni_plugin: flannel
     #k3s_flannel_backend: vxlan
     #k3s_flannel_iface: null

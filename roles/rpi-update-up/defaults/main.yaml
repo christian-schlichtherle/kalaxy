@@ -1,5 +1,6 @@
 ---
 ansible_become: yes
 boot_directory: /boot
-github_api_token: ""
+github_api_token: null
+proxy_url: null
 rpi_update: no
