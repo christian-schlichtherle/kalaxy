@@ -50,9 +50,7 @@
 - block:
     - block:
         - name: install operator for calico
-          local_action:
-            module: kubernetes.core.k8s
-            src: https://docs.projectcalico.org/manifests/tigera-operator.yaml
+          local_action: command kubectl apply --filename https://docs.projectcalico.org/manifests/tigera-operator.yaml
           vars:
             ansible_become: no
         - name: install custom resources for calico
