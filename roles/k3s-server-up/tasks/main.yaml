@@ -72,4 +72,6 @@
         - '{{ k3s_hooks_dir }}/post-master-up.yaml'
   environment:
     KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
+    http_proxy: '{{ proxy_url | default(omit) }}'
+    https_proxy: '{{ proxy_url | default(omit) }}'
   run_once: yes
