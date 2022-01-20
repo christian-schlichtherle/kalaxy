@@ -38,7 +38,6 @@
   apt:
     name:
       - apt-transport-https
-      - ca-certificates
       - curl
       - net-tools
       - software-properties-common
