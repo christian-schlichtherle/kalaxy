@@ -53,14 +53,12 @@
           local_action:
             module: kubernetes.core.k8s
             src: https://docs.projectcalico.org/manifests/tigera-operator.yaml
-            state: present
           vars:
             ansible_become: no
         - name: install custom resources for calico
           local_action:
             module: kubernetes.core.k8s
             template: custom-resources.yaml.j2
-            state: present
           vars:
             ansible_become: no
       when: k3s_cni_plugin == 'calico'
@@ -68,7 +66,6 @@
       local_action:
         module: kubernetes.core.k8s
         src: '{{ item }}'
-        state: present
       vars:
         ansible_become: no
       with_fileglob:
