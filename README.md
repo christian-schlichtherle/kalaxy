@@ -14,11 +14,14 @@ Server.
 The Ansible playbooks support:
 
 - multi-node cluster setup
-- tear-down of the entire cluster or just individual nodes for re-purposing them
+- multi-master setup
 - installation of K3s, a Rancher distribution of Kubernetes
-- external private container registry (optional)
+- tear-down of the entire cluster or just individual nodes for re-purposing them
 - external container registry mirror (optional)
-- external HTTP(S) proxies (optional)
+- external HTTP(S) proxies for apt and others (optional)
+- adding taints and labels to nodes (optional)
+- selecting network interfaces for nodes (optional)
+- configuring CNI plugins (optional)
 
 For more information, please refer to my
 [blog posting](https://illegalexception.schlichtherle.de/kubernetes/2019/09/12/provisioning-a-kubernetes-cluster-on-raspberry-pi-with-ansible/)
