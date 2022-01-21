@@ -10,5 +10,5 @@
     http_proxy: '{{ proxy_url | default(omit) }}'
     https_proxy: '{{ proxy_url | default(omit) }}'
   shell:
-    cmd: curl --fail --location --silent https://get.k3s.io | sh -s - agent
+    cmd: curl --fail --location --show-error --silent https://get.k3s.io | sh -s - agent
     creates: /usr/local/bin/k3s-agent-uninstall.sh

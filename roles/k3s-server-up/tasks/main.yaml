@@ -10,7 +10,7 @@
         http_proxy: '{{ proxy_url | default(omit) }}'
         https_proxy: '{{ proxy_url | default(omit) }}'
       shell:
-        cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
+        cmd: curl --fail --location --show-error --silent https://get.k3s.io | sh -s - server
         creates: /usr/local/bin/k3s-uninstall.sh
     - name: fetch server token
       fetch:
@@ -32,7 +32,7 @@
     http_proxy: '{{ proxy_url | default(omit) }}'
     https_proxy: '{{ proxy_url | default(omit) }}'
   shell:
-    cmd: curl --fail --location --silent https://get.k3s.io | sh -s - server
+    cmd: curl --fail --location --show-error --silent https://get.k3s.io | sh -s - server
     creates: /usr/local/bin/k3s-uninstall.sh
   throttle: 1
   when: inventory_hostname != groups.k3s_server[0]
@@ -49,23 +49,24 @@
 - meta: flush_handlers
 - block:
     - block:
-        - name: install operator for calico
-          local_action: command kubectl apply --filename https://docs.projectcalico.org/manifests/tigera-operator.yaml
-          vars:
-            ansible_become: no
+        - name: download tigera-operator manifest for calico
+          local_action:
+            dest: '{{ k3s_build_dir }}/tigera-operator.yaml'
+            module: get_url
+            url: https://docs.projectcalico.org/manifests/tigera-operator.yaml
+        - name: apply tigera-operator manifest for calico
+          local_action:
+            module: k8s
+            src: '{{ k3s_build_dir }}/tigera-operator.yaml'
         - name: install custom resources for calico
           local_action:
-            module: kubernetes.core.k8s
+            module: k8s
             template: custom-resources.yaml.j2
-          vars:
-            ansible_become: no
       when: k3s_cni_plugin == 'calico'
     - name: apply post-server-up hooks
       local_action:
         module: kubernetes.core.k8s
         src: '{{ item }}'
-      vars:
-        ansible_become: no
       with_fileglob:
         - '{{ k3s_hooks_dir }}/post-server-up.yaml'
         - '{{ k3s_hooks_dir }}/k3s-post-master-up.yaml'
@@ -75,3 +76,5 @@
     http_proxy: '{{ proxy_url | default(omit) }}'
     https_proxy: '{{ proxy_url | default(omit) }}'
   run_once: yes
+  vars:
+    ansible_become: no
