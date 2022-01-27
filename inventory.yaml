@@ -39,7 +39,7 @@ all:
     #k3s_server_url: https://localhost:6443
     #k3s_taints: [ ]
     ## https://github.com/rancher/k3s/releases :
-    #k3s_version: v1.23.2+k3s1
+    #k3s_version: v1.23.3+k3s1
     #locale: C.UTF-8
     #no_proxy: 127.0.0.1,.local,localhost
     #proxy_url: http://10.0.0.1:3128/

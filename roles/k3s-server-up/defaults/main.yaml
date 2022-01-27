@@ -12,5 +12,5 @@ k3s_server_schedule_pods: '{{ groups.k3s_agent | length == 0 }}'
 k3s_server_url: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip | default(hostvars[groups.k3s_server[0]].ansible_default_ipv4.address) }}:6443
 k3s_taints: [ ]
 # https://github.com/rancher/k3s/releases :
-k3s_version: v1.23.2+k3s1
+k3s_version: v1.23.3+k3s1
 proxy_url: null
