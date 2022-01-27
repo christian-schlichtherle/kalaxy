@@ -10,6 +10,10 @@
             module: 'command kubectl drain {{ inventory_hostname }} --delete-emptydir-data={% if k3s_delete_emptydir_data %}true{% else %}false{% endif %} --force --ignore-daemonsets'
           vars:
             ansible_become: no
+        - name: stop k3s-agent service
+          service:
+            name: k3s-agent
+            state: stopped
         - name: delete node
           local_action:
             kind: Node
