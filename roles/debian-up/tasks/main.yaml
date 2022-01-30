@@ -48,20 +48,20 @@
 - name: autoclean packages
   apt:
     autoclean: yes
-- name: set hostname
-  hostname:
-    name: "{{ inventory_hostname }}"
-- name: "set timezone to {{ timezone }}"
-  timezone:
-    name: "{{ timezone }}"
-  notify: restart cron
-- name: "set locale to {{ locale }}"
-  lineinfile:
-    create: yes
-    line: '{{ item.key }}={{ item.value }}'
-    path: /etc/default/locale
-    regexp: '^\s*#?\s*{{ item.key }}\s*='
-  with_dict:
-    LANG: '{{ locale }}'
-    LC_ALL: '{{ locale }}'
+- block:
+    - name: set hostname
+      hostname:
+        name: '{{ inventory_hostname }}'
+    - name: set timezone to {{ timezone }}
+      timezone:
+        name: "{{ timezone }}"
+    - name: set locale to {{ locale }}
+      lineinfile:
+        create: yes
+        line: '{{ item.key }}={{ item.value }}'
+        path: /etc/default/locale
+        regexp: '^\s*#?\s*{{ item.key }}\s*='
+      with_dict:
+        LANG: '{{ locale }}'
+        LC_ALL: '{{ locale }}'
   notify: reboot
