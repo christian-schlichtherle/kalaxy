@@ -55,15 +55,13 @@
   timezone:
     name: "{{ timezone }}"
   notify: restart cron
-- name: "set LC_ALL to {{ locale }}"
+- name: "set locale to {{ locale }}"
   lineinfile:
-    line: 'LC_ALL={{ locale }}'
+    create: yes
+    line: '{{ item.key }}={{ item.value }}'
     path: /etc/default/locale
-    regexp: '^\s*#?\s*LC_ALL\s*='
-  notify: reboot
-- name: "set LANG to {{ locale }}"
-  lineinfile:
-    line: 'LANG={{ locale }}'
-    path: /etc/default/locale
-    regexp: '^\s*#?\s*LANG\s*='
+    regexp: '^\s*#?\s*{{ item.key }}\s*='
+  with_dict:
+    LANG: '{{ locale }}'
+    LC_ALL: '{{ locale }}'
   notify: reboot
