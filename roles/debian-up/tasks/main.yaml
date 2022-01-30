@@ -62,6 +62,6 @@
         path: /etc/default/locale
         regexp: '^\s*#?\s*{{ item.key }}\s*='
       with_dict:
-        LANG: '{{ locale }}'
         LC_ALL: '{{ locale }}'
+        LC_CTYPE: '{{ locale }}'
   notify: reboot
