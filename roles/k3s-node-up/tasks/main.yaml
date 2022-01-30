@@ -5,10 +5,10 @@
       - strongswan
     update_cache: yes
   when: k3s_flannel_backend == "ipsec"
-- name: install wireguard
+- name: install wireguard-tools
   apt:
     name:
-      - wireguard
+      - wireguard-tools
     update_cache: yes
   when: k3s_flannel_backend == "wireguard"
 - name: make directory /etc/rancher/k3s
