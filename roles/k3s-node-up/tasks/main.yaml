@@ -7,6 +7,7 @@
   when: k3s_flannel_backend == "ipsec"
 - name: install wireguard-tools
   apt:
+    install_recommends: false
     name:
       - wireguard-tools
     update_cache: yes
