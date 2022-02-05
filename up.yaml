@@ -1,27 +1,28 @@
 ---
-- hosts: raspberry_pi_hw
+- hosts:
+    - raspberry_pi_hw
   roles:
     - raspberry-pi-hw-up
-- hosts: raspberry_pi_os
-  roles:
-    - raspberry-pi-os-up
-- hosts: ubuntu
-  roles:
-    - ubuntu-up
 - hosts:
-    - raspberry_pi_os
-    - ubuntu
+    - debian
   roles:
     - debian-up
 - hosts:
     - raspberry_pi_os
   roles:
+    - raspberry-pi-os-up
     - rpi-update-up
-- hosts: k3s_server
+- hosts:
+    - ubuntu
+  roles:
+    - ubuntu-up
+- hosts:
+    - k3s_server
   roles:
     - k3s-node-up
     - k3s-server-up
-- hosts: k3s_agent
+- hosts:
+    - k3s_agent
   roles:
     - k3s-node-up
     - k3s-agent-up
