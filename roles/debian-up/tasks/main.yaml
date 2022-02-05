@@ -26,15 +26,15 @@
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
   when: proxy_url
-- name: update && upgrade full
+- name: apt update && apt full-upgrade
   apt:
     update_cache: yes
     upgrade: full
-- name: upgrade dist
+- name: apt dist-upgrade
   apt:
     upgrade: dist
   notify: reboot
-- name: install common apt packages
+- name: apt install <common packages...>
   apt:
     name:
       - apt-transport-https
@@ -42,10 +42,10 @@
       - net-tools
       - software-properties-common
       - traceroute
-- name: autoremove packages
+- name: apt autoremove
   apt:
     autoremove: yes
-- name: autoclean packages
+- name: apt autoclean
   apt:
     autoclean: yes
 - block:
