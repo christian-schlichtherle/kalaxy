@@ -11,7 +11,6 @@
     - raspberry_pi_os
   roles:
     - raspberry-pi-os-up
-    - rpi-update-up
 - hosts:
     - ubuntu
   roles:
