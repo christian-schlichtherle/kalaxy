@@ -1,25 +1,34 @@
 ---
 all:
-  hosts:
-    ## [all Ansible hosts]
+  ## All Ansible hosts:
+  hosts: { }
   children:
     debian:
       children:
         raspberry_pi_os: { }
         ubuntu: { }
-    k3s_server:
-      ## [at most one K3s server]
+    ## Hosts acting as K3s agents:
     k3s_agent:
-      ## [all K3s agents]
+      hosts: { }
+    k3s_node:
+      children:
+        k3s_agent: { }
+        k3s_server: { }
+    ## Hosts acting as K3s servers (at least one):
+    k3s_server:
+      hosts: { }
+    ## Raspberry Pi hardware:
     raspberry_pi_hw:
       children:
         raspberry_pi_os: { }
+    ## Hosts running Raspberry Pi OS:
     raspberry_pi_os:
-      ## [all hosts running Raspberry Pi OS]
+      hosts: { }
       vars:
         ansible_ssh_user: pi
+    ## Hosts running Ubuntu:
     ubuntu:
-      ## [all hosts running Ubuntu]
+      hosts: { }
       vars:
         ansible_ssh_user: ubuntu
   vars:
