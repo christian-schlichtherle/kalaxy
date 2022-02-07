@@ -3,6 +3,7 @@
   template:
     dest: /etc/rancher/k3s/config.yaml
     src: config.yaml.j2
+  notify: restart k3s service
 - name: install k3s agent
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'

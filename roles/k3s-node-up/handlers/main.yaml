@@ -1,0 +1,5 @@
+---
+- name: restart k3s service
+  service:
+    name: k3s{% if inventory_hostname not in groups.k3s_server %}-agent{% endif %}
+    state: restarted

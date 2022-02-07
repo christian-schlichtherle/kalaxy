@@ -3,6 +3,7 @@
   template:
     dest: /etc/rancher/k3s/config.yaml
     src: config.yaml.j2
+  notify: restart k3s service
 - block:
     - name: install first k3s server
       environment:
