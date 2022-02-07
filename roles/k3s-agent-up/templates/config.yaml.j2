@@ -14,16 +14,16 @@ node-label:
   - {{ label }}
 {% endfor %}
 {% endif %}
+{% if k3s_taints | length > 0 %}
+node-taint:
+{% for taint in k3s_taints %}
+  - {{ taint }}
+{% endfor %}
+{% endif %}
 {% if hostvars[groups.k3s_server[0]].k3s_node_ip is defined %}
 server: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip }}:6443
 {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
 server: https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
 {% else %}
 server: https://{{ default(hostvars[groups.k3s_server[0]].ansible_default_ipv4.address) }}:6443
-{% endif %}
-{% if k3s_taints | length > 0 %}
-node-taint:
-{% for taint in k3s_taints %}
-  - {{ taint }}
-{% endfor %}
 {% endif %}
