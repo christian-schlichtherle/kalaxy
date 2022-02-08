@@ -25,7 +25,7 @@
   run_once: yes
   vars:
     ansible_become: no
-    server: |
+    server: |-
       {% if k3s_url %}
       {{ k3s_url }}
       {% elif hostvars[groups.k3s_server[0]].k3s_node_ip is defined %}
