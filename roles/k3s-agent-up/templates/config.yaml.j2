@@ -25,5 +25,5 @@ server: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip }}:6443
 {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
 server: https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
 {% else %}
-server: https://{{ default(hostvars[groups.k3s_server[0]].ansible_default_ipv4.address) }}:6443
+server: https://{{ hostvars[groups.k3s_server[0]].ansible_default_ipv4.address }}:6443
 {% endif %}
