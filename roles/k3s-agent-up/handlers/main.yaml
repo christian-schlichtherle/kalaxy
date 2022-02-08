@@ -1,5 +1,0 @@
----
-- name: restart k3s service
-  service:
-    name: k3s-agent
-    state: restarted

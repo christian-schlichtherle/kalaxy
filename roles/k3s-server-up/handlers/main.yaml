@@ -1,8 +1,4 @@
 ---
-- name: restart k3s service
-  service:
-    name: k3s
-    state: restarted
 - name: fix access to kubeconfig
   local_action:
     mode: '600'
@@ -21,7 +17,7 @@
 - name: edit kubeconfig
   local_action:
     backrefs: yes
-    line: '\g<1>{{ k3s_server_url }}'
+    line: '\g<1>{{ server }}'
     module: lineinfile
     mode: '600'
     path: '{{ k3s_build_dir }}/kubeconfig.yaml'
@@ -29,3 +25,13 @@
   run_once: yes
   vars:
     ansible_become: no
+    server: |
+      {% if k3s_url %}
+      {{ k3s_url }}
+      {% elif hostvars[groups.k3s_server[0]].k3s_node_ip is defined %}
+      https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip }}:6443
+      {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
+      https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
+      {% else %}
+      https://{{ hostvars[groups.k3s_server[0]].ansible_default_ipv4.address }}:6443
+      {% endif %}

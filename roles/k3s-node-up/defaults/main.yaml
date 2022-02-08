@@ -1,4 +1,10 @@
 ---
 ansible_become: yes
-k3s_container_registry_mirror_urls: null
-k3s_flannel_backend: vxlan
+# ansible.builtin.apt parameters for installing extra packages, e.g. open-iscsi:
+k3s_apt: { }
+# https://rancher.com/docs/k3s/latest/en/installation/install-options/agent-config/ :
+# https://rancher.com/docs/k3s/latest/en/installation/install-options/server-config/ :
+k3s_config: { }
+# Content template for /etc/rancher/k3s/registries.yaml - see
+# https://rancher.com/docs/k3s/latest/en/installation/private-registry/ :
+k3s_registries: { }

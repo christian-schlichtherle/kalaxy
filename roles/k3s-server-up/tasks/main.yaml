@@ -1,9 +1,4 @@
 ---
-- name: write /etc/rancher/k3s/config.yaml
-  template:
-    dest: /etc/rancher/k3s/config.yaml
-    src: config.yaml.j2
-  notify: restart k3s service
 - block:
     - name: install first k3s server
       environment:
@@ -48,34 +43,18 @@
     - edit kubeconfig
   run_once: yes
 - meta: flush_handlers
-- block:
-    - block:
-        - name: download tigera-operator manifest for calico
-          local_action:
-            dest: '{{ k3s_build_dir }}/tigera-operator.yaml'
-            module: get_url
-            url: https://docs.projectcalico.org/manifests/tigera-operator.yaml
-        - name: apply tigera-operator manifest for calico
-          local_action:
-            module: k8s
-            src: '{{ k3s_build_dir }}/tigera-operator.yaml'
-        - name: install custom resources for calico
-          local_action:
-            module: k8s
-            template: custom-resources.yaml.j2
-      when: k3s_cni_plugin == 'calico'
-    - name: apply post-server-up hooks
-      local_action:
-        module: kubernetes.core.k8s
-        src: '{{ item }}'
-      with_fileglob:
-        - '{{ k3s_hooks_dir }}/post-server-up.yaml'
-        - '{{ k3s_hooks_dir }}/k3s-post-master-up.yaml'
-        - '{{ k3s_hooks_dir }}/post-master-up.yaml'
+- name: apply post-server-up hooks
   environment:
     KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
     http_proxy: '{{ proxy_url | default(omit) }}'
     https_proxy: '{{ proxy_url | default(omit) }}'
+  local_action:
+    module: kubernetes.core.k8s
+    src: '{{ item }}'
   run_once: yes
   vars:
     ansible_become: no
+  with_fileglob:
+    - '{{ k3s_hooks_dir }}/post-server-up.yaml'
+    - '{{ k3s_hooks_dir }}/k3s-post-master-up.yaml'
+    - '{{ k3s_hooks_dir }}/post-master-up.yaml'

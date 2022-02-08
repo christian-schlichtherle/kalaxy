@@ -1,29 +1,16 @@
 ---
-{% if k3s_flannel_iface %}
-flannel-iface: {{ k3s_flannel_iface }}
+{% if inventory_hostname == groups.k3s_server[0] and groups.k3s_server | length > 1 %}
+cluster-init: true
 {% endif %}
-{% if k3s_node_external_ip %}
-node-external-ip: {{ k3s_node_external_ip }}
-{% endif %}
-{% if k3s_node_ip %}
-node-ip: {{ k3s_node_ip }}
-{% endif %}
-{% if k3s_labels | length > 0 %}
-node-label:
-{% for label in k3s_labels %}
-  - {{ label }}
-{% endfor %}
-{% endif %}
-{% if k3s_taints | length > 0 %}
-node-taint:
-{% for taint in k3s_taints %}
-  - {{ taint }}
-{% endfor %}
-{% endif %}
+{% if inventory_hostname != groups.k3s_server[0] %}
 {% if hostvars[groups.k3s_server[0]].k3s_node_ip is defined %}
 server: https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip }}:6443
 {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
 server: https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
 {% else %}
 server: https://{{ hostvars[groups.k3s_server[0]].ansible_default_ipv4.address }}:6443
+{% endif %}
+{% endif %}
+{% if k3s_config | length > 0 %}
+{{ k3s_config | to_nice_yaml }}
 {% endif %}

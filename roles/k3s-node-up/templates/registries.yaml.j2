@@ -1,6 +1,4 @@
-mirrors:
-{% for registry, url in k3s_container_registry_mirror_urls.items() %}
-  {{ registry }}:
-    endpoint:
-      - "{{ url }}"
-{% endfor %}
+---
+{% if k3s_registries | length > 0 %}
+{{ k3s_registries | to_nice_yaml }}
+{% endif %}

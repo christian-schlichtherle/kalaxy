@@ -1,24 +1,20 @@
 ---
-- name: install strongswan
-  apt:
-    name:
-      - strongswan
-    update_cache: yes
-  when: k3s_flannel_backend == "ipsec"
-- name: install wireguard-tools
-  apt:
-    install_recommends: false
-    name:
-      - wireguard-tools
-    update_cache: yes
-  when: k3s_flannel_backend == "wireguard"
+- name: install common apt packages
+  apt: '{{ k3s_apt | to_yaml }}'
+  when: k3s_apt | length > 0
 - name: make directory /etc/rancher/k3s
   file:
     path: /etc/rancher/k3s
     state: directory
-- name: write /etc/rancher/k3s/registries.yaml
-  template:
-    dest: /etc/rancher/k3s/registries.yaml
-    src: registries.yaml.j2
+- block:
+    - name: write /etc/rancher/k3s/config.yaml
+      template:
+        dest: /etc/rancher/k3s/config.yaml
+        src: config.yaml.j2
+      when: k3s_config | length > 0
+    - name: write /etc/rancher/k3s/registries.yaml
+      template:
+        dest: /etc/rancher/k3s/registries.yaml
+        src: registries.yaml.j2
+      when: k3s_registries | length > 0
   notify: restart k3s service
-  when: k3s_container_registry_mirror_urls

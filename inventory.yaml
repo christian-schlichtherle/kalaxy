@@ -34,24 +34,25 @@ all:
   vars:
     ansible_python_interpreter: /usr/bin/python3
     #boot_directory: /boot
-    #k3s_build_dir: build
-    #k3s_container_registry_mirror_urls:
-    #  docker.io: https://my-container-registry-mirror.local
-    ## Do you want to delete all data from emptydir volumes upon teardown?
-    #k3s_delete_emptydir_data: no
     ## API Token for cloning repos from GitHub:
     #github_api_token: null
-    #k3s_cni_plugin: flannel
-    #k3s_flannel_backend: vxlan
-    #k3s_flannel_iface: null
+    ## ansible.builtin.apt parameters for installing extra packages, e.g. open-iscsi:
+    #k3s_apt: { }
+    ## Where to store build files for K3s?
+    #k3s_build_dir: build
+    ## Content template for /etc/rancher/k3s/config.yaml - see:
+    ## - https://rancher.com/docs/k3s/latest/en/installation/install-options/agent-config/
+    ## - https://rancher.com/docs/k3s/latest/en/installation/install-options/server-config/
+    #k3s_config: { }
+    ## Do you want to delete all data from emptydir volumes upon teardown?
+    #k3s_delete_emptydir_data: no
+    ## Where to find resource manifests to apply after (un)installing K3s?
     #k3s_hooks_dir: hooks
-    #k3s_labels: [ ]
-    #k3s_node_external_ip: null
-    #k3s_node_ip: null
-    ## Should pods be scheduled on K3s servers?
-    #k3s_server_schedule_pods: '{{ groups.k3s_agent | length == 0 }}'
-    #k3s_server_url: https://localhost:6443
-    #k3s_taints: [ ]
+    ## Content template for /etc/rancher/k3s/registries.yaml - see
+    ## https://rancher.com/docs/k3s/latest/en/installation/private-registry/ :
+    #k3s_registries: { }
+    ## If you want to use a load balancer for the K3s masters, put its URL here. Otherwise, don't touch:
+    #k3s_url: null
     ## https://github.com/rancher/k3s/releases :
     #k3s_version: v1.23.3+k3s1
     #locale: C.UTF-8
