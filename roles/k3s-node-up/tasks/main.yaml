@@ -1,6 +1,6 @@
 ---
-- name: install common apt packages
-  apt: '{{ k3s_apt | to_yaml }}'
+- name: install apt packages
+  apt: '{{ k3s_apt }}'
   when: k3s_apt | length > 0
 - name: make directory /etc/rancher/k3s
   file:

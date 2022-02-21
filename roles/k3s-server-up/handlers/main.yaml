@@ -33,5 +33,5 @@
       {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
       https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
       {% else %}
-      https://{{ hostvars[groups.k3s_server[0]].ansible_default_ipv4.address }}:6443
+      https://{{ hostvars[groups.k3s_server[0]].ansible_facts.default_ipv4.address }}:6443
       {% endif %}
