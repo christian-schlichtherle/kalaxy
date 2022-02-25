@@ -7,5 +7,5 @@ k3s_hooks_dir: hooks
 # If you want to use a load balancer for the K3s masters, put its URL here. Otherwise, don't touch:
 k3s_url: null
 # https://github.com/rancher/k3s/releases :
-k3s_version: v1.23.3+k3s1
+k3s_version: v1.23.4+k3s1
 proxy_url: null
