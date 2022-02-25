@@ -1,5 +1,5 @@
----
 {{ ansible_managed | comment }}
+---
 {% if k3s_registries | length > 0 %}
 {{ k3s_registries | to_nice_yaml }}
 {% endif %}

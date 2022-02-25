@@ -1,5 +1,5 @@
----
 {{ ansible_managed | comment }}
+---
 {% if inventory_hostname == groups.k3s_server[0] and groups.k3s_server | length > 1 %}
 cluster-init: true
 {% endif %}
