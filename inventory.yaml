@@ -59,4 +59,4 @@ all:
     #no_proxy: 127.0.0.1,.local,localhost
     #proxy_url: http://10.0.0.1:3128/
     #rpi_update: yes
-    #timezone: UTC
+    #timezone: Etc/UTC
