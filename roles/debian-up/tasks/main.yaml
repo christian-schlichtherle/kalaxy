@@ -33,13 +33,11 @@
     - name: set timezone to {{ timezone }}
       timezone:
         name: "{{ timezone }}"
-    - name: set locale to {{ locale }}
-      lineinfile:
-        create: yes
-        line: '{{ item.key }}={{ item.value }}'
-        path: /etc/default/locale
-        regexp: '^\s*#?\s*{{ item.key }}\s*='
-      with_dict:
-        LC_ALL: '{{ locale }}'
-        LC_CTYPE: '{{ locale }}'
+    - name: generate locale {{ locale }}
+      locale_gen:
+        name: '{{ locale }}'
+    - name: set default locale to {{ locale }}
+      template:
+        dest: /etc/default/locale
+        src: locale.j2
   notify: reboot
