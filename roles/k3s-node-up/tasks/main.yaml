@@ -1,5 +1,5 @@
 ---
-- name: install apt packages
+- name: apt install <packages...>
   apt: '{{ k3s_apt }}'
   when: k3s_apt | length > 0
 - name: make directory /etc/rancher/k3s

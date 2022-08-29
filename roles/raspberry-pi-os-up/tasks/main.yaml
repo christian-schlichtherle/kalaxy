@@ -15,7 +15,7 @@
   args:
     removes: /var/swap
 - block:
-    - name: install apt packages
+    - name: apt install <packages...>
       apt:
         name:
           - initramfs-tools
