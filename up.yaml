@@ -13,10 +13,6 @@
   roles:
     - raspberry-pi-os-up
 - hosts:
-    - ubuntu
-  roles:
-    - ubuntu-up
-- hosts:
     - k3s_server
   roles:
     - k3s-node-up

@@ -8,10 +8,6 @@
   roles:
     - k3s-server-down
 #- hosts:
-#    - ubuntu
-#  roles:
-#    - ubuntu-down
-#- hosts:
 #    - raspberry_pi_os
 #  roles:
 #    - raspberry-pi-os-down
