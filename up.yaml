@@ -7,6 +7,7 @@
     - debian
   roles:
     - debian-up
+    - reboot-if-required
 - hosts:
     - raspberry_pi_os
   roles:
