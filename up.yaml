@@ -11,7 +11,8 @@
     - debian
   roles:
     - debian-up
-- hosts:
+- gather_facts: no
+  hosts:
     - all
   roles:
     - reboot-if-required
