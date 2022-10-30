@@ -4,14 +4,10 @@
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
   when: proxy_url
-- name: apt update && apt full-upgrade
+- name: apt-get update && apt-get dist-upgrade
   apt:
     update_cache: yes
-    upgrade: full
-- name: apt dist-upgrade
-  apt:
     upgrade: dist
-  notify: reboot
 - name: apt install <packages...>
   apt:
     name:
