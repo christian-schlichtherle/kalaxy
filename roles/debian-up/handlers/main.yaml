@@ -1,3 +1,5 @@
 ---
-- name: reboot
-  reboot: { }
+- name: require reboot
+  file:
+    path: /var/run/reboot-required
+    state: touch

@@ -36,4 +36,4 @@
       template:
         dest: /etc/default/locale
         src: locale.j2
-  notify: reboot
+  notify: require reboot

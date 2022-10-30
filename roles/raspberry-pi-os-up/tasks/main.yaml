@@ -32,7 +32,7 @@
         SKIP_WARNING: 1
         http_proxy: '{{ proxy_url | default(omit) }}'
         https_proxy: '{{ proxy_url | default(omit) }}'
-      notify: reboot
+      notify: require reboot
       register: rpi_update
     - name: stat /root/.rpi-firmware
       stat:
@@ -59,7 +59,7 @@
                 path: '{{ boot_directory }}/config.txt'
                 regexp: '^initramfs\s'
               with_items: '{{ versions }}'
-              notify: reboot
+              notify: require reboot
           vars:
             versions: '{{ found.files | map(attribute="path") | map("basename") }}'
       when: rpi_firmware.stat.exists

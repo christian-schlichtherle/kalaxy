@@ -4,14 +4,17 @@
   roles:
     - raspberry-pi-hw-up
 - hosts:
-    - debian
-  roles:
-    - debian-up
-    - reboot-if-required
-- hosts:
     - raspberry_pi_os
   roles:
     - raspberry-pi-os-up
+- hosts:
+    - debian
+  roles:
+    - debian-up
+- hosts:
+    - all
+  roles:
+    - reboot-if-required
 - hosts:
     - k3s_server
   roles:

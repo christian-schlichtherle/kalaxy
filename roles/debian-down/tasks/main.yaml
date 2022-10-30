@@ -8,7 +8,7 @@
 #    path: /etc/environment
 #    regexp: '^\s*{{ item }}\s*='
 #    state: absent
-#  notify: reboot
+#  notify: require reboot
 #  with_items:
 #    - http_proxy
 #    - HTTP_PROXY

@@ -1,8 +1,18 @@
 ---
-- name: check if reboot required
+- name: check if a reboot is required
   register: reboot_required
   stat:
     path: /var/run/reboot-required
-- name: reboot if required
-  reboot: { }
+- block:
+    - block:
+        - name: reboot K3s servers one-by-one
+          reboot: { }
+          throttle: 1
+        - name: wait {{ sleep_after_reboot_seconds }} seconds to allow K3s service to restart
+          pause:
+            seconds: '{{ sleep_after_reboot_seconds }}'
+      when: inventory_hostname in groups.k3s_server
+    - name: reboot others concurrently
+      reboot: { }
+      when: inventory_hostname not in groups.k3s_server
   when: reboot_required.stat.exists
