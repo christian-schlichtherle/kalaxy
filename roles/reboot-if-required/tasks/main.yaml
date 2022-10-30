@@ -1,8 +1,8 @@
 ---
 - name: check if reboot required
+  register: reboot_required
   stat:
     path: /var/run/reboot-required
-  register: reboot_required
 - name: reboot if required
   reboot: { }
   when: reboot_required.stat.exists
