@@ -38,9 +38,9 @@
         src: locale.j2
   notify: require reboot
 # See https://docs.k3s.io/advanced#additional-preparation-for-debian-buster-based-distributions :
-- name: flush iptables
-  iptables:
-    flush: yes
+#- name: flush iptables
+#  iptables:
+#    flush: yes
 - name: use iptables-legacy
   alternatives:
     name: iptables
