@@ -54,7 +54,7 @@ all:
     ## If you want to use a load balancer for the K3s masters, put its URL here. Otherwise, don't touch:
     #k3s_url: null
     ## https://github.com/rancher/k3s/releases :
-    #k3s_version: v1.25.5+k3s1
+    #k3s_version: v1.26.0+k3s1
     #locale: en_US.UTF-8
     #no_proxy: 127.0.0.1,.local,localhost
     #proxy_url: http://10.0.0.1:3128/
