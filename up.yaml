@@ -32,10 +32,6 @@
     - k3s_server
   roles:
     - k3s-server-up
-- gather_facts: no
-  hosts:
-    - k3s_server
-  roles:
     - k3s-post-server-up
 - gather_facts: no
   hosts:
