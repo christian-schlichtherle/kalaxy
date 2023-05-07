@@ -1,18 +1,18 @@
 ---
-- name: check if a reboot is required
+- name: Check If A Reboot Is Required
   register: reboot_required
   stat:
     path: /var/run/reboot-required
 - block:
     - block:
-        - name: reboot K3s servers one-by-one
+        - name: Reboot K3s And OpenVPN Servers One-By-One
           reboot: { }
           throttle: 1
-        - name: wait {{ sleep_after_reboot_seconds }} seconds to allow K3s service to restart
+        - name: Wait {{ sleep_after_reboot_seconds }} Seconds To Allow K3s And OpenVPN Servers To Restart
           pause:
             seconds: '{{ sleep_after_reboot_seconds }}'
       when: inventory_hostname in groups.k3s_server
-    - name: reboot others concurrently
+    - name: Reboot All Other Hosts Concurrently
       reboot: { }
       when: inventory_hostname not in groups.k3s_server
   when: reboot_required.stat.exists

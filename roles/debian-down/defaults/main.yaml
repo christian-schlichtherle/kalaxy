@@ -1,3 +1,2 @@
 ---
 ansible_become: yes
-proxy_url: null

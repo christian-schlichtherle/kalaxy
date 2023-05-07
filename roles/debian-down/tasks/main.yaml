@@ -1,18 +1,5 @@
 ---
-- name: remove apt proxies
+- name: Remove Apt Proxies
   file:
     path: /etc/apt/apt.conf.d/95proxies
     state: absent
-#- name: remove environment variables HTTP_PROXY, HTTPS_PROXY and NO_PROXY
-#  lineinfile:
-#    path: /etc/environment
-#    regexp: '^\s*{{ item }}\s*='
-#    state: absent
-#  notify: require reboot
-#  with_items:
-#    - http_proxy
-#    - HTTP_PROXY
-#    - https_proxy
-#    - HTTPS_PROXY
-#    - no_proxy
-#    - NO_PROXY

@@ -1,5 +1,5 @@
 ---
-- name: add apt proxies
+- name: Add Apt Proxies
   template:
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
@@ -8,7 +8,7 @@
   apt:
     update_cache: yes
     upgrade: dist
-- name: apt install <packages...>
+- name: apt-get install <packages...>
   apt:
     name:
       - apt-transport-https
@@ -16,36 +16,36 @@
       - net-tools
       - software-properties-common
       - traceroute
-- name: apt autoremove
+- name: apt-get autoremove
   apt:
     autoremove: yes
-- name: apt autoclean
+- name: apt-get autoclean
   apt:
     autoclean: yes
 - block:
-    - name: set hostname
+    - name: Set Hostname
       hostname:
         name: '{{ inventory_hostname }}'
-    - name: set timezone to {{ timezone }}
+    - name: Set Timezone To {{ timezone }}
       timezone:
         name: "{{ timezone }}"
-    - name: generate locale {{ locale }}
+    - name: Generate Locale {{ locale }}
       locale_gen:
         name: '{{ locale }}'
-    - name: set default locale to {{ locale }}
+    - name: Set Default Locale To {{ locale }}
       template:
         dest: /etc/default/locale
         src: locale.j2
-  notify: require reboot
+  notify: Require Reboot
 # See https://docs.k3s.io/advanced#additional-preparation-for-debian-buster-based-distributions :
-#- name: flush iptables
+#- name: Flush iptables
 #  iptables:
 #    flush: yes
-- name: use iptables-legacy
+- name: Use iptables-legacy
   alternatives:
     name: iptables
     path: /usr/sbin/iptables-legacy
-- name: use ip6tables-legacy
+- name: Use ip6tables-legacy
   alternatives:
     name: ip6tables
     path: /usr/sbin/ip6tables-legacy
