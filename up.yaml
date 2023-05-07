@@ -1,13 +1,19 @@
 ---
-- hosts:
+- gather_facts: yes
+  hosts:
+    - all
+- gather_facts: no
+  hosts:
     - raspberry_pi_hw
   roles:
     - raspberry-pi-hw-up
-- hosts:
+- gather_facts: no
+  hosts:
     - raspberry_pi_os
   roles:
     - raspberry-pi-os-up
-- hosts:
+- gather_facts: no
+  hosts:
     - debian
   roles:
     - debian-up
@@ -16,12 +22,14 @@
     - all
   roles:
     - reboot-if-required
-- hosts:
+- gather_facts: no
+  hosts:
     - k3s_server
   roles:
     - k3s-node-up
     - k3s-server-up
-- hosts:
+- gather_facts: no
+  hosts:
     - k3s_agent
   roles:
     - k3s-node-up
