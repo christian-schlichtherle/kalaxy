@@ -1,9 +1,9 @@
 ---
-- name: enable swap-space
+- name: Enable Swap Space
   shell: update-rc.d dphys-swapfile enable && dphys-swapfile setup && dphys-swapfile swapon
   args:
     creates: /var/swap
-- name: make /etc/resolv.conf mutable
+- name: Make File /etc/resolv.conf Mutable
   changed_when: false
   file:
     attributes: -i

@@ -1,12 +1,12 @@
 ---
-- name: ensure cgroup kernel params
+- name: Ensure CGroup Kernel Parameters
   ignore_errors: yes
   lineinfile:
     backrefs: yes
     line: '\g<1>\g<2>'
     path: '{{ boot_directory }}/{{ item }}'
     regexp: '^(.*console=tty1)(?: cgroup_enable=memory cgroup_memory=1)?(.*)$'
-  notify: require reboot
+  notify: Require Reboot
   with_items:
     - cmdline.txt
     - nobtcmd.txt

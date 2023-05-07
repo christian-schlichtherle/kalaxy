@@ -1,21 +1,21 @@
 ---
-- name: fix search in /etc/resolv.conf
+- name: Fix Search In File /etc/resolv.conf
   lineinfile:
     backrefs: yes
     line: 'search\g<1>'
     path: /etc/resolv.conf
     regexp: '^(?:domain|search)(\s.*)'
-- name: make /etc/resolv.conf immutable
+- name: Make File /etc/resolv.conf Immutable
   changed_when: false
   file:
     attributes: +i
     path: /etc/resolv.conf
-- name: disable swap-space
+- name: Disable Swap Space
   shell: dphys-swapfile uninstall && update-rc.d dphys-swapfile disable
   args:
     removes: /var/swap
 - block:
-    - name: apt install <packages...>
+    - name: apt-get update && apt-get install <packages...>
       apt:
         name:
           - initramfs-tools
@@ -32,14 +32,14 @@
         SKIP_WARNING: 1
         http_proxy: '{{ proxy_url | default(omit) }}'
         https_proxy: '{{ proxy_url | default(omit) }}'
-      notify: require reboot
+      notify: Require Reboot
       register: rpi_update
-    - name: stat /root/.rpi-firmware
+    - name: Stat File /root/.rpi-firmware
       stat:
         path: /root/.rpi-firmware
       register: rpi_firmware
     - block:
-        - name: find kernel versions
+        - name: Find Kernel Versions
           find:
             file_type: directory
             paths: /root/.rpi-firmware/modules
@@ -59,7 +59,7 @@
                 path: '{{ boot_directory }}/config.txt'
                 regexp: '^initramfs\s'
               with_items: '{{ versions }}'
-              notify: require reboot
+              notify: Require Reboot
           vars:
             versions: '{{ found.files | map(attribute="path") | map("basename") }}'
       when: rpi_firmware.stat.exists
