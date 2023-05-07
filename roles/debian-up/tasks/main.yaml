@@ -37,6 +37,15 @@
         dest: /etc/default/locale
         src: locale.j2
   notify: Require Reboot
+# Set fs.inotify.max_user_instances to fs.inotify.max_user_watches to avoid issues with logging etc in K8s:
+- name: Read Kernel Parameter fs.inotify.max_user_watches
+  slurp:
+    src: /proc/sys/fs/inotify/max_user_watches
+  register: fs_inotify_max_user_watches
+- name: Write Kernel Parameter fs.inotify.max_user_instances
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_instances
+    value: '{{ fs_inotify_max_user_watches.content | b64decode }}'
 # See https://docs.k3s.io/advanced#additional-preparation-for-debian-buster-based-distributions :
 #- name: Flush iptables
 #  iptables:
