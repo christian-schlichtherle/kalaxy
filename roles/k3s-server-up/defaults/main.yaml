@@ -1,11 +1,11 @@
 ---
 ansible_become: yes
 # Where to store build files for K3s?
-k3s_build_dir: build
-# Where to find resource manifests to apply after installing K3s?
-k3s_hooks_dir: hooks
-# If you want to use a load balancer for the K3s masters, put its URL here. Otherwise, don't touch:
-k3s_url: null
+k3s_build_dir: '{{ playbook_dir }}/build/k3s'
+# Should be set by querying the cluster
+k3s_installed_version: ""
+# If you want to use a load balancer for the K3s server nodes, put its URL here. Otherwise, don't touch:
+k3s_url: ""
 # https://github.com/rancher/k3s/releases :
 k3s_version: v1.27.1+k3s1
-proxy_url: null
+proxy_url: ""

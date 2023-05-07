@@ -1,37 +1,31 @@
 ---
-- name: fix access to kubeconfig
-  local_action:
-    mode: '600'
-    module: file
-    path: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
+- block:
+    - name: Fix Access To kubectl Configuration
+      file:
+        mode: '600'
+        path: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
+    - name: Backup kubectl Configuration
+      copy:
+        dest: '{{ k3s_build_dir }}/kubeconfig.yaml'
+        src: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
+    - name: Patch kubectl Configuration
+      lineinfile:
+        backrefs: yes
+        line: '\g<1>{{ server }}'
+        mode: '600'
+        path: '{{ k3s_build_dir }}/kubeconfig.yaml'
+        regexp: '^(\s+server:\s*)https?://.*'
+      vars:
+        server: |-
+          {% if k3s_url %}
+          {{ k3s_url }}
+          {% elif hostvars[groups.k3s_server[0]].k3s_node_ip is defined %}
+          https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip }}:6443
+          {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
+          https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
+          {% else %}
+          https://{{ hostvars[groups.k3s_server[0]].ansible_facts.default_ipv4.address }}:6443
+          {% endif %}
+  delegate_to: localhost
   vars:
     ansible_become: no
-- name: backup kubeconfig
-  local_action:
-    dest: '{{ k3s_build_dir }}/kubeconfig.yaml'
-    module: copy
-    src: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
-  run_once: yes
-  vars:
-    ansible_become: no
-- name: edit kubeconfig
-  local_action:
-    backrefs: yes
-    line: '\g<1>{{ server }}'
-    module: lineinfile
-    mode: '600'
-    path: '{{ k3s_build_dir }}/kubeconfig.yaml'
-    regexp: '^(\s+server:\s*)https?://.*'
-  run_once: yes
-  vars:
-    ansible_become: no
-    server: |-
-      {% if k3s_url %}
-      {{ k3s_url }}
-      {% elif hostvars[groups.k3s_server[0]].k3s_node_ip is defined %}
-      https://{{ hostvars[groups.k3s_server[0]].k3s_node_ip }}:6443
-      {% elif hostvars[groups.k3s_server[0]].k3s_flannel_iface is defined %}
-      https://{{ hostvars[groups.k3s_server[0]].ansible_facts[hostvars[groups.k3s_server[0]].k3s_flannel_iface].ipv4.address }}:6443
-      {% else %}
-      https://{{ hostvars[groups.k3s_server[0]].ansible_facts.default_ipv4.address }}:6443
-      {% endif %}

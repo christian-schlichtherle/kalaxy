@@ -1,5 +1,7 @@
 ---
-- name: restart k3s service
+- name: Restart K3s (Agent) Service
+  # On installation, the service does not exist yet, so we need to ignore this error:
+  ignore_errors: yes
   service:
     name: k3s{% if inventory_hostname not in groups.k3s_server %}-agent{% endif %}
     state: restarted

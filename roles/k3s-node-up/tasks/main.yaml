@@ -1,19 +1,42 @@
 ---
-- name: apt install <packages...>
+- name: apt-get install <packages...>
   apt: '{{ k3s_apt }}'
   when: k3s_apt | length > 0
-- name: make directory /etc/rancher/k3s
+- name: Make Directory /etc/rancher/k3s
   file:
     path: /etc/rancher/k3s
     state: directory
 - block:
-    - name: write /etc/rancher/k3s/config.yaml
+    - name: Write File /etc/rancher/k3s/config.yaml
       template:
         dest: /etc/rancher/k3s/config.yaml
         src: config.yaml.j2
-    - name: write /etc/rancher/k3s/registries.yaml
+    - name: Write File /etc/rancher/k3s/registries.yaml
       template:
         dest: /etc/rancher/k3s/registries.yaml
         src: registries.yaml.j2
       when: k3s_registries | length > 0
-  notify: restart k3s service
+  notify: Restart K3s (Agent) Service
+- block:
+    - name: Read K3s Node Infos
+      delegate_to: localhost
+      environment:
+        KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
+        http_proxy: '{{ proxy_url }}'
+        https_proxy: '{{ proxy_url }}'
+      kubernetes.core.k8s_info:
+        kind: Node
+      register: k3s_node_infos
+      run_once: yes
+    - block:
+        - name: Extract All Installed K3s Versions
+          run_once: yes
+          set_fact:
+            k3s_installed_versions: '{{ k3s_node_infos.resources | map(attribute="metadata.name") | zip(k3s_node_infos.resources | map(attribute="status.nodeInfo.kubeletVersion")) | community.general.dict }}'
+        - name: Extract Installed K3s Version Per Host
+          set_fact:
+            k3s_installed_version: '{{ k3s_installed_versions[inventory_hostname] }}'
+      when: k3s_node_infos is succeeded
+  ignore_errors: yes
+  vars:
+    ansible_become: no

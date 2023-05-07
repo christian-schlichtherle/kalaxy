@@ -1,10 +1,13 @@
 ---
-- name: install k3s agent
+- name: Install K3s Agent
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
     K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
-    http_proxy: '{{ proxy_url | default(omit) }}'
-    https_proxy: '{{ proxy_url | default(omit) }}'
+    http_proxy: '{{ proxy_url }}'
+    https_proxy: '{{ proxy_url }}'
   shell:
-    cmd: curl --fail --location --show-error --silent https://get.k3s.io | sh -s - agent
-    creates: /usr/local/bin/k3s-agent-uninstall.sh
+    cmd: |
+      set -o pipefail
+      curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - agent
+    executable: /bin/bash
+  when: k3s_installed_version != k3s_version

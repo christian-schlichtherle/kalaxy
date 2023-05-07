@@ -4,14 +4,14 @@
     - all
 - gather_facts: no
   hosts:
-    - k3s_agent
-  roles:
-    - k3s-agent-down
-- gather_facts: no
-  hosts:
     - k3s_server
   roles:
-    - k3s-server-down
+    - k3s-pre-server-down
+- gather_facts: no
+  hosts:
+    - k3s_node
+  roles:
+    - k3s-node-down
 #- gather_facts: no
 #  hosts:
 #    - raspberry_pi_os

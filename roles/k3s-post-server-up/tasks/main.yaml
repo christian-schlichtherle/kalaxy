@@ -1,0 +1,15 @@
+---
+- name: Apply Post-Server-Up Hooks
+  delegate_to: localhost
+  environment:
+    KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
+    http_proxy: '{{ proxy_url }}'
+    https_proxy: '{{ proxy_url }}'
+  ignore_errors: yes
+  kubernetes.core.k8s:
+    src: '{{ item }}'
+  run_once: yes
+  with_fileglob:
+    - '{{ k3s_hooks_dir }}/post-server-up.yaml'
+    - '{{ k3s_hooks_dir }}/k3s-post-master-up.yaml'
+    - '{{ k3s_hooks_dir }}/post-master-up.yaml'

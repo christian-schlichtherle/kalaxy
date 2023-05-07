@@ -1,60 +1,48 @@
 ---
 - block:
-    - name: install first k3s server
-      environment:
-        INSTALL_K3S_VERSION: '{{ k3s_version }}'
-        http_proxy: '{{ proxy_url | default(omit) }}'
-        https_proxy: '{{ proxy_url | default(omit) }}'
-      shell:
-        cmd: curl --fail --location --show-error --silent https://get.k3s.io | sh -s - server
-        creates: /usr/local/bin/k3s-uninstall.sh
-    - name: fetch server token
-      fetch:
-        dest: '{{ k3s_build_dir }}/server-token'
-        flat: yes
-        src: /var/lib/rancher/k3s/server/token
-    - name: fix access to server token
-      local_action:
-        mode: '600'
-        module: file
-        path: '{{ k3s_build_dir }}/server-token'
-      vars:
-        ansible_become: no
-  run_once: yes
-- name: install remaining k3s servers
+    - block:
+        - name: Install First K3s Server
+          shell:
+            cmd: |
+              set -o pipefail
+              curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - server
+            executable: /bin/bash
+          when: k3s_installed_version != k3s_version
+        - name: Fetch Server Token
+          fetch:
+            dest: '{{ k3s_build_dir }}/server-token'
+            flat: yes
+            src: /var/lib/rancher/k3s/server/token
+        - name: Fix Access To Server Token
+          delegate_to: localhost
+          file:
+            mode: '600'
+            path: '{{ k3s_build_dir }}/server-token'
+          vars:
+            ansible_become: no
+        - name: Fetch kubectl Configuration
+          fetch:
+            dest: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
+            flat: yes
+            src: /etc/rancher/k3s/k3s.yaml
+          notify:
+            - Fix Access To kubectl Configuration
+            - Backup kubectl Configuration
+            - Patch kubectl Configuration
+      when: inventory_hostname == groups.k3s_server[0]
+    - block:
+        - name: Install Remaining K3s Servers
+          environment:
+            K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
+          shell:
+            cmd: |
+              set -o pipefail
+              curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - server
+            executable: /bin/bash
+          throttle: 1
+          when: k3s_installed_version != k3s_version
+      when: inventory_hostname != groups.k3s_server[0]
   environment:
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
-    K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
-    http_proxy: '{{ proxy_url | default(omit) }}'
-    https_proxy: '{{ proxy_url | default(omit) }}'
-  shell:
-    cmd: curl --fail --location --show-error --silent https://get.k3s.io | sh -s - server
-    creates: /usr/local/bin/k3s-uninstall.sh
-  throttle: 1
-  when: inventory_hostname != groups.k3s_server[0]
-- name: fetch kubeconfig
-  fetch:
-    dest: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
-    flat: yes
-    src: /etc/rancher/k3s/k3s.yaml
-  notify:
-    - fix access to kubeconfig
-    - backup kubeconfig
-    - edit kubeconfig
-  run_once: yes
-- meta: flush_handlers
-- name: apply post-server-up hooks
-  environment:
-    KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
-    http_proxy: '{{ proxy_url | default(omit) }}'
-    https_proxy: '{{ proxy_url | default(omit) }}'
-  local_action:
-    module: kubernetes.core.k8s
-    src: '{{ item }}'
-  run_once: yes
-  vars:
-    ansible_become: no
-  with_fileglob:
-    - '{{ k3s_hooks_dir }}/post-server-up.yaml'
-    - '{{ k3s_hooks_dir }}/k3s-post-master-up.yaml'
-    - '{{ k3s_hooks_dir }}/post-master-up.yaml'
+    http_proxy: '{{ proxy_url }}'
+    https_proxy: '{{ proxy_url }}'

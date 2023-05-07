@@ -1,6 +1,0 @@
----
-ansible_become: yes
-# Where to store build files for K3s?
-k3s_build_dir: build
-# Do you want to delete all data from emptydir volumes upon teardown?
-k3s_delete_emptydir_data: no
