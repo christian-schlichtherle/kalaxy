@@ -24,6 +24,11 @@
     - reboot-if-required
 - gather_facts: no
   hosts:
+    - k3s_node:&debian
+  roles:
+    - k3s-debian-up
+- gather_facts: no
+  hosts:
     - k3s_node
   roles:
     - k3s-node-up
