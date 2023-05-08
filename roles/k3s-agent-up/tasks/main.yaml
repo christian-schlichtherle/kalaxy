@@ -6,7 +6,7 @@
     http_proxy: '{{ proxy_url }}'
     https_proxy: '{{ proxy_url }}'
   shell:
-    cmd: |
+    cmd: |-
       set -o pipefail
       curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - agent
     executable: /bin/bash

@@ -3,7 +3,7 @@
     - block:
         - name: Install First K3s Server
           shell:
-            cmd: |
+            cmd: |-
               set -o pipefail
               curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - server
             executable: /bin/bash
@@ -35,7 +35,7 @@
           environment:
             K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
           shell:
-            cmd: |
+            cmd: |-
               set -o pipefail
               curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - server
             executable: /bin/bash
