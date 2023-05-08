@@ -19,7 +19,7 @@
     - debian-up
 - gather_facts: no
   hosts:
-    - all
+    - debian
   roles:
     - reboot-if-required
 - gather_facts: no
