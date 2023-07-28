@@ -37,8 +37,17 @@
         dest: /etc/default/locale
         src: locale.j2
     - name: Configure web proxy
-      template:
-        dest: /etc/environment.d/95proxies.env.j2
-        src: 95proxies.env.j2
+      lineinfile:
+        backup: yes
+        line: '{{ item.key}}="{{ item.value }}"'
+        path: /etc/environment
+        regexp: '^\s*#*\s*{{ item.key }}\s*=.*'
+      with_dict:
+        HTTP_PROXY: '{{ proxy_url }}'
+        HTTPS_PROXY: '{{ proxy_url }}'
+        NO_PROXY: '{{ no_proxy }}'
+        http_proxy: '{{ proxy_url }}'
+        https_proxy: '{{ proxy_url }}'
+        no_proxy: '{{ no_proxy }}'
       when: proxy_url
   notify: Require reboot
