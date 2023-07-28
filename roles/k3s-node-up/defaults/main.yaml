@@ -8,4 +8,5 @@ k3s_config: { }
 # Content template for /etc/rancher/k3s/registries.yaml - see
 # https://rancher.com/docs/k3s/latest/en/installation/private-registry/ :
 k3s_registries: { }
+no_proxy: ""
 proxy_url: ""

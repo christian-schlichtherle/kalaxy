@@ -3,4 +3,5 @@
 k3s_build_dir: '{{ playbook_dir }}/build/k3s'
 # Where to find resource manifests to apply after installing K3s?
 k3s_hooks_dir: hooks
+no_proxy: ""
 proxy_url: ""

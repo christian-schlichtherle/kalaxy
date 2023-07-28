@@ -8,4 +8,5 @@ k3s_installed_version: ""
 k3s_url: ""
 # https://github.com/rancher/k3s/releases :
 k3s_version: v1.27.3+k3s1
+no_proxy: ""
 proxy_url: ""
