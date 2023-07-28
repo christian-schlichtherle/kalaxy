@@ -7,5 +7,5 @@ k3s_installed_version: ""
 # If you want to use a load balancer for the K3s server nodes, put its URL here. Otherwise, don't touch:
 k3s_url: ""
 # https://github.com/rancher/k3s/releases :
-k3s_version: v1.27.1+k3s1
+k3s_version: v1.27.3+k3s1
 proxy_url: ""
