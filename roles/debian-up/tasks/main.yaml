@@ -36,12 +36,13 @@
       template:
         dest: /etc/default/locale
         src: locale.j2
-    - name: Configure web proxy
+    - name: Configure web proxies
       lineinfile:
         backup: yes
-        line: '{{ item.key}}="{{ item.value }}"'
+        backrefs: yes
+        line: '{% if item.value %}{{ item.key}}="{{ item.value }}"{% else %}# {{ item.key}}=\g<1>{% endif %}'
         path: /etc/environment
-        regexp: '^\s*#*\s*{{ item.key }}\s*=.*'
+        regexp: '^\s*#*\s*{{ item.key }}\s*=(.*)'
       with_dict:
         HTTP_PROXY: '{{ proxy_url }}'
         HTTPS_PROXY: '{{ proxy_url }}'
@@ -49,5 +50,4 @@
         http_proxy: '{{ proxy_url }}'
         https_proxy: '{{ proxy_url }}'
         no_proxy: '{{ no_proxy }}'
-      when: proxy_url
   notify: Require reboot
