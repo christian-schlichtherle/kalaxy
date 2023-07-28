@@ -2,13 +2,13 @@
 - name: Apply Pre-Server-Down Hooks
   delegate_to: localhost
   environment:
-    HTTP_PROXY: '{{ proxy_url | default(omit, true) }}'
-    HTTPS_PROXY: '{{ proxy_url | default(omit, true) }}'
+    HTTP_PROXY: '{{ proxy_url }}'
+    HTTPS_PROXY: '{{ proxy_url }}'
     KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
-    NO_PROXY: '{{ no_proxy | default(omit, true) }}'
-    http_proxy: '{{ proxy_url | default(omit, true) }}'
-    https_proxy: '{{ proxy_url | default(omit, true) }}'
-    no_proxy: '{{ no_proxy | default(omit, true) }}'
+    NO_PROXY: '{{ no_proxy }}'
+    http_proxy: '{{ proxy_url }}'
+    https_proxy: '{{ proxy_url }}'
+    no_proxy: '{{ no_proxy }}'
   ignore_errors: yes
   kubernetes.core.k8s:
     src: '{{ item }}'
