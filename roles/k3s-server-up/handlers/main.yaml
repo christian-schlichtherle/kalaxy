@@ -1,14 +1,14 @@
 ---
 - block:
-    - name: Fix Access To kubectl Configuration
+    - name: Fix access To kubectl configuration
       file:
         mode: '600'
         path: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
-    - name: Backup kubectl Configuration
+    - name: Backup kubectl configuration
       copy:
         dest: '{{ k3s_build_dir }}/kubeconfig.yaml'
         src: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
-    - name: Patch kubectl Configuration
+    - name: Patch kubectl configuration
       lineinfile:
         backrefs: yes
         line: '\g<1>{{ server }}'

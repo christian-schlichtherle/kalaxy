@@ -2,38 +2,42 @@
 - name: apt-get install <packages...>
   apt: '{{ k3s_apt }}'
   when: k3s_apt | length > 0
-- name: Make Directory /etc/rancher/k3s
+- name: Make directory '/etc/rancher/k3s'
   file:
     path: /etc/rancher/k3s
     state: directory
 - block:
-    - name: Write File /etc/rancher/k3s/config.yaml
+    - name: Write file '/etc/rancher/k3s/config.yaml'
       template:
         dest: /etc/rancher/k3s/config.yaml
         src: config.yaml.j2
-    - name: Write File /etc/rancher/k3s/registries.yaml
+    - name: Write file '/etc/rancher/k3s/registries.yaml'
       template:
         dest: /etc/rancher/k3s/registries.yaml
         src: registries.yaml.j2
       when: k3s_registries | length > 0
-  notify: Restart K3s (Agent) Service
+  notify: Restart K3s (agent) service
 - block:
-    - name: Read K3s Node Infos
+    - name: Read K3s node infos
       delegate_to: localhost
       environment:
+        HTTP_PROXY: '{{ proxy_url | default(omit, true) }}'
+        HTTPS_PROXY: '{{ proxy_url | default(omit, true) }}'
         KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
-        http_proxy: '{{ proxy_url }}'
-        https_proxy: '{{ proxy_url }}'
+        NO_PROXY: '{{ no_proxy | default(omit, true) }}'
+        http_proxy: '{{ proxy_url | default(omit, true) }}'
+        https_proxy: '{{ proxy_url | default(omit, true) }}'
+        no_proxy: '{{ no_proxy | default(omit, true) }}'
       kubernetes.core.k8s_info:
         kind: Node
       register: k3s_node_infos
       run_once: yes
     - block:
-        - name: Extract All Installed K3s Versions
+        - name: Extract all installed K3s versions
           run_once: yes
           set_fact:
             k3s_installed_versions: '{{ k3s_node_infos.resources | map(attribute="metadata.name") | zip(k3s_node_infos.resources | map(attribute="status.nodeInfo.kubeletVersion")) | community.general.dict }}'
-        - name: Extract Installed K3s Version Per Host
+        - name: Extract installed K3s version per host
           set_fact:
             k3s_installed_version: '{{ k3s_installed_versions[inventory_hostname] }}'
       when: k3s_node_infos is succeeded

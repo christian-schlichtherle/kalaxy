@@ -1,39 +1,41 @@
 ---
 - block:
     - block:
-        - name: Install First K3s Server
+        - name: Install first K3s server
+          notify: Require reboot
           shell:
             cmd: |-
               set -o pipefail
               curl --fail --location --show-error --silent https://get.k3s.io | exec sh -s - server
             executable: /bin/bash
           when: k3s_installed_version != k3s_version
-        - name: Fetch Server Token
+        - name: Fetch server token
           fetch:
             dest: '{{ k3s_build_dir }}/server-token'
             flat: yes
             src: /var/lib/rancher/k3s/server/token
-        - name: Fix Access To Server Token
+        - name: Fix access to server token
           delegate_to: localhost
           file:
             mode: '600'
             path: '{{ k3s_build_dir }}/server-token'
           vars:
             ansible_become: no
-        - name: Fetch kubectl Configuration
+        - name: Fetch kubectl configuration
           fetch:
             dest: '{{ k3s_build_dir }}/kubeconfig.yaml.bak'
             flat: yes
             src: /etc/rancher/k3s/k3s.yaml
           notify:
-            - Fix Access To kubectl Configuration
-            - Backup kubectl Configuration
-            - Patch kubectl Configuration
+            - Fix access to kubectl configuration
+            - Backup kubectl configuration
+            - Patch kubectl configuration
       when: inventory_hostname == groups.k3s_server[0]
     - block:
-        - name: Install Remaining K3s Servers
+        - name: Install remaining K3s servers
           environment:
             K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
+          notify: Require reboot
           shell:
             cmd: |-
               set -o pipefail
@@ -43,6 +45,10 @@
           when: k3s_installed_version != k3s_version
       when: inventory_hostname != groups.k3s_server[0]
   environment:
+    HTTP_PROXY: '{{ proxy_url | default(omit, true) }}'
+    HTTPS_PROXY: '{{ proxy_url | default(omit, true) }}'
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
-    http_proxy: '{{ proxy_url }}'
-    https_proxy: '{{ proxy_url }}'
+    NO_PROXY: '{{ no_proxy | default(omit, true) }}'
+    http_proxy: '{{ proxy_url | default(omit, true) }}'
+    https_proxy: '{{ proxy_url | default(omit, true) }}'
+    no_proxy: '{{ no_proxy | default(omit, true) }}'

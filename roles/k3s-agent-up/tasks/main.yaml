@@ -1,10 +1,15 @@
 ---
-- name: Install K3s Agent
+- name: Install K3s agent
   environment:
+    HTTP_PROXY: '{{ proxy_url | default(omit, true) }}'
+    HTTPS_PROXY: '{{ proxy_url | default(omit, true) }}'
     INSTALL_K3S_VERSION: '{{ k3s_version }}'
     K3S_TOKEN: '{{ lookup("file", k3s_build_dir + "/server-token") }}'
-    http_proxy: '{{ proxy_url }}'
-    https_proxy: '{{ proxy_url }}'
+    NO_PROXY: '{{ no_proxy | default(omit, true) }}'
+    http_proxy: '{{ proxy_url | default(omit, true) }}'
+    https_proxy: '{{ proxy_url | default(omit, true) }}'
+    no_proxy: '{{ no_proxy | default(omit, true) }}'
+  notify: Require reboot
   shell:
     cmd: |-
       set -o pipefail

@@ -2,9 +2,13 @@
 - name: Apply Post-Server-Up Hooks
   delegate_to: localhost
   environment:
+    HTTP_PROXY: '{{ proxy_url | default(omit, true) }}'
+    HTTPS_PROXY: '{{ proxy_url | default(omit, true) }}'
     KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
-    http_proxy: '{{ proxy_url }}'
-    https_proxy: '{{ proxy_url }}'
+    NO_PROXY: '{{ no_proxy | default(omit, true) }}'
+    http_proxy: '{{ proxy_url | default(omit, true) }}'
+    https_proxy: '{{ proxy_url | default(omit, true) }}'
+    no_proxy: '{{ no_proxy | default(omit, true) }}'
   ignore_errors: yes
   kubernetes.core.k8s:
     src: '{{ item }}'

@@ -1,5 +1,5 @@
 ---
-- name: Restart K3s (Agent) Service
+- name: Restart K3s (agent) service
   # On installation, the service does not exist yet, so we need to ignore this error:
   ignore_errors: yes
   service:

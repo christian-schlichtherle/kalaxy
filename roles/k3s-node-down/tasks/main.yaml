@@ -1,30 +1,34 @@
 ---
-- name: Stat K3s {% if inventory_hostname in groups.k3s_server %}Server{% else %}Agent{% endif %} Uninstall Script
+- name: Stat K3s {% if inventory_hostname in groups.k3s_server %}server{% else %}agent{% endif %} uninstall script
   stat:
     path: /usr/local/bin/k3s{% if inventory_hostname not in groups.k3s_server %}-agent{% endif %}-uninstall.sh
   register: k3s_uninstall_script
 - block:
     - block:
-        - name: Drain Node
+        - name: Drain node
           kubernetes.core.k8s_drain:
             delete_options:
               delete_emptydir_data: '{{ k3s_delete_emptydir_data }}'
               force: yes
               ignore_daemonsets: yes
             name: '{{ inventory_hostname }}'
-        - name: Delete Node
+        - name: Delete node
           kubernetes.core.k8s:
             kind: Node
             name: '{{ inventory_hostname }}'
             state: absent
       delegate_to: localhost
       environment:
+        HTTP_PROXY: '{{ proxy_url | default(omit, true) }}'
+        HTTPS_PROXY: '{{ proxy_url | default(omit, true) }}'
         KUBECONFIG: '{{ k3s_build_dir }}/kubeconfig.yaml'
-        http_proxy: '{{ proxy_url }}'
-        https_proxy: '{{ proxy_url }}'
+        NO_PROXY: '{{ no_proxy | default(omit, true) }}'
+        http_proxy: '{{ proxy_url | default(omit, true) }}'
+        https_proxy: '{{ proxy_url | default(omit, true) }}'
+        no_proxy: '{{ no_proxy | default(omit, true) }}'
       ignore_errors: yes
       vars:
         ansible_become: no
-    - name: Uninstall K3s {% if inventory_hostname in groups.k3s_server %}Server{% else %}Agent{% endif %}
+    - name: Uninstall K3s {% if inventory_hostname in groups.k3s_server %}server{% else %}agent{% endif %}
       command: k3s{% if inventory_hostname not in groups.k3s_server %}-agent{% endif %}-uninstall.sh
   when: k3s_uninstall_script.stat.exists
