@@ -1,5 +1,5 @@
 ---
-- name: Require Reboot
+- name: Require reboot
   file:
     path: /var/run/reboot-required
     state: touch

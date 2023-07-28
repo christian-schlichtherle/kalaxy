@@ -1,5 +1,5 @@
 ---
-- name: Add Apt Proxies
+- name: Add APT proxies
   template:
     dest: /etc/apt/apt.conf.d/95proxies
     src: 95proxies.j2
@@ -23,17 +23,22 @@
   apt:
     autoclean: yes
 - block:
-    - name: Set Hostname
+    - name: Set hostname
       hostname:
         name: '{{ inventory_hostname }}'
-    - name: Set Timezone To {{ timezone }}
+    - name: Set timezone to {{ timezone }}
       timezone:
         name: "{{ timezone }}"
-    - name: Generate Locale {{ locale }}
+    - name: Generate locale {{ locale }}
       locale_gen:
         name: '{{ locale }}'
-    - name: Set Default Locale To {{ locale }}
+    - name: Set default locale to {{ locale }}
       template:
         dest: /etc/default/locale
         src: locale.j2
-  notify: Require Reboot
+    - name: Configure web proxy
+      template:
+        dest: /etc/environment.d/95proxies.env.j2
+        src: 95proxies.env.j2
+      when: proxy_url
+  notify: Require reboot
