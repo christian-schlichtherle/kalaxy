@@ -56,7 +56,7 @@ all:
     ## https://github.com/rancher/k3s/releases :
     #k3s_version: v1.27.3+k3s1
     #locale: en_US.UTF-8
-    #no_proxy: 127.0.0.1/8,.local,localhost
+    #no_proxy: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.local,localhost
     #proxy_url: http://10.0.0.1:3128/
     #rpi_update: yes
     #timezone: Etc/UTC
